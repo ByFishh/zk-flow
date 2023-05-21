@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
-import { getAddressTransactionCount } from '../services/explorer.ts';
+import { getBalance } from '../services/explorer.ts';
 
 const AddressPage = () => {
   const address = window.location.search.split('=')[1];
 
   const test = async () => {
-    console.log(await getAddressTransactionCount(address));
+    console.log(await getBalance(address));
   };
 
   useEffect(() => {

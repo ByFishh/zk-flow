@@ -20,17 +20,17 @@ const getTokenList = async (address: string): Promise<Token[]> => {
     });
 };
 
-const getAddressERC20 = async (address: string): Promise<Token[]> => {
+const getERC20 = async (address: string): Promise<Token[]> => {
   const tokenList = await getTokenList(address);
   return tokenList.filter((token: Token) => token.type === 'ERC-20');
 };
 
-const getAddressERC721 = async (address: string): Promise<Token[]> => {
+const getERC721 = async (address: string): Promise<Token[]> => {
   const tokenList = await getTokenList(address);
   return tokenList.filter((token: Token) => token.type === 'ERC-721');
 };
 
-const getAddressTransactionCount = async (address: string): Promise<number> => {
+const getTransactionCount = async (address: string): Promise<number> => {
   return axios
     .get(`https://zksync2-mainnet-explorer.zksync.io/address/${address}`)
     .then((res) => {
@@ -41,4 +41,17 @@ const getAddressTransactionCount = async (address: string): Promise<number> => {
     });
 };
 
-export { getAddressERC20, getAddressERC721, getAddressTransactionCount };
+const getBalance = async (address: string): Promise<string | void> => {
+  return axios
+    .get(`https://zksync2-mainnet-explorer.zksync.io/address/${address}`)
+    .then((res) => {
+      const balance = res.data.info.balances['0x0000000000000000000000000000000000000000'];
+      const ethBalance = parseInt(balance.balance, 16) * 10 ** -balance.tokenInfo.decimals;
+      return (ethBalance * balance.tokenInfo.usdPrice).toFixed(2);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+export { getERC20, getERC721, getTransactionCount, getBalance };
