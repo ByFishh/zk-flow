@@ -1,11 +1,15 @@
-import { useEffect } from 'react';
-import { getBalance } from '../services/explorer.ts';
+import { useEffect, useState } from 'react';
+import { getAllTransactions } from '../services/explorer.ts';
+import BasicsCard from '../components/BasicsCard.tsx';
 
 const AddressPage = () => {
   const address = window.location.search.split('=')[1];
+  const [transactionList, setTransactionList] = useState<any[]>();
 
-  const test = async () => {
-    console.log(await getBalance(address));
+  const fetchTransactionList = async () => {
+    const transactions: any[] = await getAllTransactions(address);
+    setTransactionList(transactions);
+    console.log(transactions);
   };
 
   useEffect(() => {
@@ -13,7 +17,7 @@ const AddressPage = () => {
       window.location.search = '';
       return;
     }
-    test();
+    fetchTransactionList();
   }, [address]);
 
   return (
@@ -21,6 +25,7 @@ const AddressPage = () => {
       <div className="grid mt-20 place-items-center">
         <div className="grid place-items-center">
           <h1 className="font-bold text-6xl text-white mb-10">zkFlow</h1>
+          <BasicsCard address={address} transactionList={transactionList} />
         </div>
       </div>
     </>
