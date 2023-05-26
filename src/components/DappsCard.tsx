@@ -95,7 +95,11 @@ const DappsCard: FC<{ address: string; transactionList: any[] }> = ({ address, t
                           scope="row"
                           className="flex items-center space-x-4 px-6 py-4 text-left font-normal text-white"
                         >
-                          <img className="w-10 h-10 rounded-full" src={`/dapp/${dapp.id}.png`} alt={dapp.name} />
+                          <img
+                            className="w-10 h-10 rounded-full"
+                            src={`/zk-flow/dapp/${dapp.id}.png`}
+                            alt={dapp.name}
+                          />
                           <div className="font-medium text-white">
                             <div>{dapp.name}</div>
                           </div>
