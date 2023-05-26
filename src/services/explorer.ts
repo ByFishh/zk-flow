@@ -35,18 +35,13 @@ const getBalance = async (address: string): Promise<string | number> => {
     .get(`https://zksync2-mainnet-explorer.zksync.io/address/${address}`)
     .then((res) => {
       const ethInfo = res.data.info.balances['0x0000000000000000000000000000000000000000'];
+      if (!ethInfo) return 'NaN';
       const ethBalance = (
         parseInt(ethInfo.balance, 16) *
         10 ** -ethInfo.tokenInfo.decimals *
         ethInfo.tokenInfo.usdPrice
       ).toFixed(2);
-      const usdcInfo = res.data.info.balances['0x3355df6d4c9c3035724fd0e3914de96a5a83aaf4'];
-      const usdcBalance = (
-        parseInt(usdcInfo.balance, 16) *
-        10 ** -usdcInfo.tokenInfo.decimals *
-        usdcInfo.tokenInfo.usdPrice
-      ).toFixed(2);
-      return parseInt(ethBalance + usdcBalance);
+      return parseInt(ethBalance);
     })
     .catch((err) => {
       console.log(err);
@@ -59,6 +54,7 @@ const getLastInteraction = async (address: string): Promise<string> => {
     .get(`https://zksync2-mainnet-explorer.zksync.io/transactions?limit=1&direction=older&accountAddress=${address}`)
     .then((res) => {
       const transaction = res.data.list[0];
+      if (!transaction) return 'NaN';
       return transaction.receivedAt;
     })
     .catch((err) => {
@@ -103,4 +99,4 @@ const getAllTransactions = async (address: string): Promise<any[]> => {
   return transactions;
 };
 
-export { getERC20, getERC721, getTransactionCount, getBalance, getLastInteraction, getAllTransactions };
+export { getERC20, getERC721, getBalance, getLastInteraction, getAllTransactions };

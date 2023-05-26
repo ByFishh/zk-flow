@@ -1,18 +1,19 @@
 import { FC, useEffect, useState } from 'react';
 import { getBalance, getLastInteraction } from '../services/explorer.ts';
+import { getTimeAgo } from '../utils/utils.ts';
 
 interface BasicsCardInfo {
   address: string;
   totalInteractions: number;
-  totalBalance: string;
-  totalVolume: number;
+  totalBalance: string | number;
+  totalVolume: string;
   lastActivity: string;
 }
 
 const getTotalVolume = (transactionList: any[]) => {
   let totalVolume = 0;
 
-  if (transactionList === undefined) return -1;
+  if (transactionList === undefined) return 'Nan';
 
   transactionList.forEach((transaction: any) => {
     const erc20Transfers = transaction.erc20Transfers.sort((a: any, b: any) => {
@@ -28,32 +29,17 @@ const getTotalVolume = (transactionList: any[]) => {
       erc20Transfers[0].tokenInfo.usdPrice;
   });
 
-  return totalVolume;
+  return totalVolume.toFixed(2);
 };
 
-const getTimeAgo = (date: string) => {
-  const seconds = (new Date().getTime() - new Date(date).getTime()) / 1000;
-
-  if (seconds < 60) {
-    return Math.round(seconds) + ' second' + (seconds === 1 ? '' : 's') + ' ago';
-  }
-
-  const minutes = seconds / 60;
-  if (minutes < 60) {
-    return Math.round(minutes) + ' minute' + (minutes === 1 ? '' : 's') + ' ago';
-  }
-
-  const hours = minutes / 60;
-  if (hours < 24) {
-    return Math.round(hours) + ' hour' + (hours === 1 ? '' : 's') + ' ago';
-  }
-
-  const days = hours / 24;
-  return Math.round(days) + ' day' + (days === 1 ? '' : 's') + ' ago';
-};
-
-const BasicsCard: FC<{ address: string; transactionList: any[] }> = ({ address, transactionList }) => {
-  const [cardInfo, setCardInfo] = useState<BasicsCardInfo>();
+const BasicsCard: FC<{ address: string; transactionList: any[] | undefined }> = ({ address, transactionList }) => {
+  const [cardInfo, setCardInfo] = useState<BasicsCardInfo>({
+    address: address,
+    totalInteractions: 0,
+    totalBalance: 0,
+    totalVolume: 'NaN',
+    lastActivity: 'NaN',
+  });
 
   useEffect(() => {
     const fetchInfo = async () => {
@@ -69,34 +55,28 @@ const BasicsCard: FC<{ address: string; transactionList: any[] }> = ({ address, 
   }, [address, transactionList]);
 
   return (
-    <>
-      <div className="block p-6 border rounded-lg shadow bg-gray-800 border-gray-700 text-center">
-        <div className="grid max-w-screen-xl grid-cols-4 gap-8 p-4 mx-auto text-white sm:p-8 text-center">
-          {cardInfo ? (
-            <>
-              <div className="flex flex-col items-center justify-center">
-                <dt className="mb-2 text-3xl font-extrabold">{cardInfo?.totalInteractions}</dt>
-                <dd className="text-gray-400">Total interactions</dd>
-              </div>
-              <div className="flex flex-col items-center justify-center">
-                <dt className="mb-2 text-3xl font-extrabold">${cardInfo?.totalBalance}</dt>
-                <dd className="text-gray-400">Balance</dd>
-              </div>
-              <div className="flex flex-col items-center justify-center">
-                <dt className="mb-2 text-3xl font-extrabold">${cardInfo?.totalVolume.toFixed(2)}</dt>
-                <dd className="text-gray-400">Total volume</dd>
-              </div>
-              <div className="flex flex-col items-center justify-center">
-                <dt className="mb-2 text-3xl font-extrabold">{cardInfo?.lastActivity}</dt>
-                <dd className="text-gray-400">Last activity</dd>
-              </div>
-            </>
-          ) : (
-            <h5>Loading...</h5>
-          )}
-        </div>
+    <div className="block p-6 border rounded-lg shadow bg-gray-800 border-gray-700 text-center">
+      <div className="grid max-w-screen-xl grid-cols-4 gap-8 p-4 mx-auto text-white sm:p-8 text-center">
+        <>
+          <div className="flex flex-col items-center justify-center">
+            <dt className="mb-2 text-3xl font-extrabold">{cardInfo?.totalInteractions}</dt>
+            <dd className="text-gray-400">Total interactions</dd>
+          </div>
+          <div className="flex flex-col items-center justify-center">
+            <dt className="mb-2 text-3xl font-extrabold">${cardInfo?.totalBalance}</dt>
+            <dd className="text-gray-400">Balance</dd>
+          </div>
+          <div className="flex flex-col items-center justify-center">
+            <dt className="mb-2 text-3xl font-extrabold">${cardInfo?.totalVolume}</dt>
+            <dd className="text-gray-400">Total volume</dd>
+          </div>
+          <div className="flex flex-col items-center justify-center">
+            <dt className="mb-2 text-3xl font-extrabold">{cardInfo?.lastActivity}</dt>
+            <dd className="text-gray-400">Last activity</dd>
+          </div>
+        </>
       </div>
-    </>
+    </div>
   );
 };
 
