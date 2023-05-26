@@ -5,7 +5,7 @@ import DappsCard from '../components/DappsCard.tsx';
 
 const AddressPage = () => {
   const address = window.location.search.split('=')[1];
-  const [transactionList, setTransactionList] = useState<any[]>();
+  const [transactionList, setTransactionList] = useState<any[]>([]);
 
   const fetchTransactionList = async () => {
     const transactions: any[] = await getAllTransactions(address);

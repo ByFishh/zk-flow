@@ -32,7 +32,7 @@ const getTotalVolume = (transactionList: any[]) => {
   return totalVolume.toFixed(2);
 };
 
-const BasicsCard: FC<{ address: string; transactionList: any[] | undefined }> = ({ address, transactionList }) => {
+const BasicsCard: FC<{ address: string; transactionList: any[] }> = ({ address, transactionList }) => {
   const [cardInfo, setCardInfo] = useState<BasicsCardInfo>({
     address: address,
     totalInteractions: 0,

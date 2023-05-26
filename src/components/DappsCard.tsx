@@ -10,7 +10,7 @@ interface DappsInfo {
   totalInteractions: number;
 }
 
-const DappsCard: FC<{ address: string; transactionList: any[] | undefined }> = ({ address, transactionList = [] }) => {
+const DappsCard: FC<{ address: string; transactionList: any[] }> = ({ address, transactionList = [] }) => {
   const [dappsInfos, setDappsInfos] = useState<DappsInfo[]>([]);
 
   const getDappInfo = (
