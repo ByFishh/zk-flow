@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
+import axios, {AxiosResponse} from 'axios';
 
 export interface Token {
   balance: number;
@@ -30,24 +30,21 @@ const getERC721 = async (address: string): Promise<Token[]> => {
   return tokenList.filter((token: Token) => token.type === 'ERC-721');
 };
 
-const getBalance = async (address: string): Promise<string | number> => {
-  return axios
-    .get(`https://zksync2-mainnet-explorer.zksync.io/address/${address}`)
-    .then((res) => {
-      const ethInfo = res.data.info.balances['0x0000000000000000000000000000000000000000'];
-      if (!ethInfo) return 'NaN';
-      const ethBalance = (
-        parseInt(ethInfo.balance, 16) *
-        10 ** -ethInfo.tokenInfo.decimals *
-        ethInfo.tokenInfo.usdPrice
-      ).toFixed(2);
-      return parseInt(ethBalance);
-    })
-    .catch((err) => {
-      console.log(err);
-      return 'NaN';
+const getBalance = async (address: string): Promise<Token[]> => {
+  const response: AxiosResponse = await axios.get(`https://zksync2-mainnet-explorer.zksync.io/address/${address}`);
+  const balances = response.data.info.balances;
+  const tokenBalances: Token[] = [];
+  for (const tokenAddress in balances) {
+    const tokenInfo = balances[tokenAddress].tokenInfo;
+    const balance = parseFloat((parseInt(balances[tokenAddress].balance, 16) * 10 ** -tokenInfo.decimals * tokenInfo.usdPrice).toFixed(2));
+    tokenBalances.push({
+      ...tokenInfo,
+      balance,
     });
+  }
+  return tokenBalances;
 };
+
 
 const getLastInteraction = async (address: string): Promise<string> => {
   return axios
@@ -80,7 +77,6 @@ const getAllTransactions = async (address: string): Promise<any[]> => {
 
     try {
       const response: AxiosResponse = await axios.get(baseUrl, { params });
-
       if (response.status === 200) {
         const data = response.data.list;
         transactions.push(...data);
@@ -99,4 +95,5 @@ const getAllTransactions = async (address: string): Promise<any[]> => {
   return transactions;
 };
 
-export { getERC20, getERC721, getBalance, getLastInteraction, getAllTransactions };
+
+export {getERC20, getERC721, getBalance, getLastInteraction, getAllTransactions};
