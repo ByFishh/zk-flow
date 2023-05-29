@@ -1,24 +1,26 @@
 import { useEffect, useState } from 'react';
-import { getAllTransactions } from '../services/explorer.ts';
-import BasicsCard from '../components/BasicsCard.tsx';
+import { useNavigate } from 'react-router-dom';
 import DappsCard from '../components/DappsCard.tsx';
+import BasicsCard from '../components/BasicsCard.tsx';
+import { getAllTransactions } from '../services/explorer.ts';
 
 const AddressPage = () => {
-  const address = window.location.search.split('=')[1];
+  const address = window.location.pathname.split('/')[2];
+  const navigate = useNavigate();
   const [transactionList, setTransactionList] = useState<any[]>([]);
+
+  useEffect(() => {
+    if (!address || address.length !== 42 || address.slice(0, 2) !== '0x') {
+      navigate('/zk-flow/');
+      return;
+    }
+    fetchTransactionList();
+  }, [address, navigate]);
 
   const fetchTransactionList = async () => {
     const transactions: any[] = await getAllTransactions(address);
     setTransactionList(transactions);
   };
-
-  useEffect(() => {
-    if (address === '' || address.length !== 42 || !address.startsWith('0x')) {
-      window.location.search = '';
-      return;
-    }
-    fetchTransactionList();
-  }, [address]);
 
   return (
     <>

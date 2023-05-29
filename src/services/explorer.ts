@@ -36,7 +36,9 @@ const getBalance = async (address: string): Promise<Token[]> => {
   const tokenBalances: Token[] = [];
   for (const tokenAddress in balances) {
     const tokenInfo = balances[tokenAddress].tokenInfo;
-    const balance = parseFloat((parseInt(balances[tokenAddress].balance, 16) * 10 ** -tokenInfo.decimals * tokenInfo.usdPrice).toFixed(2));
+    const balance = parseFloat(
+      (parseInt(balances[tokenAddress].balance, 16) * 10 ** -tokenInfo.decimals * tokenInfo.usdPrice).toFixed(2),
+    );
     tokenBalances.push({
       ...tokenInfo,
       balance,
