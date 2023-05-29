@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
+import axios, {AxiosResponse} from 'axios';
 
 export interface Token {
   balance: number;
@@ -46,6 +46,7 @@ const getBalance = async (address: string): Promise<Token[]> => {
   }
   return tokenBalances;
 };
+
 
 const getLastInteraction = async (address: string): Promise<string> => {
   return axios
@@ -96,4 +97,5 @@ const getAllTransactions = async (address: string): Promise<any[]> => {
   return transactions;
 };
 
-export { getERC20, getERC721, getBalance, getLastInteraction, getAllTransactions };
+
+export {getERC20, getERC721, getBalance, getLastInteraction, getAllTransactions};

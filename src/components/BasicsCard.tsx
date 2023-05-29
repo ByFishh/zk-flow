@@ -138,7 +138,7 @@ const BasicsCard: FC<{ address: string; transactionList: any[] }> = ({ address, 
             <dt className="mb-2 text-3xl font-extrabold">{cardInfo?.activeWeeks}</dt>
             <dd className="text-gray-400">Active Weeks</dd>
           </div>
-          <br></br>
+          <br/>
           <div className="flex flex-col items-center justify-center">
             <dt className="mb-2 text-3xl font-extrabold">{Object.keys(cardInfo?.activeMonths).length}</dt>
             <dd className="text-gray-400">Active Months</dd>
@@ -154,5 +154,6 @@ const BasicsCard: FC<{ address: string; transactionList: any[] }> = ({ address, 
     </div>
   );
 };
+
 
 export default BasicsCard;
