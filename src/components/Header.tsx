@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import React, { FC, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 interface HeaderProps {
@@ -9,7 +9,7 @@ const Header: FC<HeaderProps> = ({ hasSearchBar }) => {
   const [address, setAddress] = useState<string>('');
   const navigate = useNavigate();
 
-  const handleSubmit = (event: any) => {
+  const handleSubmit = (event: React.KeyboardEvent<HTMLElement>) => {
     if (event.key !== 'Enter') return;
     if (address === '' || address.length !== 42 || !address.startsWith('0x')) {
       alert('Please enter valid address');
