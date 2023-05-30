@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import DappsCard from '../components/DappsCard.tsx';
 import BasicsCard from '../components/BasicsCard.tsx';
 import { getAllTransactions } from '../services/explorer.ts';
+import Header from '../components/Header.tsx';
 
 const AddressPage = () => {
   const address = window.location.pathname.split('/')[2];
@@ -24,9 +25,9 @@ const AddressPage = () => {
 
   return (
     <>
+      <Header hasSearchBar />
       <div className="grid mt-20 place-items-center">
         <div className="grid place-items-center">
-          <h1 className="font-bold text-6xl text-white mb-10">zkFlow</h1>
           <BasicsCard address={address} transactionList={transactionList} />
           <br />
           <DappsCard address={address} transactionList={transactionList} />

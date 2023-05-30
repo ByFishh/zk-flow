@@ -1,8 +1,11 @@
 {
   "name": "zk-flow",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
+  "author": "ByFish",
+  "repository": "https://github.com/ByFishh/zk-flow",
+  "homepage": "https://byfishh.github.io/zk-flow/",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

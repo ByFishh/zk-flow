@@ -1,4 +1,4 @@
-import axios, {AxiosResponse} from 'axios';
+import axios, { AxiosResponse } from 'axios';
 
 export interface Token {
   balance: number;
@@ -7,6 +7,34 @@ export interface Token {
   name: string;
   symbol: string;
   type: string;
+}
+
+export interface ERC20Transfer {}
+
+export interface Transfer {}
+
+export interface BalanceChange {}
+
+export interface Transaction {
+  transactionHash: string;
+  data: any;
+  isL1Originated: boolean;
+  status: 'verified' | string;
+  fee: string;
+  nonce: number;
+  blockNumber: number;
+  l1BatchNumber: number;
+  blockHash: string;
+  indexInBlock: number;
+  initiatorAddress: string;
+  receivedAt: string;
+  ethCommitTxHash: string;
+  ethProveTxHash: string;
+  ethExecuteTxHash: string;
+  erc20Transfers: ERC20Transfer[];
+  transfers: Transfer[];
+  balanceChanges: BalanceChange[];
+  type: number;
 }
 
 export const getTokenList = async (address: string): Promise<Token[]> => {
@@ -47,7 +75,6 @@ const getBalance = async (address: string): Promise<Token[]> => {
   return tokenBalances;
 };
 
-
 const getLastInteraction = async (address: string): Promise<string> => {
   return axios
     .get(`https://zksync2-mainnet-explorer.zksync.io/transactions?limit=1&direction=older&accountAddress=${address}`)
@@ -62,11 +89,11 @@ const getLastInteraction = async (address: string): Promise<string> => {
     });
 };
 
-const getAllTransactions = async (address: string): Promise<any[]> => {
+const getAllTransactions = async (address: string): Promise<Transaction[]> => {
   const baseUrl = 'https://zksync2-mainnet-explorer.zksync.io/transactions';
   const limit = 100;
   let offset = 0;
-  const transactions: any[] = [];
+  const transactions: Transaction[] = [];
 
   // eslint-disable-next-line no-constant-condition
   while (true) {
@@ -97,5 +124,4 @@ const getAllTransactions = async (address: string): Promise<any[]> => {
   return transactions;
 };
 
-
-export {getERC20, getERC721, getBalance, getLastInteraction, getAllTransactions};
+export { getERC20, getERC721, getBalance, getLastInteraction, getAllTransactions };
