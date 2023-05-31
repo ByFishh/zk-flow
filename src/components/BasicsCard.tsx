@@ -1,6 +1,9 @@
 import { FC, useEffect, useState } from 'react';
-import { getBalance, getLastInteraction, Token } from '../services/explorer.ts';
+import { getBalance, getLastInteraction, Token, Transaction, Transfer } from '../services/explorer.ts';
 import { getTimeAgo } from '../utils/utils.ts';
+
+import Chart from 'react-apexcharts';
+import { ApexOptions } from 'apexcharts';
 
 interface BasicsCardInfo {
   address: string;
@@ -14,13 +17,13 @@ interface BasicsCardInfo {
   activeMonths: { [month: string]: number };
 }
 
-const getTotalVolume = (transactionList: any[]) => {
+const getTotalVolume = (transactionList: Transaction[]) => {
   let totalVolume = 0;
 
   if (transactionList === undefined) return 'Nan';
 
   transactionList.forEach((transaction: any) => {
-    const erc20Transfers = transaction.erc20Transfers.sort((a: any, b: any) => {
+    const erc20Transfers = transaction.erc20Transfers.sort((a: Transfer, b: Transfer) => {
       const valueA = parseInt(a.amount, 16) * 10 ** -a.tokenInfo.decimals * a.tokenInfo.usdPrice;
       const valueB = parseInt(b.amount, 16) * 10 ** -b.tokenInfo.decimals * b.tokenInfo.usdPrice;
 
@@ -77,7 +80,7 @@ const getActiveTimePeriods = (transactionList: any[]): ActiveTimePeriods => {
   };
 };
 
-const BasicsCard: FC<{ address: string; transactionList: any[] }> = ({ address, transactionList }) => {
+const BasicsCard: FC<{ address: string; transactionList: Transaction[] }> = ({ address, transactionList }) => {
   const [cardInfo, setCardInfo] = useState<BasicsCardInfo>({
     address: address,
     totalInteractions: 0,
@@ -109,51 +112,120 @@ const BasicsCard: FC<{ address: string; transactionList: any[] }> = ({ address, 
     };
     fetchInfo();
   }, [address, transactionList]);
-
   return (
-    <div className="block p-6 border rounded-lg shadow bg-gray-800 border-gray-700 text-center">
-      <div className="grid max-w-screen-xl grid-cols-4 gap-8 p-4 mx-auto text-white sm:p-8 text-center">
-        <>
-          <div className="flex flex-col items-center justify-center">
-            <dt className="mb-2 text-3xl font-extrabold">{cardInfo?.totalInteractions}</dt>
-            <dd className="text-gray-400">Total interactions</dd>
-          </div>
-          <div className="flex flex-col items-center justify-center">
-            <dt className="mb-2 text-3xl font-extrabold">${cardInfo?.totalBalance}</dt>
-            <dd className="text-gray-400">Balance</dd>
-          </div>
-          <div className="flex flex-col items-center justify-center">
-            <dt className="mb-2 text-3xl font-extrabold">${cardInfo?.totalVolume}</dt>
-            <dd className="text-gray-400">Total volume</dd>
-          </div>
-          <div className="flex flex-col items-center justify-center">
-            <dt className="mb-2 text-3xl font-extrabold">{cardInfo?.lastActivity}</dt>
-            <dd className="text-gray-400">Last activity</dd>
-          </div>
-          <div className="flex flex-col items-center justify-center">
-            <dt className="mb-2 text-3xl font-extrabold">{cardInfo?.activeDays}</dt>
-            <dd className="text-gray-400">Active Days</dd>
-          </div>
-          <div className="flex flex-col items-center justify-center">
-            <dt className="mb-2 text-3xl font-extrabold">{cardInfo?.activeWeeks}</dt>
-            <dd className="text-gray-400">Active Weeks</dd>
-          </div>
-          <br/>
-          <div className="flex flex-col items-center justify-center">
-            <dt className="mb-2 text-3xl font-extrabold">{Object.keys(cardInfo?.activeMonths).length}</dt>
-            <dd className="text-gray-400">Active Months</dd>
-          </div>
-          {cardInfo.tokenBalances.map((token) => (
-            <div key={token.symbol} className="flex flex-col items-center justify-center">
-              <dt className="mb-2 text-3xl font-extrabold">${Number(token.balance).toFixed(2)}</dt>
-              <dd className="text-gray-400">{token.symbol} Balance</dd>
+    <>
+      <div className="flex flex-col items-center sm:flex-row sm:space-x-5 mt-5">
+        <div className="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+          <div className="sm:flex xl:block 2xl:flex sm:space-x-4 xl:space-x-0 2xl:space-x-4">
+            <div className="w-52 text-center">
+              <h3 className="text-l text-gray-400 dark:text-white">Interactions</h3>
+              <div className="text-center pt-7">
+                <h3 className="mb-2 text-5xl font-extrabold text-blue-600">{cardInfo.totalInteractions}</h3>
+                <div className="text-l text-gray-500 dark:text-gray-400">+50</div>
+                <div className="text-sm text-gray-500 dark:text-gray-400">this month</div>
+              </div>
             </div>
-          ))}
-        </>
+          </div>
+        </div>
+        <div className="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+          <div className="sm:flex xl:block 2xl:flex sm:space-x-4 xl:space-x-0 2xl:space-x-4">
+            <div className="w-52 max-w-52 text-center">
+              <h3 className="text-l text-gray-900 dark:text-white">Volume in $</h3>
+              <div className="text-center pt-7">
+                <h3 className="mb-2 text-5xl font-extrabold text-blue-600">{parseInt(cardInfo.totalVolume)}</h3>
+                <div className="text-l text-gray-500 dark:text-red-500">-50</div>
+                <div className="text-sm text-gray-500 dark:text-gray-400">this month</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+          <div className="sm:flex xl:block 2xl:flex sm:space-x-4 xl:space-x-0 2xl:space-x-4">
+            <div className="w-52 max-w-52 text-center">
+              <h3 className="text-l text-gray-900 dark:text-white">Fee spent in $</h3>
+              <div className="text-center pt-7">
+                <h3 className="mb-2 text-5xl font-extrabold text-blue-600">{parseInt(0)}</h3>
+                <div className="text-l text-gray-500 dark:text-green-500">+50</div>
+                <div className="text-sm text-gray-500 dark:text-gray-400">this month</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+      <div className="flex flex-col items-center sm:flex-row sm:space-x-5 mt-1.5">
+        <div className="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+          <div className="sm:flex xl:block 2xl:flex sm:space-x-4 xl:space-x-0 2xl:space-x-4">
+            <div className="w-[347px]">
+              <ul className="max-w-md divide-y divide-gray-200 dark:divide-gray-700">
+                <li className="pb-3 sm:pb-4">
+                  <div className="flex items-center space-x-4">
+                    <div className="flex-shrink-0">
+                      <img
+                        className="w-8 h-8 rounded-full"
+                        src="/docs/images/people/profile-picture-1.jpg"
+                        alt="Ether"
+                      />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-gray-900 truncate dark:text-white">Ether</p>
+                      <p className="text-sm text-gray-500 truncate dark:text-gray-400">0.01 ETH</p>
+                    </div>
+                    <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                      $320
+                    </div>
+                  </div>
+                </li>
+                <li className="py-3 sm:pt-4">
+                  <div className="flex items-center space-x-4">
+                    <div className="flex-shrink-0">
+                      <img className="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-3.jpg" alt="ON" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-gray-900 truncate dark:text-white">Onsenswap token</p>
+                      <p className="text-sm text-gray-500 truncate dark:text-gray-400">20 ON</p>
+                    </div>
+                    <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                      $3467
+                    </div>
+                  </div>
+                </li>
+                <li className="pt-3 sm:pt-4">
+                  <div className="flex items-center space-x-4">
+                    <div className="flex-shrink-0">
+                      <img
+                        className="w-8 h-8 rounded-full"
+                        src="/docs/images/people/profile-picture-3.jpg"
+                        alt="Neil image"
+                      />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-gray-900 truncate dark:text-white">zkSwap</p>
+                      <p className="text-sm text-gray-500 truncate dark:text-gray-400">1 ZKSP</p>
+                    </div>
+                    <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                      $3467
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div className="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+          <div className="sm:flex xl:block 2xl:flex sm:space-x-4 xl:space-x-0 2xl:space-x-4">
+            <div className="w-[347px] text-center">
+              <h3 className="text-l text-gray-400 dark:text-white">Interactions</h3>
+              <div className="text-center pt-7">
+                <h3 className="mb-2 text-5xl font-extrabold text-blue-600">{cardInfo.totalInteractions}</h3>
+                <div className="text-l text-gray-500 dark:text-gray-400">+50</div>
+                <div className="text-sm text-gray-500 dark:text-gray-400">this month</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
-
 
 export default BasicsCard;

@@ -16,7 +16,7 @@ const HomePage = () => {
 
   return (
     <>
-      <Header mainPage />
+      <Header />
       <div className="grid mt-36 place-items-center">
         <div className="grid place-items-center">
           <h1 className="font-bold text-6xl text-black dark:text-white mb-10 ">zkFlow</h1>

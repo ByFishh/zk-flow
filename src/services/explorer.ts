@@ -9,11 +9,37 @@ export interface Token {
   type: string;
 }
 
-export interface ERC20Transfer {}
+export interface TokenInfo {
+  l1Address: string;
+  l2Address: string;
+  address: string;
+  symbol: string;
+  name: string;
+  decimals: number;
+  usdPrice: string;
+}
 
-export interface Transfer {}
+export interface ERC20Transfer {
+  tokenInfo: TokenInfo;
+  from: string;
+  to: string;
+  amount: string;
+}
 
-export interface BalanceChange {}
+export interface Transfer {
+  tokenInfo: TokenInfo;
+  from: string;
+  to: string;
+  amount: string;
+}
+
+export interface BalanceChanges {
+  tokenInfo: TokenInfo;
+  from: string;
+  to: string;
+  amount: string;
+  type: 'fee' | 'transfer' | string;
+}
 
 export interface Transaction {
   transactionHash: string;
@@ -32,8 +58,8 @@ export interface Transaction {
   ethProveTxHash: string;
   ethExecuteTxHash: string;
   erc20Transfers: ERC20Transfer[];
-  transfers: Transfer[];
-  balanceChanges: BalanceChange[];
+  transfer: Transfer[];
+  balanceChanges: BalanceChanges[];
   type: number;
 }
 
