@@ -4,7 +4,7 @@ const AboutPage = () => {
   return (
     <>
       <Header />
-      <h1 className="text-center text-white mt-20">About</h1>
+      <h1 className="text-center text-white mt-20">Under construction</h1>
     </>
   );
 };

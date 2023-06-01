@@ -1,4 +1,10 @@
-const availableDapps = [
+export interface Protocol {
+  name: string;
+  id: string;
+  addresses: string[];
+}
+
+const availableProtocols: Protocol[] = [
   {
     name: 'Orbiter Finance',
     id: 'orbiter',
@@ -62,4 +68,4 @@ const availableDapps = [
   },
 ];
 
-export { availableDapps };
+export { availableProtocols };
