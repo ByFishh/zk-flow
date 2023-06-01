@@ -16,14 +16,7 @@ export interface TokenInfo {
   symbol: string;
   name: string;
   decimals: number;
-  usdPrice: string;
-}
-
-export interface ERC20Transfer {
-  tokenInfo: TokenInfo;
-  from: string;
-  to: string;
-  amount: string;
+  usdPrice: number;
 }
 
 export interface Transfer {
@@ -57,7 +50,7 @@ export interface Transaction {
   ethCommitTxHash: string;
   ethProveTxHash: string;
   ethExecuteTxHash: string;
-  erc20Transfers: ERC20Transfer[];
+  erc20Transfers: Transfer[];
   transfer: Transfer[];
   balanceChanges: BalanceChanges[];
   type: number;

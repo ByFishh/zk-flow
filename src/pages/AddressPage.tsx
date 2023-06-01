@@ -1,9 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import DappsCard from '../components/DappsCard.tsx';
-import BasicsCard from '../components/BasicsCard.tsx';
 import { getAllTransactions, Transaction } from '../services/explorer.ts';
 import Header from '../components/Header.tsx';
+import InteractionsCard from '../components/InteractionsCard.tsx';
+import VolumeCard from '../components/VolumeCard.tsx';
+import FeeCard from '../components/FeeCard.tsx';
+import TokensCard from '../components/TokensCard.tsx';
+import ActivityCard from '../components/ActivityCard.tsx';
+import ProtocolsCard from '../components/ProtocolsCard.tsx';
 
 const AddressPage = () => {
   const address = window.location.pathname.split('/')[2];
@@ -28,7 +32,16 @@ const AddressPage = () => {
       <Header hasSearchBar />
       <div className="grid mt-20 place-items-center ">
         <div className="grid place-items-center">
-          <BasicsCard address={address} transactionList={transactionList} />
+          <div className="flex flex-col items-center sm:flex-row sm:space-x-5 mt-5">
+            <InteractionsCard address={address} transactions={transactionList} />
+            <VolumeCard address={address} transactions={transactionList} />
+            <FeeCard address={address} transactions={transactionList} />
+          </div>
+          <div className="flex flex-col items-center sm:flex-row sm:space-x-5 mt-1.5">
+            <TokensCard address={address} />
+            <ActivityCard address={address} transactions={transactionList} />
+          </div>
+          <ProtocolsCard address={address} transactions={transactionList} />
         </div>
       </div>
     </>

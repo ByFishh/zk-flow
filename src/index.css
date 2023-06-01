@@ -5,3 +5,14 @@
 body {
     background-color: rgb(17, 24, 39);
 }
+
+@layer utilities {
+    .scrollbar::-webkit-scrollbar {
+        height: 2px;
+        width: 8px;
+    }
+
+    .scrollbar::-webkit-scrollbar-thumb {
+        background: #9b9b9b;
+    }
+}

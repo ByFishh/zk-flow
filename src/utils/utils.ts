@@ -1,3 +1,5 @@
+import { Transfer } from '../services/explorer.ts';
+
 const getTimeAgo = (date: string) => {
   const seconds = (new Date().getTime() - new Date(date).getTime()) / 1000;
 
@@ -19,4 +21,11 @@ const getTimeAgo = (date: string) => {
   return Math.round(days) + ' day' + (days === 1 ? '' : 's') + ' ago';
 };
 
-export { getTimeAgo };
+const sortTransfer = (a: Transfer, b: Transfer) => {
+  const valueA = parseInt(a.amount, 16) * 10 ** -a.tokenInfo.decimals * a.tokenInfo.usdPrice;
+  const valueB = parseInt(b.amount, 16) * 10 ** -b.tokenInfo.decimals * b.tokenInfo.usdPrice;
+
+  return valueB - valueA;
+};
+
+export { getTimeAgo, sortTransfer };
