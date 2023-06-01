@@ -61,7 +61,7 @@ const ProtocolsCard: FC<ProtocolsCardProps> = ({ address, transactions }) => {
   }, [transactions]);
 
   return (
-    <div className="relative mt-1.5 rounded-lg dark:border-gray-700 border border-gray-200 mb-8 ml-4 mr-4">
+    <div className="relative mt-1.5 rounded-lg dark:border-gray-700 border border-gray-200 mb-20 ml-4 mr-4">
       <table className="text-sm w-[812px] text-left text-gray-500 dark:text-gray-400 ">
         <caption className="p-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800 rounded-t-lg">
           Protocols
