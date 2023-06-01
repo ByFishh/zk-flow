@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { getAllTransactions, Transaction } from '../services/explorer.ts';
 import Header from '../components/Header.tsx';
 import InteractionsCard from '../components/InteractionsCard.tsx';
@@ -10,17 +9,16 @@ import ActivityCard from '../components/ActivityCard.tsx';
 import ProtocolsCard from '../components/ProtocolsCard.tsx';
 
 const AddressPage = () => {
-  const address = window.location.pathname.split('/')[2];
-  const navigate = useNavigate();
+  const address = window.location.search.split('=')[1];
   const [transactionList, setTransactionList] = useState<Transaction[]>([]);
 
   useEffect(() => {
     if (!address || address.length !== 42 || address.slice(0, 2) !== '0x') {
-      navigate('/zk-flow/');
+      window.location.search = '';
       return;
     }
     fetchTransactionList();
-  }, [address, navigate]);
+  }, [address]);
 
   const fetchTransactionList = async () => {
     const transactions: Transaction[] = await getAllTransactions(address);

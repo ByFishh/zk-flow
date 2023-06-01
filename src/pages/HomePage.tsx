@@ -1,17 +1,14 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header.tsx';
 
 const HomePage = () => {
   const [address, setAddress] = React.useState<string>('');
-  const navigate = useNavigate();
-
   const handleSubmit = () => {
     if (address === '' || address.length !== 42 || !address.startsWith('0x')) {
       alert('Please enter valid address');
       return;
     }
-    navigate(`/zk-flow/${address}`);
+    window.location.search = '?address=' + address;
   };
 
   return (
