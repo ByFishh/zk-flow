@@ -9,6 +9,53 @@ export interface Token {
   type: string;
 }
 
+export interface TokenInfo {
+  l1Address: string;
+  l2Address: string;
+  address: string;
+  symbol: string;
+  name: string;
+  decimals: number;
+  usdPrice: number;
+}
+
+export interface Transfer {
+  tokenInfo: TokenInfo;
+  from: string;
+  to: string;
+  amount: string;
+}
+
+export interface BalanceChanges {
+  tokenInfo: TokenInfo;
+  from: string;
+  to: string;
+  amount: string;
+  type: 'fee' | 'transfer' | string;
+}
+
+export interface Transaction {
+  transactionHash: string;
+  data: any;
+  isL1Originated: boolean;
+  status: 'verified' | string;
+  fee: string;
+  nonce: number;
+  blockNumber: number;
+  l1BatchNumber: number;
+  blockHash: string;
+  indexInBlock: number;
+  initiatorAddress: string;
+  receivedAt: string;
+  ethCommitTxHash: string;
+  ethProveTxHash: string;
+  ethExecuteTxHash: string;
+  erc20Transfers: Transfer[];
+  transfer: Transfer[];
+  balanceChanges: BalanceChanges[];
+  type: number;
+}
+
 export const getTokenList = async (address: string): Promise<Token[]> => {
   return axios
     .get(`https://zksync2-mainnet.zkscan.io/api?module=account&action=tokenlist&address=${address}`)
@@ -30,23 +77,21 @@ const getERC721 = async (address: string): Promise<Token[]> => {
   return tokenList.filter((token: Token) => token.type === 'ERC-721');
 };
 
-const getBalance = async (address: string): Promise<string | number> => {
-  return axios
-    .get(`https://zksync2-mainnet-explorer.zksync.io/address/${address}`)
-    .then((res) => {
-      const ethInfo = res.data.info.balances['0x0000000000000000000000000000000000000000'];
-      if (!ethInfo) return 'NaN';
-      const ethBalance = (
-        parseInt(ethInfo.balance, 16) *
-        10 ** -ethInfo.tokenInfo.decimals *
-        ethInfo.tokenInfo.usdPrice
-      ).toFixed(2);
-      return parseInt(ethBalance);
-    })
-    .catch((err) => {
-      console.log(err);
-      return 'NaN';
+const getBalance = async (address: string): Promise<Token[]> => {
+  const response: AxiosResponse = await axios.get(`https://zksync2-mainnet-explorer.zksync.io/address/${address}`);
+  const balances = response.data.info.balances;
+  const tokenBalances: Token[] = [];
+  for (const tokenAddress in balances) {
+    const tokenInfo = balances[tokenAddress].tokenInfo;
+    const balance = parseFloat(
+      (parseInt(balances[tokenAddress].balance, 16) * 10 ** -tokenInfo.decimals * tokenInfo.usdPrice).toFixed(2),
+    );
+    tokenBalances.push({
+      ...tokenInfo,
+      balance,
     });
+  }
+  return tokenBalances;
 };
 
 const getLastInteraction = async (address: string): Promise<string> => {
@@ -63,11 +108,11 @@ const getLastInteraction = async (address: string): Promise<string> => {
     });
 };
 
-const getAllTransactions = async (address: string): Promise<any[]> => {
+const getAllTransactions = async (address: string): Promise<Transaction[]> => {
   const baseUrl = 'https://zksync2-mainnet-explorer.zksync.io/transactions';
   const limit = 100;
   let offset = 0;
-  const transactions: any[] = [];
+  const transactions: Transaction[] = [];
 
   // eslint-disable-next-line no-constant-condition
   while (true) {
@@ -80,7 +125,6 @@ const getAllTransactions = async (address: string): Promise<any[]> => {
 
     try {
       const response: AxiosResponse = await axios.get(baseUrl, { params });
-
       if (response.status === 200) {
         const data = response.data.list;
         transactions.push(...data);

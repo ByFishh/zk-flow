@@ -1,22 +1,26 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import Header from '../components/Header.tsx';
 
-const HomeLayout = () => {
+const HomePage = () => {
   const [address, setAddress] = React.useState<string>('');
+  const navigate = useNavigate();
 
   const handleSubmit = () => {
     if (address === '' || address.length !== 42 || !address.startsWith('0x')) {
       alert('Please enter valid address');
       return;
     }
-    window.location.search = `?address=${address}`;
+    navigate(`/zk-flow/${address}`);
   };
 
   return (
     <>
-      <div className="grid mt-20 place-items-center">
+      <Header />
+      <div className="grid mt-36 place-items-center">
         <div className="grid place-items-center">
-          <h1 className="font-bold text-6xl text-white mb-10">zkFlow</h1>
-          <p className="text-white font-light text-2xl text-center mr-4 ml-4 max-w-4xl">
+          <h1 className="font-bold text-6xl text-black dark:text-white mb-10 ">zkFlow</h1>
+          <p className="text-black dark:text-white font-light text-2xl text-center mr-4 ml-4 max-w-4xl">
             zkFlow is a website where you can track your address and see how many volume you did on different zkSync
             protocols.
           </p>
@@ -42,7 +46,7 @@ const HomeLayout = () => {
               <input
                 type="search"
                 id="default-search"
-                className="outline-none block w-full p-4 pl-10 text-sm border rounded-lg bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                className="outline-none block w-full p-4 pl-10 text-sm border rounded-lg dark:bg-gray-700 dark:border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                 placeholder="Search Address"
                 required
                 onChange={(e) => setAddress(e.target.value)}
@@ -61,4 +65,4 @@ const HomeLayout = () => {
   );
 };
 
-export default HomeLayout;
+export default HomePage;
