@@ -30,12 +30,12 @@ const AddressPage = () => {
       <Header hasSearchBar />
       <div className="grid mt-20 place-items-center ">
         <div className="grid place-items-center">
-          <div className="flex flex-col items-center sm:flex-row sm:space-x-5 mt-5">
+          <div className="flex items-center flex-row space-x-5 mt-5">
             <InteractionsCard address={address} transactions={transactionList} />
             <VolumeCard address={address} transactions={transactionList} />
             <FeeCard address={address} transactions={transactionList} />
           </div>
-          <div className="flex flex-col items-center sm:flex-row sm:space-x-5 mt-1.5">
+          <div className="flex items-center flex-row space-x-5 mt-1.5">
             <TokensCard address={address} />
             <ActivityCard address={address} transactions={transactionList} />
           </div>

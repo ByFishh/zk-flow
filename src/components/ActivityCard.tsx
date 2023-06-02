@@ -17,7 +17,7 @@ const ActivityCard: FC<ActivityCardProps> = ({ address, transactions }) => {
   }, [transactions]);
 
   return (
-    <div className="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+    <div className="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800 h-[245px]">
       <div className="block sm:space-x-4 xl:space-x-0 2xl:space-x-4 w-[347px]">
         <ul className="max-w-md divide-y divide-gray-200 dark:divide-gray-700">
           <li className="pb-3 sm:pb-4">
