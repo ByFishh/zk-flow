@@ -40,10 +40,16 @@ const countTransactionPeriods = (
     if (transaction.erc20Transfers.length === 0) return;
     if (
       protocol &&
+      protocol.id !== 'zksynceraportal' &&
       !protocol.addresses.includes(transaction.erc20Transfers.sort(sortTransfer)[0].from) &&
       !protocol.addresses.includes(transaction.erc20Transfers.sort(sortTransfer)[0].to)
     )
       return;
+
+    if (protocol && protocol.id === 'zksynceraportal') {
+      if (!(transaction.isL1Originated || transaction.data.calldata.startsWith('0x51cff8d9'))) return;
+    }
+
     const timestamp = new Date(transaction.receivedAt);
     const year = timestamp.getFullYear();
     const month = timestamp.getMonth();

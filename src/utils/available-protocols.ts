@@ -39,10 +39,7 @@ const availableProtocols: Protocol[] = [
   {
     name: 'zkSync Era Portal',
     id: 'zksynceraportal',
-    addresses: [
-      '0x000000000000000000000000000000000000800A'.toLowerCase(),
-      '0x621425a1Ef6abE91058E9712575dcc4258F8d091'.toLowerCase(),
-    ],
+    addresses: ['0x000000000000000000000000000000000000800A'.toLowerCase()],
   },
   {
     name: 'zkSync Name Service',

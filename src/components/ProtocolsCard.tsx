@@ -18,6 +18,32 @@ export interface ProtocolState {
   activeDays: number;
 }
 
+const getEraBridgeState = (address: string, transactions: Transaction[], tmpProtocolState: ProtocolState) => {
+  tmpProtocolState.lastActivity = '';
+  tmpProtocolState.volume = 0;
+  tmpProtocolState.interactions = 0;
+
+  transactions.forEach((transaction: Transaction) => {
+    const erc20Transfers = transaction.erc20Transfers.sort(sortTransfer);
+    if (erc20Transfers.length === 0) return;
+
+    if (
+      (transaction.data.contractAddress.toLowerCase() === '0x000000000000000000000000000000000000800A'.toLowerCase() &&
+        transaction.data.calldata.startsWith('0x51cff8d9')) ||
+      (transaction.data.contractAddress.toLowerCase() === address.toLowerCase() && transaction.isL1Originated)
+    ) {
+      tmpProtocolState.interactions += 1;
+      tmpProtocolState.volume +=
+        parseInt(erc20Transfers[0].amount, 16) *
+        10 ** -erc20Transfers[0].tokenInfo.decimals *
+        erc20Transfers[0].tokenInfo.usdPrice;
+      if (tmpProtocolState.lastActivity === '') tmpProtocolState.lastActivity = transaction.receivedAt;
+      if (new Date(tmpProtocolState.lastActivity) < new Date(transaction.receivedAt))
+        tmpProtocolState.lastActivity = transaction.receivedAt;
+    }
+  });
+};
+
 const ProtocolsCard: FC<ProtocolsCardProps> = ({ address, transactions }) => {
   const [protocolsState, setProtocolsState] = useState<ProtocolState[]>([]);
 
@@ -34,15 +60,6 @@ const ProtocolsCard: FC<ProtocolsCardProps> = ({ address, transactions }) => {
       };
 
       transactions.forEach((transaction: Transaction) => {
-        /*if (protocol.id === 'zksynceraportal') {
-          if (
-            transaction.data.contractAddress.toLowerCase() !==
-              '0x000000000000000000000000000000000000800A'.toLowerCase() &&
-            !transaction.data.calldata.startsWith('0x51cff8d9')
-          )
-            return;
-        }*/
-
         const erc20Transfers = transaction.erc20Transfers.sort(sortTransfer);
         if (erc20Transfers.length === 0) return;
 
@@ -61,6 +78,10 @@ const ProtocolsCard: FC<ProtocolsCardProps> = ({ address, transactions }) => {
         }
       });
       tmpProtocolState.activeDays = countTransactionPeriods(address, transactions, protocol).days;
+
+      if (protocol.id === 'zksynceraportal') {
+        getEraBridgeState(address, transactions, tmpProtocolState);
+      }
       setProtocolsState((prevState) => [...prevState, tmpProtocolState]);
     });
     setProtocolsState((prevState) => prevState.sort((a, b) => b.volume - a.volume));
