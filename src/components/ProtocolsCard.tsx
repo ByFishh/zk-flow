@@ -9,7 +9,7 @@ interface ProtocolsCardProps {
   transactions: Transaction[];
 }
 
-interface ProtocolState {
+export interface ProtocolState {
   name: string;
   id: string;
   lastActivity: string;
@@ -34,6 +34,15 @@ const ProtocolsCard: FC<ProtocolsCardProps> = ({ address, transactions }) => {
       };
 
       transactions.forEach((transaction: Transaction) => {
+        /*if (protocol.id === 'zksynceraportal') {
+          if (
+            transaction.data.contractAddress.toLowerCase() !==
+              '0x000000000000000000000000000000000000800A'.toLowerCase() &&
+            !transaction.data.calldata.startsWith('0x51cff8d9')
+          )
+            return;
+        }*/
+
         const erc20Transfers = transaction.erc20Transfers.sort(sortTransfer);
 
         if (
@@ -52,8 +61,8 @@ const ProtocolsCard: FC<ProtocolsCardProps> = ({ address, transactions }) => {
       });
       tmpProtocolState.activeDays = countTransactionPeriods(address, transactions, protocol).days;
       setProtocolsState((prevState) => [...prevState, tmpProtocolState]);
-      setProtocolsState((prevState) => prevState.sort((a, b) => b.volume - a.volume));
     });
+    setProtocolsState((prevState) => prevState.sort((a, b) => b.volume - a.volume));
   };
 
   useEffect(() => {
