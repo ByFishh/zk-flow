@@ -17,6 +17,8 @@ const VolumeCard: FC<VolumeCardProps> = ({ address, transactions }) => {
     transactions.forEach((transaction) => {
       const erc20Transfers = transaction.erc20Transfers.sort(sortTransfer);
 
+      if (erc20Transfers.length === 0) return;
+
       const tmpVolume =
         parseInt(erc20Transfers[0].amount, 16) *
         10 ** -erc20Transfers[0].tokenInfo.decimals *

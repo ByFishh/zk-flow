@@ -37,6 +37,7 @@ const countTransactionPeriods = (
 
   transactions.forEach((transaction) => {
     if (!protocol && transaction.initiatorAddress.toLowerCase() !== address.toLowerCase()) return;
+    if (transaction.erc20Transfers.length === 0) return;
     if (
       protocol &&
       !protocol.addresses.includes(transaction.erc20Transfers.sort(sortTransfer)[0].from) &&

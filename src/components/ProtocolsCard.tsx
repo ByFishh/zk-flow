@@ -44,6 +44,7 @@ const ProtocolsCard: FC<ProtocolsCardProps> = ({ address, transactions }) => {
         }*/
 
         const erc20Transfers = transaction.erc20Transfers.sort(sortTransfer);
+        if (erc20Transfers.length === 0) return;
 
         if (
           protocol.addresses.includes(erc20Transfers[0].to.toLowerCase()) ||
