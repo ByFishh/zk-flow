@@ -1,5 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 import { getTokenList, Token } from '../services/explorer.ts';
+import getCoinPriceBySymbol from "../services/CoinPrice";
 
 interface TokensCardProps {
   address: string;
@@ -14,8 +15,17 @@ const TokensCard: FC<TokensCardProps> = ({ address }) => {
 
       if (!tokenList) return;
 
+      const updatedTokens = await Promise.all(tokenList.map(async (token) => {
+        if (token.type === 'ERC-20' && token.symbol) {
+          const price = await getCoinPriceBySymbol(token.symbol.toLowerCase(), 'usd');
+          return { ...token, price: price !== null ? price : undefined };
+        } else {
+          return token;
+        }
+      }));
+
       setTokens(
-        tokenList
+        updatedTokens
           .sort((a, b) => {
             if (a.type === b.type) return 0;
             if (a.type === 'ERC-20' && b.type !== 'ERC-20') return -1;
@@ -58,7 +68,17 @@ const TokensCard: FC<TokensCardProps> = ({ address }) => {
                       <p className="text-sm text-gray-500 truncate dark:text-gray-400">{token.name}</p>
                     </div>
                     <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                      {token.decimals ? (token.balance * 10 ** -token.decimals).toFixed(3) : token.balance}
+                      {token.price !== undefined && (
+                        <>
+                          <span>{token.decimals ? (token.balance * 10 ** -token.decimals).toFixed(3) : token.balance}</span>
+                          <span className="ml-1 text-gray-500 dark:text-gray-400">
+                              (${(token.price * (token.balance * 10 ** -token.decimals)).toFixed(2)})
+                          </span>
+                        </>
+                      )}
+                      {token.price === undefined && (
+                        <span>{token.decimals ? (token.balance * 10 ** -token.decimals).toFixed(3) : token.balance}</span>
+                      )}
                     </div>
                   </div>
                 </li>

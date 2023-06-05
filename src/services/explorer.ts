@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 
 export interface Token {
+  price: number | undefined;
   balance: number;
   contractAddress: string;
   decimals: number;
