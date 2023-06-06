@@ -1,6 +1,6 @@
 import { FC, useEffect, useState, useContext } from 'react';
 import { getTokenList, Token } from '../services/explorer.ts';
-import { MyContext } from '../contexts/global-context.ts';
+import { GlobalContext } from '../contexts/global-context.ts';
 
 interface TokensCardProps {
   address: string;
@@ -8,28 +8,26 @@ interface TokensCardProps {
 
 const TokensCard: FC<TokensCardProps> = ({ address }) => {
   const [tokens, setTokens] = useState<Token[] | undefined>(undefined);
-  const tokenContext = useContext(MyContext)
+  const tokenContext = useContext(GlobalContext);
 
   useEffect(() => {
-
     const fetchTokens = async () => {
       const tokenList = await getTokenList(address);
 
       if (!tokenList) return;
-      
+
       setTokens(
         tokenList
-        .sort((a, b) => {
-          if (a.type === b.type) return 0;
-          if (a.type === 'ERC-20' && b.type !== 'ERC-20') return -1;
-          if (b.type === 'ERC-20' && a.type !== 'ERC-20') return 1;
-          return 0;
-        })
-        .filter((token) => token.name),
-        );
-      };
-      fetchTokens();
-    
+          .sort((a, b) => {
+            if (a.type === b.type) return 0;
+            if (a.type === 'ERC-20' && b.type !== 'ERC-20') return -1;
+            if (b.type === 'ERC-20' && a.type !== 'ERC-20') return 1;
+            return 0;
+          })
+          .filter((token) => token.name),
+      );
+    };
+    fetchTokens();
   }, [address]);
 
   useEffect(() => {
