@@ -26,12 +26,15 @@ const downloadCSV = (value: string, array: string[]): void => {
 
   element.href = URL.createObjectURL(file);
   element.download = value + '-' + Date.now() + '.csv';
-  document.body.appendChild(element);
   element.click();
   URL.revokeObjectURL(element.href);
 };
 
 export const generateCSV = (tokens: Token[] | undefined, protocols: ProtocolState[] | undefined) => {
+  if (tokens) {
+    const tokenString: string[] = parseTokens(tokens);
+    downloadCSV('Tokens', tokenString);
+  }
   if (protocols) {
     const protocolString: string[] = parseProtocols(protocols);
     downloadCSV('Protocols', protocolString);
