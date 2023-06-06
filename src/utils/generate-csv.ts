@@ -32,10 +32,6 @@ const downloadCSV = (value: string, array: string[]): void => {
 };
 
 export const generateCSV = (tokens: Token[] | undefined, protocols: ProtocolState[] | undefined) => {
-  if (tokens) {
-    const tokenString: string[] = parseTokens(tokens);
-    downloadCSV('Tokens', tokenString);
-  }
   if (protocols) {
     const protocolString: string[] = parseProtocols(protocols);
     downloadCSV('Protocols', protocolString);
