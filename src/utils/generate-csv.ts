@@ -12,15 +12,14 @@ const parseTokens = (tokens: Token[] | undefined): string[] => {
 const parseProtocols = (protocols: ProtocolState[] | undefined): string[] => {
   if (!protocols) return [];
   return protocols.map((item) => {
-    if (item.interactions)
-      return (
-        item.name + ';' + item.activeDays + ';' + item.interactions + ';' + item.lastActivity + ';' + item.volume + '\n'
-      );
-    return '';
+    return (
+      item.name + ';' + item.activeDays + ';' + item.interactions + ';' + item.lastActivity + ';' + item.volume + '\n'
+    );
   });
 };
 
 const downloadCSV = (value: string, array: string[]): void => {
+  console.log(array);
   const file = new Blob(array, { type: 'text/csv' });
   const element = document.createElement('a');
 
