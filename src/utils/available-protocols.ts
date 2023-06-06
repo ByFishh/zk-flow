@@ -125,6 +125,19 @@ const availableProtocols: Protocol[] = [
     id: 'gemswap',
     addresses: ['0x70B86390133d4875933bE54AE2083AAEbe18F2dA'.toLowerCase()],
   },
+  {
+    name: 'Holdstation',
+    id: 'holdstation',
+    addresses: [
+      '0x7b4872e2096ec9410b6b8c8b7d039589e6ee8022'.toLowerCase(),
+      '0xaf08a9d918f16332f22cf8dc9abe9d9e14ddcbc2'.toLowerCase(),
+    ],
+  },
+  {
+    name: 'Starmaker',
+    id: 'starmaker',
+    addresses: ['0x1bdb8250EAf3c596441E6C3417C9D5195D6C85B9'.toLowerCase()],
+  },
 ];
 
 export { availableProtocols };
