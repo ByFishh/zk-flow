@@ -7,6 +7,7 @@ import FeeCard from '../components/FeeCard.tsx';
 import TokensCard from '../components/TokensCard.tsx';
 import ActivityCard from '../components/ActivityCard.tsx';
 import ProtocolsCard from '../components/ProtocolsCard.tsx';
+import ZkLiteActivityCard from '../components/ZkLiteActivityCard.tsx';
 
 const AddressPage = () => {
   const address = window.location.search.split('=')[1];
@@ -38,6 +39,9 @@ const AddressPage = () => {
           <div className="flex items-center flex-row space-x-5 mt-1.5">
             <TokensCard address={address} />
             <ActivityCard address={address} transactions={transactionList} />
+          </div>
+          <div>
+            <ZkLiteActivityCard address={address} />
           </div>
           <ProtocolsCard address={address} transactions={transactionList} />
         </div>
