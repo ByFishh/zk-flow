@@ -1,8 +1,10 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useState, useContext } from 'react';
 import { Transaction } from '../services/explorer.ts';
 import { availableProtocols } from '../utils/available-protocols.ts';
 import { countTransactionPeriods, getTimeAgo, sortTransfer } from '../utils/utils.ts';
 import { Protocol } from '../utils/available-protocols.ts';
+import { GlobalContext } from '../contexts/global-context.ts';
+import { generateCSV } from '../utils/generate-csv.ts';
 
 interface ProtocolsCardProps {
   address: string;
@@ -46,6 +48,7 @@ const getEraBridgeState = (address: string, transactions: Transaction[], tmpProt
 
 const ProtocolsCard: FC<ProtocolsCardProps> = ({ address, transactions }) => {
   const [protocolsState, setProtocolsState] = useState<ProtocolState[]>([]);
+  const protocolsContext = useContext(GlobalContext);
 
   const getProtocolsState = () => {
     setProtocolsState([]);
@@ -85,6 +88,7 @@ const ProtocolsCard: FC<ProtocolsCardProps> = ({ address, transactions }) => {
       setProtocolsState((prevState) => [...prevState, tmpProtocolState]);
     });
     setProtocolsState((prevState) => prevState.sort((a, b) => b.volume - a.volume));
+    protocolsContext?.setProtocols(protocolsState);
   };
 
   useEffect(() => {
@@ -93,6 +97,12 @@ const ProtocolsCard: FC<ProtocolsCardProps> = ({ address, transactions }) => {
 
   return (
     <div className="relative mt-1.5 rounded-lg dark:border-gray-700 border border-gray-200 mb-20 ml-4 mr-4">
+      <button
+        onClick={() => generateCSV(protocolsContext?.token, protocolsContext?.protocols)}
+        className="absolute top-5 right-4 py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+      >
+        Download
+      </button>
       <table className="text-sm w-[812px] text-left text-gray-500 dark:text-gray-400 ">
         <caption className="p-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800 rounded-t-lg">
           Protocols

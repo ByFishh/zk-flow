@@ -1,6 +1,7 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useState, useContext } from 'react';
 import { getTokenList, Token } from '../services/explorer.ts';
 import getCoinPriceBySymbols from '../services/CoinPrice';
+import { GlobalContext } from '../contexts/global-context.ts';
 
 interface TokensCardProps {
   address: string;
@@ -9,6 +10,7 @@ interface TokensCardProps {
 const TokensCard: FC<TokensCardProps> = ({ address }) => {
   const [tokens, setTokens] = useState<Token[] | undefined>(undefined);
   const [totalBalanceUSD, setTotalBalanceUSD] = useState<number>(0);
+  const tokenContext = useContext(GlobalContext);
 
   useEffect(() => {
     const fetchTokens = async () => {
@@ -55,6 +57,10 @@ const TokensCard: FC<TokensCardProps> = ({ address }) => {
 
     fetchTokens();
   }, [address]);
+
+  useEffect(() => {
+    tokenContext?.setToken(tokens);
+  }, [tokens]);
 
   return (
     <div className="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800 h-[245px] overflow-auto scrollbar">
