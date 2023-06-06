@@ -1,4 +1,4 @@
-import { FC, useEffect, useState, useContext } from 'react';
+import { FC, useContext, useEffect, useState } from 'react';
 import { getTokenList, Token } from '../services/explorer.ts';
 import getCoinPriceBySymbols from '../services/CoinPrice';
 import { GlobalContext } from '../contexts/global-context.ts';
@@ -66,15 +66,23 @@ const TokensCard: FC<TokensCardProps> = ({ address }) => {
     <div className="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800 h-[245px] overflow-auto scrollbar">
       <div className="block sm:space-x-4 xl:space-x-0 2xl:space-x-4 w-[339px]">
         <ul className="max-w-md divide-y divide-gray-200 dark:divide-gray-700">
-          <div className="text-center text-gray-500 dark:text-gray-400 m-2 text-xl">
-            Total Balance: ${totalBalanceUSD.toFixed(2)}
-          </div>
           {!tokens && <h1 className="text-center text-2xl text-white">Impossible to load token</h1>}
+          {totalBalanceUSD !== 0 && (
+            <div className="text-center text-gray-500 dark:text-white mb-4 text-xl">
+              Total Balance: ${totalBalanceUSD.toFixed(2)}
+            </div>
+          )}
           {tokens &&
             tokens.map((token, index) => {
               return (
                 <li
-                  className={!index ? 'pb-3 sm:pb-4' : index === tokens.length - 1 ? 'pt-3 sm:pt-4' : 'py-3 sm:pt-4'}
+                  className={
+                    !totalBalanceUSD && !index
+                      ? 'pb-3 sm:pb-4'
+                      : index === tokens.length - 1
+                      ? 'pt-3 sm:pt-4'
+                      : 'py-3 sm:pt-4'
+                  }
                   key={index}
                 >
                   <div

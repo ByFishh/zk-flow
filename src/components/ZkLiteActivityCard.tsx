@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react';
 import { getTimeAgo } from '../utils/utils.ts';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleUp, faAngleDown } from '@fortawesome/free-solid-svg-icons';
+import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons';
 
 interface ZkLiteActivityCardProps {
   address: string;
@@ -81,7 +81,8 @@ const ZkLiteActivityCard: FC<ZkLiteActivityCardProps> = ({ address }) => {
           <div className="p-5 pl-20 pr-20 bg-gray-900 rounded-t-lg flex justify-between">
             {data.nonce !== null && (
               <div>
-                Interactions<br></br> <span className="mb-2 text-xl font-extrabold text-blue-600">{data.nonce}</span>{' '}
+                Interactions
+                <br /> <span className="mb-2 text-xl font-extrabold text-blue-600">{data.nonce}</span>{' '}
               </div>
             )}
             {data.latestTransactionDate !== null && (
@@ -104,7 +105,7 @@ const ZkLiteActivityCard: FC<ZkLiteActivityCardProps> = ({ address }) => {
 
         {show && data && (
           <div className="p-5 bg-gray-900 rounded-b-lg">
-            <div className="items-center overflow-x-scroll whitespace-nowrap">
+            <div className="items-center overflow-auto whitespace-nowrap">
               <span className="mr-2">Balances</span>
               <div className="text-left inline-flex">
                 {data.tokenBalances !== null &&

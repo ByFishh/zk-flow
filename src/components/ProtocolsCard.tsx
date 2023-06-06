@@ -1,8 +1,7 @@
-import { FC, useEffect, useState, useContext } from 'react';
+import { FC, useContext, useEffect, useState } from 'react';
 import { Transaction } from '../services/explorer.ts';
-import { availableProtocols } from '../utils/available-protocols.ts';
+import { availableProtocols, Protocol } from '../utils/available-protocols.ts';
 import { countTransactionPeriods, getTimeAgo, sortTransfer } from '../utils/utils.ts';
-import { Protocol } from '../utils/available-protocols.ts';
 import { GlobalContext } from '../contexts/global-context.ts';
 import { generateCSV } from '../utils/generate-csv.ts';
 

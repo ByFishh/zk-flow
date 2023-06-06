@@ -6,7 +6,6 @@ import VolumeCard from '../components/VolumeCard.tsx';
 import FeeCard from '../components/FeeCard.tsx';
 import TokensCard from '../components/TokensCard.tsx';
 import ActivityCard from '../components/ActivityCard.tsx';
-import ProtocolsCard from '../components/ProtocolsCard.tsx';
 import ZkLiteActivityCard from '../components/ZkLiteActivityCard.tsx';
 import ProtocolsCard, { ProtocolState } from '../components/ProtocolsCard.tsx';
 import { GlobalContext } from '../contexts/global-context.ts';
