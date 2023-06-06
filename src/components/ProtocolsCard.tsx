@@ -1,15 +1,16 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useState, useContext } from 'react';
 import { Transaction } from '../services/explorer.ts';
 import { availableProtocols } from '../utils/available-protocols.ts';
 import { countTransactionPeriods, getTimeAgo, sortTransfer } from '../utils/utils.ts';
 import { Protocol } from '../utils/available-protocols.ts';
-
+import { MyContext } from '../contexts/global-context.ts';
+import { DownloadTokensAndProtocols } from '../utils/generate-csv.ts';
 interface ProtocolsCardProps {
   address: string;
   transactions: Transaction[];
 }
 
-interface ProtocolState {
+export interface ProtocolState {
   name: string;
   id: string;
   lastActivity: string;
@@ -18,8 +19,36 @@ interface ProtocolState {
   activeDays: number;
 }
 
+const getEraBridgeState = (address: string, transactions: Transaction[], tmpProtocolState: ProtocolState) => {
+  tmpProtocolState.lastActivity = '';
+  tmpProtocolState.volume = 0;
+  tmpProtocolState.interactions = 0;
+
+  transactions.forEach((transaction: Transaction) => {
+    const erc20Transfers = transaction.erc20Transfers.sort(sortTransfer);
+    if (erc20Transfers.length === 0) return;
+
+    if (
+      (transaction.data.contractAddress.toLowerCase() === '0x000000000000000000000000000000000000800A'.toLowerCase() &&
+        transaction.data.calldata.startsWith('0x51cff8d9')) ||
+      (transaction.data.contractAddress.toLowerCase() === address.toLowerCase() && transaction.isL1Originated)
+    ) {
+      tmpProtocolState.interactions += 1;
+      tmpProtocolState.volume +=
+        parseInt(erc20Transfers[0].amount, 16) *
+        10 ** -erc20Transfers[0].tokenInfo.decimals *
+        erc20Transfers[0].tokenInfo.usdPrice;
+      if (tmpProtocolState.lastActivity === '') tmpProtocolState.lastActivity = transaction.receivedAt;
+      if (new Date(tmpProtocolState.lastActivity) < new Date(transaction.receivedAt))
+        tmpProtocolState.lastActivity = transaction.receivedAt;
+    }
+  });
+};
+
 const ProtocolsCard: FC<ProtocolsCardProps> = ({ address, transactions }) => {
   const [protocolsState, setProtocolsState] = useState<ProtocolState[]>([]);
+  const protocolsContext = useContext(MyContext)
+
 
   const getProtocolsState = () => {
     setProtocolsState([]);
@@ -35,6 +64,7 @@ const ProtocolsCard: FC<ProtocolsCardProps> = ({ address, transactions }) => {
 
       transactions.forEach((transaction: Transaction) => {
         const erc20Transfers = transaction.erc20Transfers.sort(sortTransfer);
+        if (erc20Transfers.length === 0) return;
 
         if (
           protocol.addresses.includes(erc20Transfers[0].to.toLowerCase()) ||
@@ -51,9 +81,14 @@ const ProtocolsCard: FC<ProtocolsCardProps> = ({ address, transactions }) => {
         }
       });
       tmpProtocolState.activeDays = countTransactionPeriods(address, transactions, protocol).days;
+
+      if (protocol.id === 'zksynceraportal') {
+        getEraBridgeState(address, transactions, tmpProtocolState);
+      }
       setProtocolsState((prevState) => [...prevState, tmpProtocolState]);
-      setProtocolsState((prevState) => prevState.sort((a, b) => b.volume - a.volume));
     });
+    setProtocolsState((prevState) => prevState.sort((a, b) => b.volume - a.volume));
+    protocolsContext?.setProtocols(protocolsState)
   };
 
   useEffect(() => {
@@ -62,6 +97,7 @@ const ProtocolsCard: FC<ProtocolsCardProps> = ({ address, transactions }) => {
 
   return (
     <div className="relative mt-1.5 rounded-lg dark:border-gray-700 border border-gray-200 mb-20 ml-4 mr-4">
+      <button onClick={() => DownloadTokensAndProtocols(protocolsContext?.token, protocolsContext?.protocols)} className="absolute top-5 right-4 py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Download</button>
       <table className="text-sm w-[812px] text-left text-gray-500 dark:text-gray-400 ">
         <caption className="p-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800 rounded-t-lg">
           Protocols
