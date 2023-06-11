@@ -1,5 +1,4 @@
 import { Transaction, Transfer } from '../services/explorer.ts';
-import { Protocol } from './available-protocols.ts';
 
 const getTimeAgo = (date: string) => {
   const seconds = (new Date().getTime() - new Date(date).getTime()) / 1000;
@@ -25,7 +24,6 @@ const getTimeAgo = (date: string) => {
 const countAllTransactionPeriods = (
   address: string,
   transactions: Transaction[],
-  protocol?: Protocol,
 ): {
   days: number;
   weeks: number;
@@ -36,19 +34,8 @@ const countAllTransactionPeriods = (
   const uniqueMonths: Set<string> = new Set();
 
   transactions.forEach((transaction) => {
-    if (!protocol && transaction.initiatorAddress.toLowerCase() !== address.toLowerCase()) return;
+    if (transaction.initiatorAddress.toLowerCase() !== address.toLowerCase()) return;
     if (transaction.erc20Transfers.length === 0) return;
-    if (
-      protocol &&
-      protocol.id !== 'zksynceraportal' &&
-      !protocol.addresses.includes(transaction.erc20Transfers.sort(sortTransfer)[0].from) &&
-      !protocol.addresses.includes(transaction.erc20Transfers.sort(sortTransfer)[0].to)
-    )
-      return;
-
-    if (protocol && protocol.id === 'zksynceraportal') {
-      if (!(transaction.isL1Originated || transaction.data.calldata.startsWith('0x51cff8d9'))) return;
-    }
 
     const timestamp = new Date(transaction.receivedAt);
     const year = timestamp.getFullYear();
