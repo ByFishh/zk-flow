@@ -16,7 +16,6 @@ const getCoinPriceBySymbols = async (
     const coinIds = symbols.map((symbol) => {
       const coin = coinsList.find((coin: { symbol: string }) => coin.symbol.toLowerCase() === symbol.toLowerCase());
       if (!coin) {
-        console.warn(`Coin not found for symbol: ${symbol}`);
         return null;
       }
       return coin.id;
@@ -34,7 +33,6 @@ const getCoinPriceBySymbols = async (
       if (coinId && coinPrice && coinPrice[coinId] && coinPrice[coinId][currency]) {
         coinPrices[symbol] = coinPrice[coinId][currency];
       } else {
-        console.warn(`Price not found for symbol: ${symbol}`);
         coinPrices[symbol] = undefined;
       }
     });

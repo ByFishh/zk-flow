@@ -22,7 +22,7 @@ const getTimeAgo = (date: string) => {
   return Math.round(days) + ' day' + (days === 1 ? '' : 's') + ' ago';
 };
 
-const countTransactionPeriods = (
+const countAllTransactionPeriods = (
   address: string,
   transactions: Transaction[],
   protocol?: Protocol,
@@ -68,6 +68,59 @@ const countTransactionPeriods = (
   };
 };
 
+const countTransactionPeriods = (
+  address: string,
+  transactions: Transaction[],
+  protocol: string,
+  addresses: string[] = [],
+): {
+  days: number;
+  weeks: number;
+  months: number;
+} => {
+  const uniqueDays: Set<string> = new Set();
+  const uniqueWeeks: Set<string> = new Set();
+  const uniqueMonths: Set<string> = new Set();
+
+  transactions.forEach((transaction) => {
+    if (transaction.initiatorAddress.toLowerCase() !== address.toLowerCase()) return;
+    if (protocol !== 'zksynceraportal' && !addresses.includes(transaction.data.contractAddress)) return;
+
+    if (protocol === 'zksynceraportal') {
+      if (!(transaction.isL1Originated || transaction.data.calldata.startsWith('0x51cff8d9'))) return;
+    }
+
+    const timestamp = new Date(transaction.receivedAt);
+    const year = timestamp.getFullYear();
+    const month = timestamp.getMonth();
+    const day = timestamp.getDate();
+    const week = getWeekNumber(timestamp);
+
+    uniqueDays.add(`${year}-${month}-${day}`);
+    uniqueWeeks.add(`${year}-${week}`);
+    uniqueMonths.add(`${year}-${month}`);
+  });
+
+  return {
+    days: uniqueDays.size,
+    weeks: uniqueWeeks.size,
+    months: uniqueMonths.size,
+  };
+};
+
+export const hasApprovedAddress = (transaction: Transaction, addresses: string[]) => {
+  let hasApproved = false;
+
+  addresses.forEach((address) => {
+    if (transaction.data.calldata.startsWith('0x095ea7b3')) {
+      const approveFor = address.split('x')[1];
+      const calldata = transaction.data.calldata;
+      if (calldata.toLowerCase().includes(approveFor)) hasApproved = true;
+    }
+  });
+  return hasApproved;
+};
+
 const getWeekNumber = (date: Date): string => {
   const year = date.getFullYear();
   const oneJan = new Date(year, 0, 1);
@@ -85,4 +138,4 @@ const sortTransfer = (a: Transfer, b: Transfer) => {
   return valueB - valueA;
 };
 
-export { getTimeAgo, countTransactionPeriods, getWeekNumber, sortTransfer };
+export { getTimeAgo, countTransactionPeriods, getWeekNumber, sortTransfer, countAllTransactionPeriods };

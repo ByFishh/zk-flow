@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 import { Transaction } from '../services/explorer.ts';
-import { countTransactionPeriods, getTimeAgo } from '../utils/utils.ts';
+import { countAllTransactionPeriods, getTimeAgo } from '../utils/utils.ts';
 
 interface ActivityCardProps {
   address: string;
@@ -8,7 +8,7 @@ interface ActivityCardProps {
 }
 
 const ActivityCard: FC<ActivityCardProps> = ({ address, transactions }) => {
-  const { days, weeks, months } = countTransactionPeriods(address, transactions);
+  const { days, weeks, months } = countAllTransactionPeriods(address, transactions);
   const [lastActivity, setLastActivity] = useState<string>('');
 
   useEffect(() => {

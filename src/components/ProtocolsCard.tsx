@@ -1,9 +1,21 @@
 import { FC, useContext, useEffect, useState } from 'react';
 import { Transaction } from '../services/explorer.ts';
-import { availableProtocols, Protocol } from '../utils/available-protocols.ts';
-import { countTransactionPeriods, getTimeAgo, sortTransfer } from '../utils/utils.ts';
+import { getTimeAgo } from '../utils/utils.ts';
 import { GlobalContext } from '../contexts/global-context.ts';
 import { generateCSV } from '../utils/generate-csv.ts';
+import { SyncSwap } from '../protocols/syncswap.ts';
+import { ZkSyncEraPortal } from '../protocols/zksynceraportal.ts';
+import { ZkSyncNameService } from '../protocols/zksyncnameservice.ts';
+import { Mute } from '../protocols/muteio.ts';
+import { Velocore } from '../protocols/velocore.ts';
+import { Orbiter } from '../protocols/orbiter.ts';
+import { Holdstation } from '../protocols/holdstation.ts';
+import { IzumiFinance } from '../protocols/izumi.ts';
+import { Maverick } from '../protocols/maverick.ts';
+import { OnchainTrade } from '../protocols/onchaintrade.ts';
+import { SpaceFi } from '../protocols/spacefi.ts';
+import { Starmaker } from '../protocols/starmaker.ts';
+import { Goal3 } from '../protocols/goal3.ts';
 
 interface ProtocolsCardProps {
   address: string;
@@ -17,33 +29,9 @@ export interface ProtocolState {
   volume: number;
   interactions: number;
   activeDays: number;
+  approves: number;
+  url: string;
 }
-
-const getEraBridgeState = (address: string, transactions: Transaction[], tmpProtocolState: ProtocolState) => {
-  tmpProtocolState.lastActivity = '';
-  tmpProtocolState.volume = 0;
-  tmpProtocolState.interactions = 0;
-
-  transactions.forEach((transaction: Transaction) => {
-    const erc20Transfers = transaction.erc20Transfers.sort(sortTransfer);
-    if (erc20Transfers.length === 0) return;
-
-    if (
-      (transaction.data.contractAddress.toLowerCase() === '0x000000000000000000000000000000000000800A'.toLowerCase() &&
-        transaction.data.calldata.startsWith('0x51cff8d9')) ||
-      (transaction.data.contractAddress.toLowerCase() === address.toLowerCase() && transaction.isL1Originated)
-    ) {
-      tmpProtocolState.interactions += 1;
-      tmpProtocolState.volume +=
-        parseInt(erc20Transfers[0].amount, 16) *
-        10 ** -erc20Transfers[0].tokenInfo.decimals *
-        erc20Transfers[0].tokenInfo.usdPrice;
-      if (tmpProtocolState.lastActivity === '') tmpProtocolState.lastActivity = transaction.receivedAt;
-      if (new Date(tmpProtocolState.lastActivity) < new Date(transaction.receivedAt))
-        tmpProtocolState.lastActivity = transaction.receivedAt;
-    }
-  });
-};
 
 const ProtocolsCard: FC<ProtocolsCardProps> = ({ address, transactions }) => {
   const [protocolsState, setProtocolsState] = useState<ProtocolState[]>([]);
@@ -51,41 +39,20 @@ const ProtocolsCard: FC<ProtocolsCardProps> = ({ address, transactions }) => {
 
   const getProtocolsState = () => {
     setProtocolsState([]);
-    availableProtocols.forEach((protocol: Protocol) => {
-      const tmpProtocolState: ProtocolState = {
-        name: protocol.name,
-        id: protocol.id,
-        lastActivity: '',
-        volume: 0,
-        interactions: 0,
-        activeDays: 0,
-      };
+    setProtocolsState((prevState) => [...prevState, Holdstation.getProtocolsState(transactions, address)]);
+    setProtocolsState((prevState) => [...prevState, IzumiFinance.getProtocolsState(transactions, address)]);
+    setProtocolsState((prevState) => [...prevState, Maverick.getProtocolsState(transactions, address)]);
+    setProtocolsState((prevState) => [...prevState, Mute.getProtocolsState(transactions, address)]);
+    setProtocolsState((prevState) => [...prevState, OnchainTrade.getProtocolsState(transactions, address)]);
+    setProtocolsState((prevState) => [...prevState, Orbiter.getProtocolsState(transactions, address)]);
+    setProtocolsState((prevState) => [...prevState, SpaceFi.getProtocolsState(transactions, address)]);
+    setProtocolsState((prevState) => [...prevState, Starmaker.getProtocolsState(transactions, address)]);
+    setProtocolsState((prevState) => [...prevState, SyncSwap.getProtocolsState(transactions, address)]);
+    setProtocolsState((prevState) => [...prevState, Velocore.getProtocolsState(transactions, address)]);
+    setProtocolsState((prevState) => [...prevState, ZkSyncEraPortal.getProtocolsState(transactions, address)]);
+    setProtocolsState((prevState) => [...prevState, ZkSyncNameService.getProtocolsState(transactions, address)]);
+    setProtocolsState((prevState) => [...prevState, Goal3.getProtocolsState(transactions, address)]);
 
-      transactions.forEach((transaction: Transaction) => {
-        const erc20Transfers = transaction.erc20Transfers.sort(sortTransfer);
-        if (erc20Transfers.length === 0) return;
-
-        if (
-          protocol.addresses.includes(erc20Transfers[0].to.toLowerCase()) ||
-          protocol.addresses.includes(erc20Transfers[0].from.toLowerCase())
-        ) {
-          tmpProtocolState.interactions += 1;
-          tmpProtocolState.volume +=
-            parseInt(erc20Transfers[0].amount, 16) *
-            10 ** -erc20Transfers[0].tokenInfo.decimals *
-            erc20Transfers[0].tokenInfo.usdPrice;
-          if (tmpProtocolState.lastActivity === '') tmpProtocolState.lastActivity = transaction.receivedAt;
-          if (new Date(tmpProtocolState.lastActivity) < new Date(transaction.receivedAt))
-            tmpProtocolState.lastActivity = transaction.receivedAt;
-        }
-      });
-      tmpProtocolState.activeDays = countTransactionPeriods(address, transactions, protocol).days;
-
-      if (protocol.id === 'zksynceraportal') {
-        getEraBridgeState(address, transactions, tmpProtocolState);
-      }
-      setProtocolsState((prevState) => [...prevState, tmpProtocolState]);
-    });
     setProtocolsState((prevState) => prevState.sort((a, b) => b.volume - a.volume));
   };
 
@@ -141,8 +108,13 @@ const ProtocolsCard: FC<ProtocolsCardProps> = ({ address, transactions }) => {
                   }
                   key={protocolState.id}
                 >
-                  <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white">
-                    <div className="flex items-center space-x-4">
+                  <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white cursor-pointer">
+                    <div
+                      className="flex items-center space-x-4"
+                      onClick={() => {
+                        window.open(protocolState.url, '_blank');
+                      }}
+                    >
                       <img
                         className={'w-10 h-10 rounded-full ' + (!protocolState.interactions && 'grayscale')}
                         src={'/zk-flow/protocol/' + protocolState.id + '.png'}
