@@ -24,8 +24,8 @@ export const Orbiter = {
       const erc20Transfers = transaction.erc20Transfers.sort(sortTransfer);
       if (
         orbiterRouters.includes(transaction.data.contractAddress.toLowerCase()) ||
-        orbiterRouters.includes(erc20Transfers[0].from) ||
-        orbiterRouters.includes(erc20Transfers[0].to)
+        (erc20Transfers.length && orbiterRouters.includes(erc20Transfers[0].from)) ||
+        (erc20Transfers.length && orbiterRouters.includes(erc20Transfers[0].to))
       ) {
         protocolState.interactions += 1;
         protocolState.volume +=
