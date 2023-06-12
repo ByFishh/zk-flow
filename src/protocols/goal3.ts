@@ -21,6 +21,7 @@ export const Goal3 = {
       activeDays: 0,
       approves: 0,
       url: 'https://beta.goal3.xyz/',
+      tag: 'Gasless',
     };
 
     transactions.forEach((transaction: Transaction) => {
