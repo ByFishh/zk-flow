@@ -5,6 +5,7 @@ import { countTransactionPeriods, hasApprovedAddress, sortTransfer } from '../ut
 const orbiterRouters: string[] = [
   '0xe4edb277e41dc89ab076a1f049f4a3efa700bce8',
   '0x80c67432656d59144ceff962e8faf8926599bcf8',
+  '0xee73323912a4e3772b74ed0ca1595a152b0ef282',
 ];
 
 export const Orbiter = {
