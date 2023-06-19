@@ -16,6 +16,7 @@ import { OnchainTrade } from '../protocols/onchaintrade.ts';
 import { SpaceFi } from '../protocols/spacefi.ts';
 import { Starmaker } from '../protocols/starmaker.ts';
 import { Goal3 } from '../protocols/goal3.ts';
+import { Rollup } from '../protocols/rollup.ts';
 
 interface ProtocolsCardProps {
   address: string;
@@ -53,6 +54,7 @@ const ProtocolsCard: FC<ProtocolsCardProps> = ({ address, transactions }) => {
     setProtocolsState((prevState) => [...prevState, ZkSyncEraPortal.getProtocolsState(transactions, address)]);
     setProtocolsState((prevState) => [...prevState, ZkSyncNameService.getProtocolsState(transactions, address)]);
     setProtocolsState((prevState) => [...prevState, Goal3.getProtocolsState(transactions, address)]);
+    setProtocolsState((prevState) => [...prevState, Rollup.getProtocolsState(transactions, address)]);
 
     setProtocolsState((prevState) => prevState.sort((a, b) => b.volume - a.volume));
   };
