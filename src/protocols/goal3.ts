@@ -30,7 +30,7 @@ export const Goal3 = {
           const zkUsdValue = parseInt(transaction.data.slice(-64), 16) * 10 ** -6;
           protocolState.volume += zkUsdValue;
         } else {
-          protocolState.volume += parseInt(transaction.value, 16) * 10 ** -18;
+          protocolState.volume += parseInt(transaction.value) * 10 ** -18 * transaction.ethValue;
         }
         protocolState.interactions += 1;
 

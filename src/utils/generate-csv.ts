@@ -19,7 +19,6 @@ const parseProtocols = (protocols: ProtocolState[] | undefined): string[] => {
 };
 
 const downloadCSV = (value: string, array: string[]): void => {
-  console.log(array);
   const file = new Blob(array, { type: 'text/csv' });
   const element = document.createElement('a');
 

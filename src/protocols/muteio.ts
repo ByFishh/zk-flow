@@ -25,7 +25,7 @@ export const Mute = {
     transactions.forEach((transaction: Transaction) => {
       if (muteRouter.includes(transaction.to.toLowerCase()) || mutePools.includes(transaction.to.toLowerCase())) {
         protocolState.interactions += 1;
-        protocolState.volume += parseInt(transaction.value, 16) * 10 ** -18;
+        protocolState.volume += parseInt(transaction.value) * 10 ** -18 * transaction.ethValue;
         if (protocolState.lastActivity === '') protocolState.lastActivity = transaction.receivedAt;
         if (new Date(protocolState.lastActivity) < new Date(transaction.receivedAt))
           protocolState.lastActivity = transaction.receivedAt;

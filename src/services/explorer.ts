@@ -28,6 +28,7 @@ export interface Transaction {
   commitTxHash: string;
   executeTxHash: string;
   proveTxHash: string;
+  ethValue: number;
 }
 
 export const getTokenList = async (address: string): Promise<Token[]> => {
@@ -44,6 +45,13 @@ export const getTokenList = async (address: string): Promise<Token[]> => {
 const getAllTransactions = async (address: string): Promise<Transaction[]> => {
   let url = `https://block-explorer-api.mainnet.zksync.io/transactions?address=${address}&limit=100&page=1`;
   const transactions: Transaction[] = [];
+
+  const ethResponse = await axios.post('https://mainnet.era.zksync.io/', {
+    id: 42,
+    jsonrpc: '2.0',
+    method: 'zks_getTokenPrice',
+    params: ['0x0000000000000000000000000000000000000000'],
+  });
 
   // eslint-disable-next-line no-constant-condition
   while (true) {
@@ -64,7 +72,10 @@ const getAllTransactions = async (address: string): Promise<Transaction[]> => {
       break;
     }
   }
-  console.log(transactions);
+
+  transactions.forEach((transaction: Transaction) => {
+    transaction.ethValue = ethResponse.data.result;
+  });
   return transactions;
 };
 
