@@ -64,6 +64,8 @@ const countTransactionPeriods = (
   weeks: number;
   months: number;
 } => {
+  protocol;
+  addresses;
   const uniqueDays: Set<string> = new Set();
   const uniqueWeeks: Set<string> = new Set();
   const uniqueMonths: Set<string> = new Set();
