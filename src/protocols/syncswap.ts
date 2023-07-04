@@ -1,6 +1,6 @@
 import { ProtocolState } from '../components/ProtocolsCard.tsx';
 import { Transaction } from '../services/explorer.ts';
-import { countTransactionPeriods, hasApprovedAddress, sortTransfer } from '../utils/utils.ts';
+import { countTransactionPeriods } from '../utils/utils.ts';
 
 const syncSwapRouter = '0x2da10a1e27bf85cedd8ffb1abbe97e53391c0295';
 
@@ -26,21 +26,15 @@ export const SyncSwap = {
 
     transactions.forEach((transaction: Transaction) => {
       if (
-        syncSwapRouter.includes(transaction.data.contractAddress.toLowerCase()) ||
-        syncSwapPools.includes(transaction.data.contractAddress.toLowerCase())
+        syncSwapRouter.includes(transaction.to.toLowerCase()) ||
+        syncSwapPools.includes(transaction.to.toLowerCase())
       ) {
-        const erc20Transfers = transaction.erc20Transfers.sort(sortTransfer);
-
         protocolState.interactions += 1;
-        protocolState.volume +=
-          parseInt(erc20Transfers[0].amount, 16) *
-          10 ** -erc20Transfers[0].tokenInfo.decimals *
-          erc20Transfers[0].tokenInfo.usdPrice;
+        protocolState.volume += parseInt(transaction.value, 16) * 10 ** -18;
         if (protocolState.lastActivity === '') protocolState.lastActivity = transaction.receivedAt;
         if (new Date(protocolState.lastActivity) < new Date(transaction.receivedAt))
           protocolState.lastActivity = transaction.receivedAt;
       }
-      if (hasApprovedAddress(transaction, syncSwapPools.concat([syncSwapRouter]))) protocolState.approves += 1;
     });
 
     protocolState.activeDays = countTransactionPeriods(

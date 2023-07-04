@@ -13,7 +13,7 @@ const ActivityCard: FC<ActivityCardProps> = ({ address, transactions }) => {
 
   useEffect(() => {
     if (!transactions || transactions.length === 0) return;
-    setLastActivity(getTimeAgo(transactions[0].receivedAt));
+    setLastActivity(getTimeAgo(transactions[0]?.receivedAt));
   }, [transactions]);
 
   return (

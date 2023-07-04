@@ -14,25 +14,11 @@ const FeeCard: FC<FeeCardProps> = ({ address, transactions }) => {
     setChange(0);
     setFees(0);
     transactions.forEach((transaction) => {
-      if (transaction.initiatorAddress.toLowerCase() !== address.toLowerCase()) return;
-      transaction.balanceChanges.forEach((balanceChange) => {
-        let tmpFees = 0;
-        if (balanceChange.type === 'fee') {
-          tmpFees =
-            parseInt(balanceChange.amount, 16) *
-            10 ** -balanceChange.tokenInfo.decimals *
-            balanceChange.tokenInfo.usdPrice;
-        } else if (balanceChange.from.toLowerCase() === '0x0000000000000000000000000000000000008001') {
-          tmpFees -=
-            parseInt(balanceChange.amount, 16) *
-            10 ** -balanceChange.tokenInfo.decimals *
-            balanceChange.tokenInfo.usdPrice;
-        }
-        setFees((prev) => prev + tmpFees);
-        if (new Date(transaction.receivedAt).getTime() >= new Date().getTime() - 86400 * 7 * 1000) {
-          setChange((prev) => prev + tmpFees);
-        }
-      });
+      const tmpFees = parseInt(transaction.fee, 16) * 10 ** -18;
+      setFees((prev) => prev + tmpFees);
+      if (new Date(transaction.receivedAt).getTime() >= new Date().getTime() - 86400 * 7 * 1000) {
+        setChange((prev) => prev + tmpFees);
+      }
     });
   }, [address, transactions]);
 

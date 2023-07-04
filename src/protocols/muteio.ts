@@ -1,6 +1,6 @@
 import { Transaction } from '../services/explorer.ts';
 import { ProtocolState } from '../components/ProtocolsCard.tsx';
-import { countTransactionPeriods, hasApprovedAddress, sortTransfer } from '../utils/utils.ts';
+import { countTransactionPeriods } from '../utils/utils.ts';
 
 const muteRouter = '0x8b791913eb07c32779a16750e3868aa8495f5964';
 
@@ -23,22 +23,13 @@ export const Mute = {
     };
 
     transactions.forEach((transaction: Transaction) => {
-      if (
-        muteRouter.includes(transaction.data.contractAddress.toLowerCase()) ||
-        mutePools.includes(transaction.data.contractAddress.toLowerCase())
-      ) {
-        const erc20Transfers = transaction.erc20Transfers.sort(sortTransfer);
-
+      if (muteRouter.includes(transaction.to.toLowerCase()) || mutePools.includes(transaction.to.toLowerCase())) {
         protocolState.interactions += 1;
-        protocolState.volume +=
-          parseInt(erc20Transfers[0].amount, 16) *
-          10 ** -erc20Transfers[0].tokenInfo.decimals *
-          erc20Transfers[0].tokenInfo.usdPrice;
+        protocolState.volume += parseInt(transaction.value, 16) * 10 ** -18;
         if (protocolState.lastActivity === '') protocolState.lastActivity = transaction.receivedAt;
         if (new Date(protocolState.lastActivity) < new Date(transaction.receivedAt))
           protocolState.lastActivity = transaction.receivedAt;
       }
-      if (hasApprovedAddress(transaction, mutePools.concat([muteRouter]))) protocolState.approves += 1;
     });
 
     protocolState.activeDays = countTransactionPeriods(

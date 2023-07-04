@@ -1,6 +1,6 @@
 import { Transaction } from '../services/explorer.ts';
 import { ProtocolState } from '../components/ProtocolsCard.tsx';
-import { countTransactionPeriods, hasApprovedAddress, sortTransfer } from '../utils/utils.ts';
+import { countTransactionPeriods } from '../utils/utils.ts';
 
 const goal3Addresses: string[] = [
   '0xd2ca21df45479824f954a6e1759d436a57d63faf',
@@ -25,17 +25,12 @@ export const Goal3 = {
     };
 
     transactions.forEach((transaction: Transaction) => {
-      if (goal3Addresses.includes(transaction.data.contractAddress.toLowerCase())) {
-        if (transaction.data.calldata.startsWith('0xbd95e4f1')) {
-          const zkUsdValue = parseInt(transaction.data.calldata.slice(-64), 16) * 10 ** -6;
+      if (goal3Addresses.includes(transaction.to.toLowerCase())) {
+        if (transaction.data.startsWith('0xbd95e4f1')) {
+          const zkUsdValue = parseInt(transaction.data.slice(-64), 16) * 10 ** -6;
           protocolState.volume += zkUsdValue;
         } else {
-          const erc20Transfers = transaction.erc20Transfers.sort(sortTransfer);
-
-          protocolState.volume +=
-            parseInt(erc20Transfers[0].amount, 16) *
-            10 ** -erc20Transfers[0].tokenInfo.decimals *
-            erc20Transfers[0].tokenInfo.usdPrice;
+          protocolState.volume += parseInt(transaction.value, 16) * 10 ** -18;
         }
         protocolState.interactions += 1;
 
@@ -43,7 +38,6 @@ export const Goal3 = {
         if (new Date(protocolState.lastActivity) < new Date(transaction.receivedAt))
           protocolState.lastActivity = transaction.receivedAt;
       }
-      if (hasApprovedAddress(transaction, goal3Addresses)) protocolState.approves += 1;
     });
 
     protocolState.activeDays = countTransactionPeriods(address, transactions, protocolState.id, goal3Addresses).days;

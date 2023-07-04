@@ -14,7 +14,7 @@ const InteractionsCard: FC<InteractionsCardProps> = ({ address, transactions }) 
     setChange(0);
     setInteractions(0);
     transactions.forEach((transaction) => {
-      if (transaction.initiatorAddress.toLowerCase() === address.toLowerCase()) {
+      if (transaction.from.toLowerCase() === address.toLowerCase()) {
         setInteractions((prev) => prev + 1);
         if (new Date(transaction.receivedAt).getTime() >= new Date().getTime() - 86400 * 7 * 1000) {
           setChange((prev) => prev + 1);

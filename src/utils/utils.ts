@@ -1,4 +1,4 @@
-import { Transaction, Transfer } from '../services/explorer.ts';
+import { Transaction } from '../services/explorer.ts';
 
 const getTimeAgo = (date: string) => {
   const seconds = (new Date().getTime() - new Date(date).getTime()) / 1000;
@@ -34,8 +34,7 @@ const countAllTransactionPeriods = (
   const uniqueMonths: Set<string> = new Set();
 
   transactions.forEach((transaction) => {
-    if (transaction.initiatorAddress.toLowerCase() !== address.toLowerCase()) return;
-    if (transaction.erc20Transfers.length === 0) return;
+    if (transaction.from.toLowerCase() !== address.toLowerCase()) return;
 
     const timestamp = new Date(transaction.receivedAt);
     const year = timestamp.getFullYear();
@@ -70,12 +69,7 @@ const countTransactionPeriods = (
   const uniqueMonths: Set<string> = new Set();
 
   transactions.forEach((transaction) => {
-    if (transaction.initiatorAddress.toLowerCase() !== address.toLowerCase()) return;
-    if (protocol !== 'zksynceraportal' && !addresses.includes(transaction.data.contractAddress)) return;
-
-    if (protocol === 'zksynceraportal') {
-      if (!(transaction.isL1Originated || transaction.data.calldata.startsWith('0x51cff8d9'))) return;
-    }
+    if (transaction.from.toLowerCase() !== address.toLowerCase()) return;
 
     const timestamp = new Date(transaction.receivedAt);
     const year = timestamp.getFullYear();
@@ -95,19 +89,6 @@ const countTransactionPeriods = (
   };
 };
 
-export const hasApprovedAddress = (transaction: Transaction, addresses: string[]) => {
-  let hasApproved = false;
-
-  addresses.forEach((address) => {
-    if (transaction.data.calldata.startsWith('0x095ea7b3')) {
-      const approveFor = address.split('x')[1];
-      const calldata = transaction.data.calldata;
-      if (calldata.toLowerCase().includes(approveFor)) hasApproved = true;
-    }
-  });
-  return hasApproved;
-};
-
 const getWeekNumber = (date: Date): string => {
   const year = date.getFullYear();
   const oneJan = new Date(year, 0, 1);
@@ -118,11 +99,4 @@ const getWeekNumber = (date: Date): string => {
   return `${year}-${weekIndex}`;
 };
 
-const sortTransfer = (a: Transfer, b: Transfer) => {
-  const valueA = parseInt(a.amount, 16) * 10 ** -a.tokenInfo.decimals * a.tokenInfo.usdPrice;
-  const valueB = parseInt(b.amount, 16) * 10 ** -b.tokenInfo.decimals * b.tokenInfo.usdPrice;
-
-  return valueB - valueA;
-};
-
-export { getTimeAgo, countTransactionPeriods, getWeekNumber, sortTransfer, countAllTransactionPeriods };
+export { getTimeAgo, countTransactionPeriods, getWeekNumber, countAllTransactionPeriods };
