@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getAllTransactions, Token, Transaction } from '../services/explorer.ts';
+import { getTransactionsList, Token, Transaction } from '../services/explorer.ts';
 import Header from '../components/Header.tsx';
 import InteractionsCard from '../components/InteractionsCard.tsx';
 import VolumeCard from '../components/VolumeCard.tsx';
@@ -25,7 +25,7 @@ const AddressPage = () => {
   }, [address]);
 
   const fetchTransactionList = async () => {
-    const transactions: Transaction[] = await getAllTransactions(address);
+    const transactions: Transaction[] = await getTransactionsList(address);
     setTransactionList(transactions);
   };
 

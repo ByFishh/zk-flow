@@ -103,8 +103,16 @@ const Header: FC<HeaderProps> = ({ hasSearchBar }) => {
                 </svg>
                 <span className="sr-only">Light bulb</span>
               </span>
-              <span>If you want to tip me a beer for my work (or do one more transaction) you can on</span>
-              <span className="text-white whitespace-pre-wrap"> 0xF859dE92A63070C54d05E33a4e99D707a34FDb12</span>
+              <div>
+                <div>
+                  <span>If you want to tip me a beer for my work (or make one more transaction) you can on</span>
+                  <span className="text-white whitespace-pre-wrap"> 0xF859dE92A63070C54d05E33a4e99D707a34FDb12</span>
+                </div>
+                <div>
+                  <span>You can also support me by using my referral code on goal3:</span>
+                  <span className="text-white font-bold whitespace-pre-wrap"> zkflow</span>
+                </div>
+              </div>
             </p>
           </div>
           <div className="flex items-center">

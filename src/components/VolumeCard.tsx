@@ -14,7 +14,13 @@ const VolumeCard: FC<VolumeCardProps> = ({ address, transactions }) => {
     setChange(0);
     setVolume(0);
     transactions.forEach((transaction) => {
-      const tmpVolume = parseInt(transaction.value) * 10 ** -18 * transaction.ethValue;
+      const transfers = transaction.transfers.sort(
+        (a, b) =>
+          parseInt(b.amount) * 10 ** -b.token.decimals * b.token.price -
+          parseInt(a.amount) * 10 ** -a.token.decimals * a.token.price,
+      );
+      if (transfers.length === 0) return;
+      const tmpVolume = parseInt(transfers[0].amount) * 10 ** -transfers[0].token.decimals * transfers[0].token.price;
       setVolume((prev) => prev + tmpVolume);
       if (new Date(transaction.receivedAt).getTime() >= new Date().getTime() - 86400 * 7 * 1000) {
         setChange((prev) => prev + tmpVolume);

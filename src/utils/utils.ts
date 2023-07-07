@@ -64,15 +64,27 @@ const countTransactionPeriods = (
   weeks: number;
   months: number;
 } => {
+  address;
   protocol;
-  addresses;
   const uniqueDays: Set<string> = new Set();
   const uniqueWeeks: Set<string> = new Set();
   const uniqueMonths: Set<string> = new Set();
 
   transactions.forEach((transaction) => {
-    if (transaction.from.toLowerCase() !== address.toLowerCase()) return;
+    if (
+      protocol !== 'zksynceraportal' &&
+      !addresses.includes(transaction.to.toLowerCase()) &&
+      !addresses.includes(transaction.from.toLowerCase())
+    )
+      return;
 
+    if (protocol === 'zksynceraportal') {
+      if (
+        !transaction.data.startsWith('0x51cff8d9') &&
+        !(transaction.to.toLowerCase() === address.toLowerCase() && transaction.isL1Originated)
+      )
+        return;
+    }
     const timestamp = new Date(transaction.receivedAt);
     const year = timestamp.getFullYear();
     const month = timestamp.getMonth();

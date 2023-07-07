@@ -32,11 +32,20 @@ export const IzumiFinance = {
 
     transactions.forEach((transaction: Transaction) => {
       if (izumiFinanceAddresses.includes(transaction.to.toLowerCase())) {
-        protocolState.interactions += 1;
-        protocolState.volume += parseInt(transaction.value) * 10 ** -18 * transaction.ethValue;
         if (protocolState.lastActivity === '') protocolState.lastActivity = transaction.receivedAt;
         if (new Date(protocolState.lastActivity) < new Date(transaction.receivedAt))
           protocolState.lastActivity = transaction.receivedAt;
+        protocolState.interactions += 1;
+
+        const transfers = transaction.transfers.sort(
+          (a, b) =>
+            parseInt(b.amount) * 10 ** -b.token.decimals * b.token.price -
+            parseInt(a.amount) * 10 ** -a.token.decimals * a.token.price,
+        );
+
+        if (transfers.length === 0) return;
+        protocolState.volume +=
+          parseInt(transfers[0].amount) * 10 ** -transfers[0].token.decimals * transfers[0].token.price;
       }
     });
 
