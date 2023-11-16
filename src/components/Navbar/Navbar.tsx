@@ -4,6 +4,7 @@ import Logo from "../../assets/images/logo.png";
 import "./Navbar.css";
 import { useNavbar } from "./Navbar.logic";
 import { useMemo } from "react";
+import DropDown from "../DropDown/DropDown";
 
 const Navbar = () => {
   const logic = useNavbar();
@@ -11,7 +12,7 @@ const Navbar = () => {
   const renderLogo = useMemo(
     () => (
       <div className="nav-logo-container">
-        <img src={Logo} alt="Icone de zkFlow" />
+        <img src={Logo} alt="zkFlow" />
         <p>
           zk<strong>FLOW</strong>
         </p>
@@ -24,7 +25,7 @@ const Navbar = () => {
     () => (
       <>
         <span>Current Blockchain</span>
-        <div className="simulate"></div>
+        <DropDown multiple={false} />
       </>
     ),
     []

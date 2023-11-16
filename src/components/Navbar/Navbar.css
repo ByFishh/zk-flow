@@ -66,8 +66,11 @@
 
 .nav-right span {
   color: #4b4b4b;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   margin-right: 1rem;
+  /* text-align: center; */
+  display: inline-block;
+  white-space: nowrap;
 }
 
 .simulate {
