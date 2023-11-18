@@ -1,0 +1,49 @@
+.dialogBanner-container {
+  width: 100%;
+  height: 45px;
+  padding: 0 1rem;
+  background-color: rgb(176, 176, 176, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dialogBanner-container[data-alert~="true"] {
+  background-color: rgb(255, 112, 112, 0.1);
+}
+
+.dialogBanner-left {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dialogBanner-left svg {
+  width: 15px;
+}
+
+.dialogBanner-left svg path {
+  stroke-width: 2;
+  stroke: white;
+}
+
+.dialogBanner-container[data-alert~="true"] .dialogBanner-left svg path {
+  stroke: #ff7171;
+}
+
+.dialogBanner-left p {
+  margin-left: 0.5rem;
+  color: white;
+}
+
+.dialogBanner-container[data-alert~="true"] .dialogBanner-left p {
+  color: #ff7171;
+}
+
+.dialogBanner-right button {
+  padding: 0.25rem 0.5rem;
+}
+
+.dialogBanner-right button svg path {
+  stroke: white;
+}

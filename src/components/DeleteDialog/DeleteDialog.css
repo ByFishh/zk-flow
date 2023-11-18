@@ -1,0 +1,48 @@
+.deleteDialog-content {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 1.5rem 1.5rem 0.5rem 1.5rem;
+}
+.deleteDialog-content p {
+  color: #ffd6d6;
+  font-size: 0.85rem;
+  max-width: 275px;
+  line-height: 1.5;
+}
+
+.deleteDialog-footer {
+  padding: 0.5rem 1.5rem 1.5rem 1.5rem;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.deleteDialog-footer button {
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  color: #ffd6d6;
+  border: 1px solid #2c2c2c;
+  border-radius: 5px;
+}
+
+.deleteDialog-footer button:hover {
+  color: #fbdede;
+  border: 1px solid #3b3b3b;
+}
+
+.deleteDialog-footer button[data-cta~="true"] {
+  color: #ff7171;
+  border: 1px solid #ff7171;
+  background-color: rgba(255, 112, 112, 0.1);
+  margin-left: 0.5rem;
+}
+
+.deleteDialog-footer button[data-cta~="true"]:hover {
+  color: #fc7b7b;
+  border: 1px solid #fc7b7b;
+  background-color: rgba(255, 112, 112, 0.2);
+  margin-left: 0.5rem;
+}
