@@ -1,7 +1,12 @@
-import React from "react";
+import WalletDropDown from "../../components/WalletDropDown/WalletDropDown";
 
 const Home = () => {
-  return <div>Home</div>;
+  return (
+    <div>
+      <p>Home</p>
+      <WalletDropDown settings details />
+    </div>
+  );
 };
 
 export default Home;

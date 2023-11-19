@@ -1,0 +1,115 @@
+.walletDropDown-container {
+  width: calc(100% - 2rem);
+  background-color: #222222;
+  padding: 0.75rem 1rem;
+  border-radius: 5px;
+  margin: 10rem auto;
+}
+
+.walletDropDown-top {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.walletDropDown-main-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.walletDropDown-blockchain-container {
+  margin-left: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.walletDropDown-blockchain-container div {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: rebeccapurple;
+  margin: 0 -0.2rem;
+}
+
+.walletDropDown-name {
+  font-weight: 500;
+  font-size: 1.05rem;
+}
+
+.walletDropDown-top span {
+  margin-left: 1rem;
+  font-size: 0.8rem;
+}
+
+.walletDropDown-right-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.walletDropDown-details-btn {
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  color: white;
+  border: 1px solid #2c2c2c;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 1rem;
+  background-color: #292929;
+}
+
+.walletDropDown-details-btn:hover {
+  background: #2e2e2e;
+}
+
+.walletDropDown-details-btn p {
+  font-weight: 400;
+}
+
+.walletDropDown-details-btn svg {
+  margin-left: 0.5rem;
+}
+
+.walletDropDown-details-btn svg[data-is-active~="true"] {
+  transform: rotate(-180deg);
+}
+
+.walletDropDown-details-btn svg path {
+  fill: white;
+}
+
+@media screen and (max-width: 768px) {
+  .walletDropDown-container {
+    padding: 1rem;
+  }
+
+  .walletDropDown-main-info {
+    align-items: flex-start;
+    flex-flow: column;
+  }
+
+  .walletDropDown-top span {
+    margin: 0.3rem 0 1rem 0;
+  }
+
+  .walletDropDown-blockchain-container {
+    margin-left: 0;
+  }
+
+  .walletDropDown-right-container {
+    align-items: flex-end;
+    flex-flow: column nowrap;
+  }
+
+  .walletDropDown-details-btn {
+    order: 1;
+    margin: 1rem 0 0 0;
+  }
+}

@@ -3,6 +3,7 @@
   height: 80px;
   position: fixed;
   background-color: #1a1a1a;
+  z-index: 1000;
 }
 
 .nav-content {
