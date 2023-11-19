@@ -1,0 +1,20 @@
+.input-container {
+  width: 100%;
+  margin-bottom: 1.25rem;
+}
+
+.input-label {
+  margin-bottom: 0.5rem;
+  color: #e6e6e6;
+  font-size: 0.85rem;
+}
+
+.input-inp {
+  width: 100%;
+  height: 40px;
+  padding: 0 0.75rem;
+  background-color: #272727;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}

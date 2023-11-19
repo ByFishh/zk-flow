@@ -16,11 +16,17 @@ const Settings = () => {
           className="settings-dropdown-items-container"
           data-show={logic.isActive}
         >
-          <div className="settings-dropdown-item">
+          <div
+            className="settings-dropdown-item"
+            onClick={logic.openEditDialog}
+          >
             <EditIcon />
             <p>Edit</p>
           </div>
-          <div className="settings-dropdown-item settings-dropdown-item-delete">
+          <div
+            className="settings-dropdown-item settings-dropdown-item-delete"
+            onClick={logic.openDeleteDialog}
+          >
             <DeleteIcon />
             <p>Delete</p>
           </div>

@@ -1,18 +1,27 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useReducer, useEffect } from "react";
+import { useReducer, useEffect, useRef } from "react";
 import { reducer, initialState, IState, IAction } from "./DropDown.reducer";
 import { preventBigString } from "../../utils/preventBigString";
 
-export const useDropDown = (props: { multiple: boolean; onChange?: (data: string[]) => void }) => {
+export const useDropDown = (props: {
+  multiple?: boolean;
+  onChange?: (data: string[]) => void;
+}) => {
   // State
   const [state, dispatch] = useReducer(reducer, { ...initialState });
+
+  // Refs
+  const firstRender = useRef<boolean>(true);
 
   useEffect(() => {
     sendDataToParent();
   }, [state.items]);
 
   const sendDataToParent = () => {
-    const items = state.items.filter((item) => item.isChecked).map((item) => item.name);
+    if (firstRender.current) return (firstRender.current = false);
+    const items = state.items
+      .filter((item) => item.isChecked)
+      .map((item) => item.name);
     props.onChange && props.onChange(items);
   };
 
@@ -29,7 +38,10 @@ export const useDropDown = (props: { multiple: boolean; onChange?: (data: string
       payload = { ...state, items: [...itemsCopy] };
       dispatch({ type: IAction.TOGGLE_ITEM_CHECK, payload });
     } else {
-      const resetItems = itemsCopy.map((item) => ({ ...item, isChecked: false }));
+      const resetItems = itemsCopy.map((item) => ({
+        ...item,
+        isChecked: false,
+      }));
       resetItems.splice(itemIndex, 1, newItem);
       payload = { ...state, items: resetItems };
     }

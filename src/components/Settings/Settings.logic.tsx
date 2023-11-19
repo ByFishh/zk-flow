@@ -1,4 +1,5 @@
-import { useEffect, useReducer } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useCallback, useEffect, useReducer } from "react";
 import {
   IState,
   componentIsUnmounting,
@@ -6,8 +7,14 @@ import {
   initialState,
   IAction,
 } from "./Settings.reducer";
+import { setDialog } from "../../redux/reducer/dialogReducer";
+import { useDispatch } from "react-redux";
+import { IAppDispatch } from "../../redux/store";
+import { IDialogs } from "../../types/Dialogs/IDialogs";
 
 export const useSettings = () => {
+  const dispatchCtx = useDispatch<IAppDispatch>();
+
   // State
   const [state, dispatch] = useReducer(reducer, { ...initialState });
 
@@ -20,5 +27,13 @@ export const useSettings = () => {
     dispatch({ type: IAction.TOGGLE_IS_ACTIVE, payload });
   };
 
-  return { ...state, toggleIsActive };
+  const openEditDialog = useCallback(() => {
+    dispatchCtx(setDialog({ isOpen: IDialogs.WALLET }));
+  }, []);
+
+  const openDeleteDialog = useCallback(() => {
+    dispatchCtx(setDialog({ isOpen: IDialogs.DELETE }));
+  }, []);
+
+  return { ...state, toggleIsActive, openEditDialog, openDeleteDialog };
 };

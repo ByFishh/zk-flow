@@ -1,0 +1,44 @@
+.walletDialog-content {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-flow: column nowrap;
+  padding: 1.5rem 1.5rem 0.5rem 1.5rem;
+}
+
+.walletDialog-footer {
+  padding: 0.5rem 1.5rem 1.5rem 1.5rem;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.walletDialog-footer button {
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  color: white;
+  border: 1px solid #2c2c2c;
+  border-radius: 5px;
+}
+
+.walletDialog-footer button:hover {
+  background: #2e2e2e;
+  border: 1px solid #3b3b3b;
+}
+
+.walletDialog-footer button[data-cta~="true"] {
+  color: #ccb256;
+  border: 1px solid #ccb256;
+  background: rgb(205, 179, 86, 0.1);
+  margin-left: 0.5rem;
+}
+
+.walletDialog-footer button[data-cta~="true"]:hover {
+  color: #d7be62;
+  border: 1px solid #d7be62;
+  background: rgb(205, 179, 86, 0.2);
+
+  margin-left: 0.5rem;
+}
