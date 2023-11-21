@@ -1,0 +1,51 @@
+type Transfer = {
+  blockNumber: string;
+  timeStamp: string;
+  hash: string;
+  nonce: string;
+  blockHash: string;
+  transactionIndex: string;
+  from: string;
+  to: string;
+  value: string;
+  tokenName: string;
+  tokenSymbol: string;
+  tokenDecimal: string;
+  gas: string;
+  gasPrice: string;
+  input: string;
+  contractAddress: string;
+  cumulativeGasUsed: string;
+  gasUsed: string;
+  confirmations: string;
+  fee: string;
+  l1BatchNumber: string;
+  transactionType: string;
+  transferPrice: number;
+};
+
+type Transaction = {
+  blockNumber: number;
+  timeStamp: number;
+  hash: string;
+  nonce: number;
+  blockHash: string;
+  transactionIndex: number;
+  from: string;
+  to: string;
+  value: number;
+  gas: number;
+  gasPrice: number;
+  isError: number;
+  txreceipt_status: number;
+  input: string;
+  contractAddress: string;
+  cumulativeGasUsed: number;
+  gasUsed: number;
+  confirmations: number;
+  methodId: string;
+  functionName: string;
+  transfers: Transfer[];
+};
+
+export type { Transfer, Transaction };
