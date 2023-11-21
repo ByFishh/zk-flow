@@ -3,8 +3,6 @@ import { HashRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './views/Home/Home';
 import Wallet from './views/Wallet/Wallet';
 import Overview from './views/Overview/Overview';
-import Navbar from './components/Navbar/Navbar';
-import Dialogs from './components/Dialogs/Dialogs';
 import { useEffect } from 'react';
 import { getWallet } from './blockchains';
 import { BlockchainType } from './blockchains/types.ts';
