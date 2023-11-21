@@ -1,10 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Link } from "react-router-dom";
-import Logo from "../../assets/images/logo.png";
-import "./Navbar.css";
-import { useNavbar } from "./Navbar.logic";
-import { useMemo } from "react";
-import DropDown from "../DropDown/DropDown";
+import { Link } from 'react-router-dom';
+import './Navbar.css';
+import { useNavbar } from './Navbar.logic';
+import { useMemo } from 'react';
+import DropDown from '../DropDown/DropDown';
 
 const Navbar = () => {
   const logic = useNavbar();
@@ -12,13 +11,13 @@ const Navbar = () => {
   const renderLogo = useMemo(
     () => (
       <div className="nav-logo-container">
-        <img src={Logo} alt="zkFlow" />
+        <img src="icon.svg" alt="zkFlow" />
         <p>
           zk<strong>FLOW</strong>
         </p>
       </div>
     ),
-    []
+    [],
   );
 
   const renderDropDown = useMemo(
@@ -28,21 +27,21 @@ const Navbar = () => {
         <DropDown multiple={false} />
       </>
     ),
-    []
+    [],
   );
 
   const renderMenu = useMemo(
     () => (
       <ul className="nav-ul">
-        <li data-is-current-location={logic.isCurrentLocation("/")}>
+        <li data-is-current-location={logic.isCurrentLocation('/')}>
           <Link to="/">Search</Link>
         </li>
-        <li data-is-current-location={logic.isCurrentLocation("/overview")}>
+        <li data-is-current-location={logic.isCurrentLocation('/overview')}>
           <Link to="/overview">Overview</Link>
         </li>
       </ul>
     ),
-    [logic.currentRoute]
+    [logic.currentRoute],
   );
 
   const renderMenuBtn = useMemo(
@@ -53,7 +52,7 @@ const Navbar = () => {
         <span></span>
       </div>
     ),
-    [logic.menuIsDisplay]
+    [logic.menuIsDisplay],
   );
 
   return (
