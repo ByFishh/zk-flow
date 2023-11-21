@@ -21,8 +21,8 @@ function App() {
 
   return (
     <Router>
-      <Navbar />
-      <Dialogs />
+      {/*<Navbar />*/}
+      {/*<Dialogs />*/}
       <Routes>
         <Route element={<Home />} path="/" />
         <Route element={<Wallet />} path="/wallet/:id" />
