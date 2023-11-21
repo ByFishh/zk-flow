@@ -38,7 +38,6 @@ We welcome contributions from the community! If you'd like to contribute, please
 Your are free to use the code in this repository for personal use. If you would like to use the code for commercial purposes, please contact me on twitter [ByFishh](https://twitter.com/ByFishh)
 
 ## Contact
-
 - Your Name - [ByFishh](https://twitter.com/ByFishh) - theo.maringer@epitech.eu
 - Project Link: [https://github.com/ByFishh/zk-flow](https://github.com/ByFishh/zk-flow)
 - Website Link: [https://byfishh.github.io/zk-flow](https://byfishh.github.io/zk-flow)
