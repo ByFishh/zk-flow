@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://zk-flow.com",
+  "homepage": "https://byfish.fr",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
