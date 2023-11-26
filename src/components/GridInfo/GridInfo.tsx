@@ -1,6 +1,7 @@
-import "./GridInfo.css";
+import { IGridInfo } from '../../types/Wallet/IGridInfo';
+import './GridInfo.css';
 
-const GridInfo = (props: { items: { key: string; value: string }[] }) => {
+const GridInfo = (props: { items: IGridInfo[] }) => {
   return (
     <div className="gridInfo-container">
       <div className="gridInfo-middle-bar"></div>

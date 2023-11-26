@@ -1,7 +1,6 @@
 .gridInfo-container {
   position: relative;
-  width: calc(100% - 2rem);
-  margin: 0 auto;
+  width: 100%;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   border-radius: 5px;

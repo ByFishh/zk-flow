@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import { memo } from "react";
-import Magnifier from "../Magnifier/Magnifier";
-import "./Search.css";
-import { useSearch } from "./Search.logic";
+import { memo } from 'react';
+import Magnifier from '../../icons/Magnifier/Magnifier';
+import './Search.css';
+import { useSearch } from './Search.logic';
 
 const Search = memo((props: { action: Function }) => {
   const logic = useSearch(props);
@@ -13,11 +13,7 @@ const Search = memo((props: { action: Function }) => {
         <button className="search-button-left" type="submit">
           <Magnifier />
         </button>
-        <input
-          type="text"
-          placeholder="Search a Wallet"
-          {...logic.register("search")}
-        />
+        <input type="text" placeholder="Search a Wallet" {...logic.register('search')} />
         <button className="search-button-right" type="submit">
           Search
         </button>

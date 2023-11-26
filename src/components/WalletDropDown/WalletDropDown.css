@@ -1,9 +1,13 @@
+.walletDropDown-global-container{
+  margin-bottom: .5rem;
+}
+
 .walletDropDown-container {
   width: 100%;
   background-color: #222222;
   padding: 0.75rem 1rem;
   border-radius: 5px;
-  margin-top: 10rem;
+  margin-bottom: .5rem;
   height: 60px;
 }
 
@@ -63,6 +67,7 @@
   align-items: center;
   margin-right: 1rem;
   background-color: #292929;
+  z-index: 30;
 }
 
 .walletDropDown-details-btn:hover {
@@ -83,6 +88,10 @@
 
 .walletDropDown-details-btn svg path {
   fill: white;
+}
+
+.walletDropDown-gridInfo-container{
+  margin-top: .5rem;
 }
 
 @media screen and (max-width: 768px) {

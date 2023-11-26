@@ -30,6 +30,7 @@
 }
 
 .settings-dropdown-items-container {
+  position: relative;
   background-color: #272727;
   display: flex;
   justify-content: center;
@@ -41,12 +42,14 @@
   pointer-events: none;
   transform: translateY(-10px);
   transition: 200ms ease-in-out;
+
 }
 
 .settings-dropdown-items-container[data-show~="true"] {
   transform: translateY(0);
   opacity: 1;
   pointer-events: all;
+  z-index: 50;
 }
 
 .settings-dropdown-item {
