@@ -1,8 +1,8 @@
 import { useDropDown } from './DropDown.logic';
 import { v4 as uuidv4 } from 'uuid';
 import './DropDown.css';
-import Cross from '../Cross/Cross';
-import Chevron from '../Chevron/Chevron';
+import Cross from '../../icons/Cross/Cross';
+import Chevron from '../../icons/Chevron/Chevron';
 import { memo } from 'react';
 import { preventBigString } from '../../utils/preventBigString';
 

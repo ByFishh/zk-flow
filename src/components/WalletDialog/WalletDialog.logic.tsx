@@ -7,8 +7,8 @@ import { useForm } from 'react-hook-form';
 import { IWallet } from '../../types/Wallet/IWallet';
 import { IDialogAction } from '../../types/Dialogs/IDialogAction';
 import { toCapitalize } from '../../utils/toCapitalize';
-import EditIcon from '../EditIcon/EditIcon';
-import AddIcon from '../AddIcon/AddIcon';
+import EditIcon from '../../icons/EditIcon/EditIcon';
+import AddIcon from '../../icons/AddIcon/AddIcon';
 
 export const useWalletDialog = () => {
   const dispatch = useDispatch<IAppDispatch>();

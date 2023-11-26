@@ -1,8 +1,8 @@
-import DeleteIcon from "../DeleteIcon/DeleteIcon";
-import EditIcon from "../EditIcon/EditIcon";
-import Gear from "../Gear/Gear";
-import { useSettings } from "./Settings.logic";
-import "./Settings.css";
+import DeleteIcon from '../../icons/DeleteIcon/DeleteIcon';
+import EditIcon from '../../icons/EditIcon/EditIcon';
+import Gear from '../../icons/Gear/Gear';
+import { useSettings } from './Settings.logic';
+import './Settings.css';
 
 const Settings = () => {
   const logic = useSettings();
@@ -12,21 +12,12 @@ const Settings = () => {
         <Gear />
       </button>
       <div className="settings-dropdown">
-        <div
-          className="settings-dropdown-items-container"
-          data-show={logic.isActive}
-        >
-          <div
-            className="settings-dropdown-item"
-            onClick={logic.openEditDialog}
-          >
+        <div className="settings-dropdown-items-container" data-show={logic.isActive}>
+          <div className="settings-dropdown-item" onClick={logic.openEditDialog}>
             <EditIcon />
             <p>Edit</p>
           </div>
-          <div
-            className="settings-dropdown-item settings-dropdown-item-delete"
-            onClick={logic.openDeleteDialog}
-          >
+          <div className="settings-dropdown-item settings-dropdown-item-delete" onClick={logic.openDeleteDialog}>
             <DeleteIcon />
             <p>Delete</p>
           </div>

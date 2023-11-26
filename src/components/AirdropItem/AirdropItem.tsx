@@ -1,6 +1,6 @@
-import Chevron from "../Chevron/Chevron";
-import "./AirdropItem.css";
-import { useAirdropItem } from "./AirdropItem.logic";
+import Chevron from '../../icons/Chevron/Chevron';
+import './AirdropItem.css';
+import { useAirdropItem } from './AirdropItem.logic';
 
 const AirdropItem = (props: { title: string; items: { txt: string; checked: boolean }[] }) => {
   const logic = useAirdropItem(props);
