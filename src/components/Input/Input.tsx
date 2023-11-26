@@ -1,17 +1,19 @@
-import DropDown from "../DropDown/DropDown";
-import { useInput } from "./Input.logic";
-import { IWallet } from "../../types/Wallet/IWallet";
-import { UseFormSetValue } from "react-hook-form";
-import "./Input.css";
+import DropDown from '../DropDown/DropDown';
+import { useInput } from './Input.logic';
+import { IWallet } from '../../types/Wallet/IWallet';
+import { UseFormRegister, UseFormSetValue } from 'react-hook-form';
+import './Input.css';
 
 const Input = (props: {
-  id: string;
+  id: 'name' | 'adress' | 'blockchain';
   label: string;
   isDropDown?: {
     multiple: boolean;
     inverted: boolean;
   };
   setValue: UseFormSetValue<IWallet>;
+  register: UseFormRegister<IWallet>;
+  initialDropdownValues: string[];
 }) => {
   const logic = useInput(props);
 
@@ -23,14 +25,10 @@ const Input = (props: {
           multiple={props.isDropDown.multiple}
           inverted={props.isDropDown.inverted}
           onChange={logic.onDropDownChange}
+          initialValues={props.initialDropdownValues}
         />
       ) : (
-        <input
-          className="input-inp"
-          type="text"
-          onChange={logic.handleInput}
-          id={props.id}
-        />
+        <input className="input-inp" type="text" id={props.id} {...props.register(props.id)} />
       )}
     </div>
   );

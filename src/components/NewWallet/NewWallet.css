@@ -1,0 +1,15 @@
+.newWallet-container{
+    width: 100%;
+    border: 2px dotted #222222;
+    height: 60px;
+    border-radius: 5px;
+    color: white;
+}
+
+.newWallet-container:hover{
+    border: 2px dotted #CCB256;
+    background-color: rgba(205, 179, 86, .1);
+    color: #CCB256;
+}
+
+

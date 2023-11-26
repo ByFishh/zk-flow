@@ -1,11 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useReducer, useEffect, useRef } from "react";
-import { reducer, initialState, IState, IAction } from "./DropDown.reducer";
-import { preventBigString } from "../../utils/preventBigString";
+import { useReducer, useEffect, useRef } from 'react';
+import { reducer, initialState, IState, IAction } from './DropDown.reducer';
+import { preventBigString } from '../../utils/preventBigString';
 
 export const useDropDown = (props: {
   multiple?: boolean;
   onChange?: (data: string[]) => void;
+  initialValues?: string[];
 }) => {
   // State
   const [state, dispatch] = useReducer(reducer, { ...initialState });
@@ -14,15 +15,27 @@ export const useDropDown = (props: {
   const firstRender = useRef<boolean>(true);
 
   useEffect(() => {
+    if (!props.initialValues || !props.initialValues.length) return;
+    setInitialValues();
+  }, []);
+
+  useEffect(() => {
     sendDataToParent();
   }, [state.items]);
 
   const sendDataToParent = () => {
     if (firstRender.current) return (firstRender.current = false);
-    const items = state.items
-      .filter((item) => item.isChecked)
-      .map((item) => item.name);
+    const items = state.items.filter((item) => item.isChecked).map((item) => item.name);
     props.onChange && props.onChange(items);
+  };
+
+  const setInitialValues = () => {
+    if (!props.initialValues || !props.initialValues.length) return;
+    const items = [...state.items].map((item) =>
+      props.initialValues?.includes(item.name) ? { ...item, isChecked: true } : { ...item },
+    );
+    const payload: IState = { ...state, items };
+    dispatch({ type: IAction.TOGGLE_ITEM_CHECK, payload });
   };
 
   const handleDropDown = (name: string): void => {
@@ -45,13 +58,12 @@ export const useDropDown = (props: {
       resetItems.splice(itemIndex, 1, newItem);
       payload = { ...state, items: resetItems };
     }
-
     dispatch({ type: IAction.TOGGLE_ITEM_CHECK, payload });
   };
 
   const getSelectedItem = (): string => {
     const getCheckedItem = state.items.find((item) => item.isChecked);
-    if (!getCheckedItem) return "";
+    if (!getCheckedItem) return '';
     return preventBigString(getCheckedItem.name, 14);
   };
 

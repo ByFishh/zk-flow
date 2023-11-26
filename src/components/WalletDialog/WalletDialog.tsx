@@ -1,22 +1,28 @@
-import DialogBanner from "../DialogBanner/DialogBanner";
-import EditIcon from "../EditIcon/EditIcon";
-import Input from "../Input/Input";
-import { useWalletDialog } from "./WalletDialog.logic";
-import "./WalletDialog.css";
-import { v4 as uuidv4 } from "uuid";
+import DialogBanner from '../DialogBanner/DialogBanner';
+import Input from '../Input/Input';
+import { useWalletDialog } from './WalletDialog.logic';
+import './WalletDialog.css';
+import { v4 as uuidv4 } from 'uuid';
 
-const inputs = [
+const inputs: {
+  label: string;
+  id: 'name' | 'adress' | 'blockchain';
+  isDropdown?: {
+    multiple: boolean;
+    inverted: boolean;
+  };
+}[] = [
   {
-    label: "Name",
-    id: "name",
+    label: 'Name',
+    id: 'name',
   },
   {
-    label: "Adress",
-    id: "adress",
+    label: 'Adress',
+    id: 'adress',
   },
   {
-    label: "Blockchain",
-    id: "blockchain",
+    label: 'Blockchain',
+    id: 'blockchain',
     isDropdown: {
       multiple: true,
       inverted: true,
@@ -29,7 +35,7 @@ const WalletDialog = () => {
 
   return (
     <div className="walletDialog-container">
-      <DialogBanner icon={<EditIcon />} title="Edit" />
+      <DialogBanner icon={logic.getDialogIcon()} title={logic.getDialogTitleName()} />
       <form onSubmit={logic.handleSubmit(logic.onSubmit)}>
         <div className="walletDialog-content">
           {inputs.map((item) => (
@@ -39,6 +45,8 @@ const WalletDialog = () => {
               id={item.id}
               isDropDown={item.isDropdown}
               setValue={logic.setValue}
+              register={logic.register}
+              initialDropdownValues={logic.initialDropdownValues}
             />
           ))}
         </div>

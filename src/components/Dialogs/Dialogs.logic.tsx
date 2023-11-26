@@ -1,9 +1,9 @@
-import { useMemo } from "react";
-import { IDialogs } from "../../types/Dialogs/IDialogs";
-import DeleteDialog from "../DeleteDialog/DeleteDialog";
-import { useSelector } from "react-redux";
-import { IRootState } from "../../redux/store";
-import WalletDialog from "../WalletDialog/WalletDialog";
+import { useMemo } from 'react';
+import { IDialogs } from '../../types/Dialogs/IDialogs';
+import DeleteDialog from '../DeleteDialog/DeleteDialog';
+import { useSelector } from 'react-redux';
+import { IRootState } from '../../redux/store';
+import WalletDialog from '../WalletDialog/WalletDialog';
 
 export const useDialogs = () => {
   const isOpen = useSelector((s: IRootState) => s.dialog.isOpen);
@@ -19,7 +19,7 @@ export const useDialogs = () => {
         component: <WalletDialog />,
       },
     ],
-    [isOpen]
+    [isOpen],
   );
 
   return { isOpen, dialogs };

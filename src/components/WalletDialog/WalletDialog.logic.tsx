@@ -1,23 +1,60 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useDispatch } from 'react-redux';
-import { IAppDispatch } from '../../redux/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { IAppDispatch, IRootState } from '../../redux/store';
 import { useCallback } from 'react';
 import { setDialog } from '../../redux/reducer/dialogReducer';
 import { useForm } from 'react-hook-form';
 import { IWallet } from '../../types/Wallet/IWallet';
+import { IDialogAction } from '../../types/Dialogs/IDialogAction';
+import { toCapitalize } from '../../utils/toCapitalize';
+import EditIcon from '../EditIcon/EditIcon';
+import AddIcon from '../AddIcon/AddIcon';
 
 export const useWalletDialog = () => {
   const dispatch = useDispatch<IAppDispatch>();
-  const { handleSubmit, setValue } = useForm<IWallet>();
+  const dialog = useSelector((s: IRootState) => s.dialog);
+
+  const { handleSubmit, setValue, register } = useForm<IWallet>({
+    defaultValues: {
+      name: dialog.data?.wallet?.name ?? '',
+      adress: dialog.data?.wallet?.adress ?? '',
+      blockchain: dialog.data?.wallet?.blockchain ?? [],
+    },
+  });
 
   const onSubmit = (data: IWallet) => {
-    // Edit/Add action
-    data;
+    console.log(data);
+    if (!dialog.data || !dialog.data.action) return;
+
+    if (dialog.data.action === IDialogAction.ADD) {
+      // Add action
+    }
+
+    if (dialog.data.action === IDialogAction.EDIT) {
+      // Edit action
+    }
   };
 
   const handleClose = useCallback(() => {
     dispatch(setDialog({ isOpen: undefined, data: undefined }));
   }, []);
 
-  return { handleSubmit, onSubmit, handleClose, setValue };
+  const getDialogTitleName = (): string => toCapitalize(dialog.data.action);
+
+  const getDialogIcon = (): JSX.Element => {
+    if (dialog.data.action === IDialogAction.ADD) return <AddIcon />;
+    if (dialog.data.action === IDialogAction.EDIT) return <EditIcon />;
+    return <></>;
+  };
+
+  return {
+    handleSubmit,
+    onSubmit,
+    handleClose,
+    setValue,
+    register,
+    getDialogTitleName,
+    getDialogIcon,
+    initialDropdownValues: dialog.data?.wallet?.blockchain ?? [],
+  };
 };

@@ -1,9 +1,10 @@
 .walletDropDown-container {
-  width: calc(100% - 2rem);
+  width: 100%;
   background-color: #222222;
   padding: 0.75rem 1rem;
   border-radius: 5px;
-  margin: 10rem auto;
+  margin-top: 10rem;
+  height: 60px;
 }
 
 .walletDropDown-top {
@@ -32,7 +33,6 @@
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background-color: rebeccapurple;
   margin: 0 -0.2rem;
 }
 
@@ -88,6 +88,7 @@
 @media screen and (max-width: 768px) {
   .walletDropDown-container {
     padding: 1rem;
+    height: initial;
   }
 
   .walletDropDown-main-info {

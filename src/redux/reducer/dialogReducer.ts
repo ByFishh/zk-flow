@@ -1,22 +1,20 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IDialogs } from "../../types/Dialogs/IDialogs";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { IDialogs } from '../../types/Dialogs/IDialogs';
 
 const initialState: {
   isOpen: IDialogs | undefined;
-  data?: unknown;
+  data?: any;
 } = {
   isOpen: undefined,
   data: undefined,
 };
 
 const dialogSlice = createSlice({
-  name: "dialog",
+  name: 'dialog',
   initialState: initialState,
   reducers: {
-    setDialog(
-      state,
-      action: PayloadAction<Pick<typeof initialState, "isOpen" | "data">>
-    ) {
+    setDialog(state, action: PayloadAction<Pick<typeof initialState, 'isOpen' | 'data'>>) {
       Object.assign(state, action.payload);
     },
   },

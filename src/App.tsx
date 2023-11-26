@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import { getWallet } from './blockchains';
 import { BlockchainType } from './blockchains/types.ts';
 import Navbar from './components/Navbar/Navbar.tsx';
+import Dialogs from './components/Dialogs/Dialogs.tsx';
 
 function App() {
   useEffect(() => {
@@ -21,7 +22,7 @@ function App() {
   return (
     <Router>
       {<Navbar />}
-      {/*<Dialogs />*/}
+      <Dialogs />
       <Routes>
         <Route element={<Home />} path="/" />
         <Route element={<Wallet />} path="/wallet/:id" />

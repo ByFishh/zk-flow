@@ -1,6 +1,6 @@
-import { UseFormSetValue } from "react-hook-form";
-import { IWallet } from "../../types/Wallet/IWallet";
-import { useCallback } from "react";
+import { UseFormRegister, UseFormSetValue } from 'react-hook-form';
+import { IWallet } from '../../types/Wallet/IWallet';
+import { useCallback } from 'react';
 
 export const useInput = (props: {
   id: string;
@@ -10,19 +10,12 @@ export const useInput = (props: {
     inverted: boolean;
   };
   setValue: UseFormSetValue<IWallet>;
+  register: UseFormRegister<IWallet>;
+  initialDropdownValues: string[];
 }) => {
-  const handleInput = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>): void => {
-      const target = e.target.getAttribute("id");
-      if (!target) return;
-      props.setValue(target as "name" | "adress", e.target.value);
-    },
-    []
-  );
-
   const onDropDownChange = useCallback((data: string[]) => {
-    props.setValue("blockchain", data);
+    props.setValue('blockchain', data);
   }, []);
 
-  return { handleInput, onDropDownChange };
+  return { onDropDownChange };
 };
