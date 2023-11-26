@@ -133,6 +133,7 @@
 .dropDown-item p {
   color: #cbcbcb;
   font-size: 0.85rem;
+  pointer-events: none;
 }
 
 .dropDown-item:hover p {

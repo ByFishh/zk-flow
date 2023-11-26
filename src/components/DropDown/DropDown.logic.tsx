@@ -13,15 +13,29 @@ export const useDropDown = (props: {
 
   // Refs
   const firstRender = useRef<boolean>(true);
+  const dropDownContainer = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!props.initialValues || !props.initialValues.length) return;
     setInitialValues();
   }, []);
 
   useEffect(() => {
+    window.addEventListener('click', preventOutsideClick);
+    return () => window.removeEventListener('click', preventOutsideClick);
+  }, [state]);
+
+  useEffect(() => {
     sendDataToParent();
   }, [state.items]);
+
+  const preventOutsideClick = (e: any) => {
+    if (!state.isActive) return;
+    const getClassAttribute = e.target.getAttribute('class');
+    if (!dropDownContainer.current) return;
+    if (!dropDownContainer.current.contains(e.target) && getClassAttribute !== 'dropDown-item') toggleIsActive();
+  };
+
+  // const handleClickOutside = (event: MouseEvent) => {};
 
   const sendDataToParent = () => {
     if (firstRender.current) return (firstRender.current = false);
@@ -72,5 +86,5 @@ export const useDropDown = (props: {
     dispatch({ type: IAction.TOGGLE_ITEM_CHECK, payload });
   };
 
-  return { ...state, handleDropDown, getSelectedItem, toggleIsActive };
+  return { ...state, handleDropDown, getSelectedItem, toggleIsActive, dropDownContainer };
 };

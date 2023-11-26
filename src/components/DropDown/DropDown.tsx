@@ -11,7 +11,7 @@ const DropDown = memo(
     const logic = useDropDown(props);
 
     return (
-      <div className="dropDown-container">
+      <div className="dropDown-container" ref={logic.dropDownContainer}>
         {props.multiple && (
           <div className="dropDown-selected-items-container">
             {logic.items
