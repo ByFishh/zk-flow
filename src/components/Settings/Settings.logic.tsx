@@ -6,9 +6,11 @@ import { useDispatch } from 'react-redux';
 import { IAppDispatch } from '../../redux/store';
 import { IDialogs } from '../../types/Dialogs/IDialogs';
 import { IDialogAction } from '../../types/Dialogs/IDialogAction';
+import { useLocalStorage } from '../../hook/useLocalStorage';
 
-export const useSettings = () => {
+export const useSettings = (props: { id: string }) => {
   const dispatchCtx = useDispatch<IAppDispatch>();
+  const { findWallet } = useLocalStorage();
 
   // State
   const [state, dispatch] = useReducer(reducer, { ...initialState });
@@ -23,18 +25,23 @@ export const useSettings = () => {
   };
 
   const openEditDialog = useCallback(() => {
+    const wallet = findWallet(props.id);
+    if (!wallet) throw new Error('No Wallet found with this ID');
+
     dispatchCtx(
       setDialog({
         isOpen: IDialogs.WALLET,
         data: {
           action: IDialogAction.EDIT,
+          wallet,
         },
       }),
     );
   }, []);
 
   const openDeleteDialog = useCallback(() => {
-    dispatchCtx(setDialog({ isOpen: IDialogs.DELETE }));
+    if (!props.id) throw new Error('No ID to delete');
+    dispatchCtx(setDialog({ isOpen: IDialogs.DELETE, data: { id: props.id } }));
   }, []);
 
   return { ...state, toggleIsActive, openEditDialog, openDeleteDialog };

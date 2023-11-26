@@ -9,10 +9,12 @@ import { IDialogAction } from '../../types/Dialogs/IDialogAction';
 import { toCapitalize } from '../../utils/toCapitalize';
 import EditIcon from '../../icons/EditIcon/EditIcon';
 import AddIcon from '../../icons/AddIcon/AddIcon';
+import { useLocalStorage } from '../../hook/useLocalStorage';
 
 export const useWalletDialog = () => {
   const dispatch = useDispatch<IAppDispatch>();
   const dialog = useSelector((s: IRootState) => s.dialog);
+  const { addNewLocalStorage, updateLocalStorage } = useLocalStorage();
 
   const { handleSubmit, setValue, register } = useForm<IWallet>({
     defaultValues: {
@@ -23,16 +25,10 @@ export const useWalletDialog = () => {
   });
 
   const onSubmit = (data: IWallet) => {
-    console.log(data);
     if (!dialog.data || !dialog.data.action) return;
-
-    if (dialog.data.action === IDialogAction.ADD) {
-      // Add action
-    }
-
-    if (dialog.data.action === IDialogAction.EDIT) {
-      // Edit action
-    }
+    if (dialog.data.action === IDialogAction.ADD) addNewLocalStorage(data);
+    if (dialog.data.action === IDialogAction.EDIT) updateLocalStorage({ ...data, id: dialog.data.wallet.id });
+    handleClose();
   };
 
   const handleClose = useCallback(() => {

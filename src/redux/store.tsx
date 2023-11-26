@@ -1,8 +1,10 @@
-import { configureStore } from "@reduxjs/toolkit";
-import DialogReducer from "./reducer/dialogReducer";
+import { configureStore } from '@reduxjs/toolkit';
+import DialogReducer from './reducer/dialogReducer';
+import walletReducer from './reducer/walletReducer';
 
 const rootReducer = {
   dialog: DialogReducer,
+  wallet: walletReducer,
 };
 
 export const initStore = () => {

@@ -12,6 +12,7 @@ const WalletDropDown = (props: {
   settings?: boolean;
   infos: {
     title: string;
+    id: string;
     adress?: string;
     blockchain?: string[];
     gridInfo?: IGridInfo[];
@@ -34,7 +35,7 @@ const WalletDropDown = (props: {
         )}
       </div>
     ),
-    [],
+    [props.infos],
   );
 
   return (
@@ -49,7 +50,7 @@ const WalletDropDown = (props: {
                 <Chevron isActive={logic.isActive} />
               </button>
             )}
-            {props.settings && <Settings />}
+            {props.settings && <Settings id={props.infos.id} />}
           </div>
         </div>
       </div>

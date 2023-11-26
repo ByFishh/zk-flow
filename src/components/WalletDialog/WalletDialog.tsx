@@ -53,7 +53,7 @@ const WalletDialog = () => {
         <div className="walletDialog-footer">
           <button onClick={logic.handleClose}>Close</button>
           <button data-cta={true} type="submit">
-            Valider
+            Validate
           </button>
         </div>
       </form>

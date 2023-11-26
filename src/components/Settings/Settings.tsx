@@ -4,8 +4,8 @@ import Gear from '../../icons/Gear/Gear';
 import { useSettings } from './Settings.logic';
 import './Settings.css';
 
-const Settings = () => {
-  const logic = useSettings();
+const Settings = (props: { id: string }) => {
+  const logic = useSettings(props);
   return (
     <div className="settings-container">
       <button className="settings-button" onClick={logic.toggleIsActive}>
