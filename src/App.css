@@ -160,3 +160,19 @@ body {
   font-family: "Outfit", sans-serif;
   background-color: #1a1a1a;
 }
+
+.app-container{
+  margin-top: 80px;
+}
+
+@media screen and (max-width: 768px) {
+  .app-container{
+    margin-top: 70px;
+  } 
+}
+
+@media screen and (max-width: 500px) {
+  .app-container{
+    margin-top: 60px;
+  } 
+}

@@ -1,0 +1,48 @@
+.home-container{
+    width: 100%;
+    max-width: 1024px;
+    margin: 0 auto;
+    padding: 4rem 2rem 2rem 2rem;
+}
+
+.home-header-container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column nowrap;
+
+}
+
+.home-header-container h1{
+    font-size: 2.75rem;
+    font-weight: 500;
+    color: white;
+}
+
+.home-header-container h1 span{
+    color: #CCB256;
+    font-weight: 700;
+}
+
+.home-header-container p {
+    max-width: 500px;
+    text-align: center;
+    margin-top: 1rem;
+    color: #767676;
+    line-height: 1.5;
+}
+
+.home-header-container p strong {
+    color: #949494;
+    font-weight: 600;
+}
+
+.home-search-container{
+    margin: 3rem 0;
+
+}
+
+.home-new-wallet-container{
+    margin: .5rem 0;
+}

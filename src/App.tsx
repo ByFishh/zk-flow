@@ -23,11 +23,13 @@ function App() {
     <Router>
       {<Navbar />}
       <Dialogs />
-      <Routes>
-        <Route element={<Home />} path="/" />
-        <Route element={<Wallet />} path="/wallet/:id" />
-        <Route element={<Overview />} path="/overview" />
-      </Routes>
+      <div className="app-container">
+        <Routes>
+          <Route element={<Home />} path="/" />
+          <Route element={<Wallet />} path="/wallet/:id" />
+          <Route element={<Overview />} path="/overview" />
+        </Routes>
+      </div>
     </Router>
   );
 }
