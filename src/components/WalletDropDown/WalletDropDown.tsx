@@ -13,6 +13,7 @@ const WalletDropDown = (props: {
   infos: {
     title: string;
     id: string;
+    icon?: JSX.Element;
     adress?: string;
     blockchain?: string[];
     gridInfo?: IGridInfo[];
@@ -23,6 +24,7 @@ const WalletDropDown = (props: {
   const renderWalletTitle = useMemo(
     () => (
       <div className="walletDropDown-main-info">
+        {props.infos.icon && props.infos.icon}
         <p className="walletDropDown-name">{props.infos.title}</p>
         {props.infos.adress && <span>{cutWalletAdress(props.infos.adress)}</span>}
         {props.infos.blockchain && (
