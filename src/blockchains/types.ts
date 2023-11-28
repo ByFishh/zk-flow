@@ -51,36 +51,11 @@ type Wallet = {
   protocols: Protocol[];
 };
 
-enum BlockchainType {
+enum Blockchain {
   zkSync = 'zkSync',
   scroll = 'scroll',
-  base = 'base',
 }
-
-type Blockchain = {
-  tokenEndpoint: string;
-  apiEndpoint: string;
-  explorer: string;
-};
-
-const BLOCKCHAINS: { [key in BlockchainType]: Blockchain } = {
-  [BlockchainType.zkSync]: {
-    tokenEndpoint: 'https://zksync.blockscout.com/api/v2/addresses/%ADDRESS%/token-balances',
-    apiEndpoint: 'https://block-explorer-api.mainnet.zksync.io/api',
-    explorer: 'https://explorer.zksync.io/address/%ADDRESS%',
-  },
-  [BlockchainType.scroll]: {
-    tokenEndpoint: 'https://blockscout.scroll.io/api',
-    apiEndpoint: 'https://api.scrollscan.com/api',
-    explorer: 'https://scrollscan.com/address/%ADDRESS%',
-  },
-  [BlockchainType.base]: {
-    tokenEndpoint: '',
-    apiEndpoint: 'https://api.basescan.org/api',
-    explorer: 'https://basescan.org/address/%ADDRESS%',
-  },
-};
 
 export type { Interaction, Volume, Fee, Contract, Token, AdditionalInfo, Protocol, Wallet };
 
-export { BlockchainType, BLOCKCHAINS };
+export { Blockchain };

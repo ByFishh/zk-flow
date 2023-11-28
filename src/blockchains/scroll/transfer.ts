@@ -1,8 +1,9 @@
 import axios from 'axios';
 import { Transaction, Transfer } from './types.ts';
-import { BLOCKCHAINS, BlockchainType } from '../types.ts';
 
-const getTransfers = async (address: string, blockchain: BlockchainType) => {
+const apiEndpoint = 'https://api.scrollscan.com/api';
+
+const getTransfers = async (address: string) => {
   const transfers: Transfer[] = [];
   const offset = 1000;
   let page = 1;
@@ -10,7 +11,7 @@ const getTransfers = async (address: string, blockchain: BlockchainType) => {
   // eslint-disable-next-line no-constant-condition
   while (true) {
     try {
-      const response = await axios.get(BLOCKCHAINS[blockchain].apiEndpoint, {
+      const response = await axios.get(apiEndpoint, {
         params: {
           module: 'account',
           action: 'tokentx',
@@ -59,8 +60,8 @@ const assignTransfersValue = async (transactions: Transaction[], ethPrice: numbe
   }
 };
 
-const assignTransfers = async (transactions: Transaction[], address: string, blockchain: BlockchainType) => {
-  const transfers = await getTransfers(address, blockchain);
+const assignTransfers = async (transactions: Transaction[], address: string) => {
+  const transfers = await getTransfers(address);
 
   for (const transfer of transfers) {
     for (const transaction of transactions) {

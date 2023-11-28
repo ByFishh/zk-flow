@@ -1,14 +1,14 @@
-import { BlockchainType, Wallet } from './types.ts';
-import { getWallet as getBlockScoutWallet } from './blockscout/wallet.ts';
+import { Blockchain, Wallet } from './types.ts';
+import { getWallet as getScrollWallet } from './scroll/wallet.ts';
+import { getWallet as getZkSyncWallet } from './zksync/wallet.ts';
 
 const blockchains = {
-  zkSync: getBlockScoutWallet,
-  scroll: getBlockScoutWallet,
-  base: getBlockScoutWallet,
+  zkSync: getZkSyncWallet,
+  scroll: getScrollWallet,
 };
 
-const getWallet = async (address: string, blockchain: BlockchainType): Promise<Wallet> => {
-  return await blockchains[blockchain](address, blockchain);
+const getWallet = async (address: string, blockchain: Blockchain): Promise<Wallet> => {
+  return await blockchains[blockchain](address);
 };
 
 export { getWallet };

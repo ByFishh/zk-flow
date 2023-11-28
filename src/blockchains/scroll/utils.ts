@@ -1,9 +1,5 @@
-import { BlockchainType, Contract, Fee, Interaction, Volume, Wallet } from '../types.ts';
-import { getTransactions } from './transaction.ts';
 import { Transaction } from './types.ts';
-import { getTokens } from './token.ts';
-import { assignTransfers, assignTransfersValue } from './transfer.ts';
-import axios from 'axios';
+import { Contract, Fee, Interaction, Volume } from '../types.ts';
 
 const getInteraction = (address: string, transactions: Transaction[]): Interaction => {
   const interaction: Interaction = {
@@ -32,17 +28,16 @@ const getVolume = async (transactions: Transaction[], ethPrice: number): Promise
 
   for (const transaction of transactions) {
     const value = Number(transaction.value);
-    volume.total += value;
-    if (transaction.transfers.length) volume.total += transaction.transfers[0].transferPrice;
+    volume.total += value * 10 ** -18 * ethPrice;
+    if (transaction.transfers.length) {
+      volume.total += transaction.transfers[0].transferPrice;
+    }
     const transactionDate = new Date(transaction.timeStamp * 1000);
     if (transactionDate > new Date(Date.now() - 1000 * 60 * 60 * 24 * 7)) {
-      volume.change += value;
+      volume.change += value * 10 ** -18 * ethPrice;
       if (transaction.transfers.length) volume.total += transaction.transfers[0].transferPrice;
     }
   }
-
-  volume.total *= 10 ** -18 * ethPrice;
-  volume.change *= 10 ** -18 * ethPrice;
 
   return volume;
 };
@@ -88,24 +83,4 @@ const getContract = (transactions: Transaction[]): Contract => {
   };
 };
 
-const getWallet = async (address: string, blockchain: BlockchainType): Promise<Wallet> => {
-  const transactions: Transaction[] = await getTransactions(address, blockchain);
-  const ethPrice =
-    Number((await axios.get('https://api.etherscan.io/api?module=stats&action=ethprice')).data.result.ethusd) || 2000;
-
-  await assignTransfers(transactions, address, blockchain);
-  await assignTransfersValue(transactions, ethPrice);
-
-  return {
-    address,
-    interaction: getInteraction(address, transactions),
-    volume: await getVolume(transactions, ethPrice),
-    fee: await getFee(address, transactions, ethPrice),
-    contract: getContract(transactions),
-    tokens: await getTokens(address, blockchain),
-    additionalInfos: [],
-    protocols: [],
-  };
-};
-
-export { getWallet };
+export { getInteraction, getVolume, getFee, getContract };
