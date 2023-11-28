@@ -10,7 +10,7 @@ const Protocols = memo(
       activeDays: string | number;
       interactions: number;
       lastActivity: number;
-      volume: string;
+      volume: number;
     }[];
   }) => {
     const logic = useProtocols();
@@ -53,7 +53,7 @@ const Protocols = memo(
               </div>
               <div className="protocols-item-box">
                 <span>Volume in $:</span>
-                <p>{item.volume}$</p>
+                <p>{String(item.volume)}$</p>
               </div>
             </div>
           ))}

@@ -1,4 +1,4 @@
 export type IGridInfo = {
   key: string;
-  value: string;
+  value: string | number;
 };

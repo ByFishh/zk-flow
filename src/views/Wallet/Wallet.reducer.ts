@@ -1,20 +1,17 @@
-import { Blockchain } from '../../blockchains/types';
+import { Wallet } from '../../blockchains/types';
 
-export let initialState: { isActive: boolean; items: { name: Blockchain; isChecked: boolean }[] } = {
-  isActive: false,
-  items: Object.values(Blockchain).map((blockchain) => ({ name: blockchain, isChecked: false })),
+export let initialState: { wallet: Wallet } = {
+  wallet: {} as Wallet,
 };
 
 const getDefaultState = () => ({
-  isActive: false,
-  items: Object.values(Blockchain).map((blockchain) => ({ name: blockchain, isChecked: false })),
+  wallet: {} as Wallet,
 });
 
 export type IState = typeof initialState;
 
 export enum IAction {
-  TOGGLE_IS_ACTIVE = 'toggle_is_active',
-  TOGGLE_ITEM_CHECK = 'toggle_item_check',
+  SET_WALLET = 'set_wallet',
 }
 export const componentIsUnmounting = () => {
   initialState = getDefaultState();

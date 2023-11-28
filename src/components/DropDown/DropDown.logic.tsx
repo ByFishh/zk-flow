@@ -2,10 +2,11 @@
 import { useReducer, useEffect, useRef } from 'react';
 import { reducer, initialState, IState, IAction } from './DropDown.reducer';
 import { preventBigString } from '../../utils/preventBigString';
+import { Blockchain } from '../../blockchains/types';
 
 export const useDropDown = (props: {
   multiple?: boolean;
-  onChange?: (data: string[]) => void;
+  onChange?: (data: Blockchain[]) => void;
   initialValues?: string[];
 }) => {
   // State

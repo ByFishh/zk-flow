@@ -1,10 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useReducer } from "react";
-import { useLocation } from "react-router-dom";
-import { reducer, initialState, IAction, IState } from "./Navbar.reducer";
+import { useEffect, useReducer } from 'react';
+import { useLocation } from 'react-router-dom';
+import { reducer, initialState, IAction, IState } from './Navbar.reducer';
+import { useDispatch, useSelector } from 'react-redux';
+import { IAppDispatch, IRootState } from '../../redux/store';
+import { setBlockchain } from '../../redux/reducer/blockchainReducer';
+import { Blockchain } from '../../blockchains/types';
 
 export const useNavbar = () => {
   const location = useLocation();
+  const dispatchCtx = useDispatch<IAppDispatch>();
+  const { currentBlockchain } = useSelector((s: IRootState) => s.blockchain);
 
   // State
   const [state, dispatch] = useReducer(reducer, { ...initialState });
@@ -13,8 +19,8 @@ export const useNavbar = () => {
   useEffect(() => onResize(), []);
 
   useEffect(() => {
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
   }, [state.menuIsDisplay]);
 
   useEffect(() => {
@@ -39,5 +45,11 @@ export const useNavbar = () => {
 
   const isCurrentLocation = (route: string): boolean => route === state.currentRoute;
 
-  return { ...state, isCurrentLocation, toggleMenu };
+  const onDropDownChange = (data: Blockchain[]) => {
+    const selectedBlockchain = data[0];
+    if (!selectedBlockchain) return;
+    dispatchCtx(setBlockchain(selectedBlockchain));
+  };
+
+  return { ...state, isCurrentLocation, toggleMenu, currentBlockchain, onDropDownChange };
 };

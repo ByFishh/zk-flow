@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import DialogReducer from './reducer/dialogReducer';
 import walletReducer from './reducer/walletReducer';
+import blockchainReducer from './reducer/blockchainReducer';
 
 const rootReducer = {
   dialog: DialogReducer,
   wallet: walletReducer,
+  blockchain: blockchainReducer,
 };
 
 export const initStore = () => {

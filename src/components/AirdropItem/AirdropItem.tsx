@@ -1,6 +1,7 @@
 import Chevron from '../../icons/Chevron/Chevron';
 import './AirdropItem.css';
 import { useAirdropItem } from './AirdropItem.logic';
+import { v4 as uuidv4 } from 'uuid';
 
 const AirdropItem = (props: { title: string; items: { txt: string; checked: boolean }[] }) => {
   const logic = useAirdropItem(props);
@@ -10,7 +11,7 @@ const AirdropItem = (props: { title: string; items: { txt: string; checked: bool
       <div className="airdropItem-top-container" onClick={logic.toggleIsActive}>
         <div className="airdropItem-flex" data-is-checked={true}>
           <div className="airdropItem-check" style={{ background: logic.getStateColor() }}></div>
-          <p>Bridge to scroll</p>
+          <p>{props.title}</p>
         </div>
         <div className="airdropItem-flex">
           <Chevron isActive={logic.isActive} />
@@ -19,7 +20,7 @@ const AirdropItem = (props: { title: string; items: { txt: string; checked: bool
       {logic.isActive && (
         <div className="airdropItem-items-container">
           {props.items.map((item) => (
-            <div className="airdropItem-item" data-is-checked={item.checked}>
+            <div key={uuidv4()} className="airdropItem-item" data-is-checked={item.checked}>
               <div className="airdropItem-check"></div>
               <p>{item.txt}</p>
             </div>

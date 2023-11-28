@@ -24,7 +24,7 @@ const Navbar = () => {
     () => (
       <>
         <span>Current Blockchain</span>
-        <DropDown multiple={false} />
+        <DropDown onChange={logic.onDropDownChange} multiple={false} initialValues={[logic.currentBlockchain]} />
       </>
     ),
     [],

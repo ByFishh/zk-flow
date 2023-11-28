@@ -1,4 +1,1 @@
-export const isProfit = (str: string): boolean => {
-  const getSign = str.slice(0, 1);
-  return getSign === "+";
-};
+export const isProfit = (value: number): boolean => value > 0;

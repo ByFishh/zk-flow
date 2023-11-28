@@ -5,9 +5,15 @@ import Cross from '../../icons/Cross/Cross';
 import Chevron from '../../icons/Chevron/Chevron';
 import { memo } from 'react';
 import { preventBigString } from '../../utils/preventBigString';
+import { Blockchain } from '../../blockchains/types';
 
 const DropDown = memo(
-  (props: { multiple: boolean; inverted?: boolean; onChange?: (data: string[]) => void; initialValues?: string[] }) => {
+  (props: {
+    multiple: boolean;
+    inverted?: boolean;
+    onChange?: (data: Blockchain[]) => void;
+    initialValues?: string[];
+  }) => {
     const logic = useDropDown(props);
 
     return (

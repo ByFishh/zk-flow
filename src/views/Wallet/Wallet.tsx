@@ -7,18 +7,34 @@ import AirdropItem from '../../components/AirdropItem/AirdropItem';
 import Protocols from '../../components/Protocols/Protocols';
 import WalletDropDown from '../../components/WalletDropDown/WalletDropDown';
 import { v4 as uuidv4 } from 'uuid';
+import { useWallet } from './Wallet.logic';
+import { isProfit } from '../../utils/isProfit';
 
 const Wallet = () => {
+  const logic = useWallet();
+
+  if (!logic.wallet.address) return;
+
   return (
     <div className="wallet-container">
       <h2 className="wallet-title">Wallet Information</h2>
-      <p className="wallet-subtitle">0xfakcia023labmklxa0mxff32</p>
+      <p className="wallet-subtitle">{logic.wallet.address}</p>
       <section>
         <div className="wallet-main-info-container">
-          <MainInfo title="Title" lastDay={2} profit={'34'} value={40} />
-          <MainInfo title="Title" lastDay={2} profit={'34'} value={40} />
-          <MainInfo title="Title" lastDay={2} profit={'34'} value={40} />
-          <MainInfo title="Title" lastDay={2} profit={'34'} value={40} />
+          <MainInfo
+            title="Interactions"
+            lastDay={7}
+            profit={logic.wallet.interaction.change}
+            value={logic.wallet.interaction.total}
+          />
+          <MainInfo title="Volume" lastDay={7} profit={logic.wallet.volume.change} value={logic.wallet.volume.total} />
+          <MainInfo title="Fee spent" lastDay={7} profit={logic.wallet.fee.change} value={logic.wallet.fee.total} />
+          <MainInfo
+            title="Contract"
+            lastDay={7}
+            profit={logic.wallet.contract.change}
+            value={logic.wallet.contract.total}
+          />
         </div>
       </section>
       <section className="wallet-balance-section">
@@ -27,14 +43,7 @@ const Wallet = () => {
           infos={{
             title: 'Balance',
             id: uuidv4(),
-            gridInfo: [
-              { key: 'Information', value: 'value' },
-              { key: 'Information', value: 'value' },
-              { key: 'Information', value: 'value' },
-              { key: 'Information', value: 'value' },
-              { key: 'Information', value: 'value' },
-              { key: 'Information', value: 'value' },
-            ],
+            gridInfo: logic.wallet.tokens.map((item) => ({ key: item.symbol, value: item.balance })),
           }}
         />
       </section>
@@ -42,16 +51,7 @@ const Wallet = () => {
         <img src={AD} />
       </section>
       <section className="wallet-blockchain-section">
-        <GridInfo
-          items={[
-            { key: 'Information', value: 'value' },
-            { key: 'Information', value: 'value' },
-            { key: 'Information', value: 'value' },
-            { key: 'Information', value: 'value' },
-            { key: 'Information', value: 'value' },
-            { key: 'Information', value: 'value' },
-          ]}
-        />
+        <GridInfo items={logic.wallet.additionalInfos.map((item) => ({ key: item.label, value: item.value }))} />
       </section>
       <section className="wallet-aidrop-container">
         <div>
@@ -61,36 +61,34 @@ const Wallet = () => {
             than 3 points, all criteria will be crossed out.
           </p>
           <div className="wallet-airdrop-left-flex">
-            <p className="wallet-airdrop-tasks">Completed Tasks 5/15</p>
-            <p className="wallet-aidrop-eligible" data-is-eligible={false}>
-              Eligible for 1000$
+            <p className="wallet-airdrop-tasks">
+              Completed Tasks {logic.wallet.airdrop.checked}/{logic.wallet.airdrop.total}
+            </p>
+            <p className="wallet-aidrop-eligible" data-is-eligible={isProfit(logic.wallet.airdrop.value)}>
+              Eligible for {logic.wallet.airdrop.value}$
             </p>
           </div>
         </div>
         <div>
-          <AirdropItem
-            title="Item number 1"
-            items={[
-              { txt: 'first item', checked: true },
-              { txt: 'second item', checked: false },
-            ]}
-          />
-          <AirdropItem
-            title="Item number 2"
-            items={[
-              { txt: 'first item', checked: true },
-              { txt: 'second item', checked: true },
-            ]}
-          />
+          {logic.wallet.airdrop.items.map((item) => (
+            <AirdropItem
+              key={uuidv4()}
+              title={item.title}
+              items={item.items.map((v) => ({ txt: v.label, checked: v.checked }))}
+            />
+          ))}
         </div>
       </section>
       <section className="wallet-protocols-container">
         <Title content="Protocols" />
         <Protocols
-          items={[
-            { name: 'SyncSwap', activeDays: 21, interactions: 432, lastActivity: 20, volume: '493' },
-            { name: 'SyncSwap', activeDays: 21, interactions: 432, lastActivity: 20, volume: '493' },
-          ]}
+          items={logic.wallet.protocols.map((item) => ({
+            name: item.name,
+            activeDays: item.activeDays,
+            interactions: item.interactions,
+            lastActivity: item.lastActivity,
+            volume: item.volume,
+          }))}
         />
       </section>
     </div>

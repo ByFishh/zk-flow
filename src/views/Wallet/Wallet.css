@@ -46,6 +46,7 @@
     color: #767676;
     line-height: 1.35;
     margin-bottom: 2rem;
+    font-size: .975rem;
 }
 
 .wallet-airdrop-desc strong {
@@ -76,8 +77,6 @@
 .wallet-protocols-container{
     padding: 4rem 0 2rem 0;
 }
-
-
 
 @media screen and (max-width: 768px){
     .wallet-main-info-container{
