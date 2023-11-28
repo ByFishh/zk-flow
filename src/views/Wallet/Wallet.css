@@ -1,0 +1,86 @@
+.wallet-container{
+    width: 100%;
+    max-width: 1024px;
+    margin: 0 auto;
+    padding: 4rem 2rem 2rem 2rem;
+}
+
+.wallet-title{
+    font-size: 2rem;
+    margin-bottom: .75rem;
+    color: white;
+    font-weight: 600;
+}
+
+.wallet-subtitle{
+    margin-bottom: 3rem;
+    color: white;
+}
+
+.wallet-main-info-container{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(325px, 1fr));
+    gap: 1.5rem;
+}
+
+.wallet-balance-section{
+    padding: 1.5rem 0;
+}
+
+.wallet-blockchain-section{
+    padding: 1.25rem 0;
+}
+
+.wallet-ad-container img {
+    width: 100%;
+}
+
+.wallet-aidrop-container{
+    margin-top: 3rem;
+    grid-template-columns: repeat(auto-fit, minmax(325px, 1fr));
+    gap: 2rem;
+    display: grid;
+}
+
+.wallet-airdrop-desc {
+    color: #767676;
+    line-height: 1.35;
+    margin-bottom: 2rem;
+}
+
+.wallet-airdrop-desc strong {
+    color: #949494;
+    font-weight: 600;
+}
+
+.wallet-airdrop-left-flex{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-flow: row wrap;
+}
+
+.wallet-airdrop-tasks{
+    color: white;
+    font-weight: 600;
+}
+
+.wallet-aidrop-eligible{
+    color: #20EC72;
+}
+
+.wallet-aidrop-eligible[data-is-eligible~="false"]{
+    color: #FF7171;
+}
+
+.wallet-protocols-container{
+    padding: 4rem 0 2rem 0;
+}
+
+
+
+@media screen and (max-width: 768px){
+    .wallet-main-info-container{
+        gap: 1rem;
+    }
+}

@@ -3,6 +3,11 @@
   margin-bottom: 1.5rem;
 }
 
+.airdropItem-container:last-child {
+  margin-bottom: 0rem;
+}
+
+
 .airdropItem-top-container {
   width: 100%;
   display: flex;
