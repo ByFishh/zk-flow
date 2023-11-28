@@ -1,4 +1,4 @@
-import { Wallet } from '../types.ts';
+import { Airdrop, Wallet } from '../types.ts';
 import { getTransactions } from './transaction.ts';
 import { Transaction } from './types.ts';
 import { getTokens } from './token.ts';
@@ -26,10 +26,10 @@ const getWallet = async (address: string): Promise<Wallet> => {
     tokens: await getTokens(address),
     additionalInfos: await getAdditionalInfos(address, transactions),
     protocols: getProtocols(address, transactions),
-    airdrop: [],
+    airdrop: {} as Airdrop,
   };
 
-  tmp.airdrop.push(...(await getAirdrop(address, transactions, tmp)));
+  tmp.airdrop = await getAirdrop(address, transactions, tmp);
 
   return tmp;
 };
