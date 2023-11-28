@@ -7,6 +7,7 @@ import axios from 'axios';
 import { getProtocols } from './protocol.ts';
 import { getContract, getFee, getInteraction, getVolume } from './utils.ts';
 import { getAdditionalInfos } from './additional.ts';
+import { getAirdrop } from './airdrop.ts';
 
 const getWallet = async (address: string): Promise<Wallet> => {
   const transactions: Transaction[] = await getTransactions(address);
@@ -16,7 +17,7 @@ const getWallet = async (address: string): Promise<Wallet> => {
   await assignTransfers(transactions, address);
   await assignTransfersValue(transactions, nativeTokenPrice);
 
-  return {
+  const tmp: Wallet = {
     address,
     interaction: getInteraction(address, transactions),
     volume: await getVolume(transactions, nativeTokenPrice),
@@ -25,7 +26,12 @@ const getWallet = async (address: string): Promise<Wallet> => {
     tokens: await getTokens(address),
     additionalInfos: await getAdditionalInfos(address, transactions),
     protocols: getProtocols(address, transactions),
+    airdrop: [],
   };
+
+  tmp.airdrop.push(...(await getAirdrop(address, transactions, tmp)));
+
+  return tmp;
 };
 
 export { getWallet };

@@ -25,6 +25,7 @@ const getWallet = async (address: string): Promise<Wallet> => {
     tokens: await getTokens(address),
     additionalInfos: await getAdditionalInfos(address, transactions),
     protocols: getProtocols(address, transactions),
+    airdrop: [],
   };
 };
 

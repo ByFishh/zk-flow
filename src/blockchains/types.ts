@@ -40,6 +40,11 @@ type Protocol = {
   volume: number;
 };
 
+type AirdropItem = {
+  title: string;
+  items: { label: string; checked: boolean }[];
+};
+
 type Wallet = {
   address: string;
   interaction: Interaction;
@@ -49,6 +54,7 @@ type Wallet = {
   tokens: Token[];
   additionalInfos: AdditionalInfo[];
   protocols: Protocol[];
+  airdrop: AirdropItem[];
 };
 
 enum Blockchain {
@@ -56,6 +62,6 @@ enum Blockchain {
   scroll = 'scroll',
 }
 
-export type { Interaction, Volume, Fee, Contract, Token, AdditionalInfo, Protocol, Wallet };
+export type { Interaction, Volume, Fee, Contract, Token, AdditionalInfo, Protocol, AirdropItem, Wallet };
 
 export { Blockchain };

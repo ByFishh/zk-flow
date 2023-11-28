@@ -28,7 +28,7 @@ const Home = () => {
     <main className="home-container">
       {renderHeader}
       <section className="home-search-container">
-        <Search action={logic.handleSearch} placeholder={'Search an Adress'} />
+        <Search action={logic.handleSearch} placeholder={'Search an Address'} />
       </section>
       <section>
         <Title content="My Wallets" />
