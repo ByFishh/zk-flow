@@ -70,14 +70,14 @@ const BLOCKCHAINS: { [key in BlockchainType]: Blockchain } = {
     explorer: 'https://explorer.zksync.io/address/%ADDRESS%',
   },
   [BlockchainType.scroll]: {
-    tokenEndpoint: '',
-    apiEndpoint: '',
-    explorer: '',
+    tokenEndpoint: 'https://blockscout.scroll.io/api',
+    apiEndpoint: 'https://api.scrollscan.com/api',
+    explorer: 'https://scrollscan.com/address/%ADDRESS%',
   },
   [BlockchainType.base]: {
     tokenEndpoint: '',
-    apiEndpoint: '',
-    explorer: '',
+    apiEndpoint: 'https://api.basescan.org/api',
+    explorer: 'https://basescan.org/address/%ADDRESS%',
   },
 };
 

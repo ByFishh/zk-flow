@@ -1,10 +1,11 @@
 import { BLOCKCHAINS, BlockchainType, Token } from '../types.ts';
 import { getTokens as getZkSyncToken } from '../zksync/token.ts';
+import { getTokens as getScrollToken } from '../scroll/token.ts';
 import axios from 'axios';
 
 const blockchains = {
   zkSync: getZkSyncToken,
-  scroll: () => [],
+  scroll: getScrollToken,
   base: () => [],
 };
 

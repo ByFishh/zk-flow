@@ -32,7 +32,7 @@ const getVolume = async (transactions: Transaction[], ethPrice: number): Promise
 
   for (const transaction of transactions) {
     const value = Number(transaction.value);
-    volume.total += value * 10 ** -18 * ethPrice;
+    volume.total += value;
     if (transaction.transfers.length) volume.total += transaction.transfers[0].transferPrice;
     const transactionDate = new Date(transaction.timeStamp * 1000);
     if (transactionDate > new Date(Date.now() - 1000 * 60 * 60 * 24 * 7)) {
@@ -40,6 +40,9 @@ const getVolume = async (transactions: Transaction[], ethPrice: number): Promise
       if (transaction.transfers.length) volume.total += transaction.transfers[0].transferPrice;
     }
   }
+
+  volume.total *= 10 ** -18 * ethPrice;
+  volume.change *= 10 ** -18 * ethPrice;
 
   return volume;
 };
@@ -88,7 +91,7 @@ const getContract = (transactions: Transaction[]): Contract => {
 const getWallet = async (address: string, blockchain: BlockchainType): Promise<Wallet> => {
   const transactions: Transaction[] = await getTransactions(address, blockchain);
   const ethPrice =
-    Number((await axios.get('https://api.etherscan.io/api?module=stats&action=ethprice')).data.result.ethusd) || 1900;
+    Number((await axios.get('https://api.etherscan.io/api?module=stats&action=ethprice')).data.result.ethusd) || 2000;
 
   await assignTransfers(transactions, address, blockchain);
   await assignTransfersValue(transactions, ethPrice);
