@@ -1,0 +1,34 @@
+.overview-container{
+    width: 100%;
+    max-width: 1024px;
+    margin: 0 auto;
+    padding: 4rem 2rem 2rem 2rem;
+}
+
+.overview-title{
+    font-size: 2rem;
+    margin-bottom: 3rem;
+    color: white;
+    font-weight: 600;
+}
+
+.overview-main-info-container{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(325px, 1fr));
+    gap: 1.5rem;
+}
+
+.overview-wallet-section{
+    margin-top: 2.5rem;
+}
+
+.overview-search-container{
+    margin-bottom: 1.5rem;
+
+}
+
+@media screen and (max-width: 768px){
+    .overview-main-info-container{
+        gap: 1rem;
+    }
+}
