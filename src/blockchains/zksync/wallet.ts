@@ -29,7 +29,7 @@ const getWallet = async (address: string): Promise<Wallet> => {
     airdrop: {} as Airdrop,
   };
 
-  tmp.airdrop = await getAirdrop(address, transactions, tmp);
+  tmp.airdrop = await getAirdrop(tmp);
 
   return tmp;
 };
