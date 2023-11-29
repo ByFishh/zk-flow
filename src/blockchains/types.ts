@@ -69,6 +69,9 @@ enum Blockchain {
   scroll = 'scroll',
 }
 
+export type ITotalProperty = Interaction | Volume | Fee | Contract | Airdrop;
+export type IChangeProperty = Interaction | Volume | Fee | Contract;
+
 export type { Interaction, Volume, Fee, Contract, Token, AdditionalInfo, Protocol, AirdropItem, Airdrop, Wallet };
 
 export { Blockchain };

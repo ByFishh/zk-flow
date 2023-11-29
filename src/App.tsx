@@ -9,7 +9,7 @@ import Dialogs from './components/Dialogs/Dialogs.tsx';
 function App() {
   return (
     <Router>
-      {<Navbar />}
+      <Navbar />
       <Dialogs />
       <div className="app-container">
         <Routes>

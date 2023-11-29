@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useReducer } from 'react';
+import { useEffect, useReducer, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { reducer, initialState, IAction, IState } from './Navbar.reducer';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,6 +15,9 @@ export const useNavbar = () => {
   // State
   const [state, dispatch] = useReducer(reducer, { ...initialState });
 
+  // Ref
+  const firstRenderRef = useRef<boolean>(true);
+
   // UseEffect
   useEffect(() => onResize(), []);
 
@@ -24,9 +27,16 @@ export const useNavbar = () => {
   }, [state.menuIsDisplay]);
 
   useEffect(() => {
+    if (isFirstRender()) return;
     if (state.currentRoute === location.pathname) return;
     setCurrentLocation();
   }, [state, location]);
+
+  const isFirstRender = (): boolean => {
+    const isFirstRender = firstRenderRef.current;
+    if (isFirstRender) firstRenderRef.current = false;
+    return isFirstRender;
+  };
 
   const onResize = () => {
     if ((!state.menuIsDisplay && window.innerWidth > 768) || (state.menuIsDisplay && window.innerWidth <= 768))

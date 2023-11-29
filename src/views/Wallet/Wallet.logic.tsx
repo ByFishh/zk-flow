@@ -19,7 +19,7 @@ export const useWallet = () => {
       const { id, blockchain } = params;
       if (!id || !blockchain) return;
       const wallet = await getWallet(id, blockchain as Blockchain);
-      if (!wallet.address) throw 'No Wallet found';
+      if (!wallet.address) throw new Error('No Wallet found');
       const payload: IState = { ...state, wallet };
       dispatch({ type: IAction.SET_WALLET, payload });
     } catch (error) {

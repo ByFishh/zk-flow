@@ -1,15 +1,20 @@
-export let initialState: { keyword: string } = {
+import { Wallet } from '../../blockchains/types';
+
+export let initialState: { keyword: string; wallets: Wallet[] } = {
   keyword: '',
+  wallets: [],
 };
 
 const getDefaultState = () => ({
   keyword: '',
+  wallets: [],
 });
 
 export type IState = typeof initialState;
 
 export enum IAction {
   SET_KEYWORD = 'set_keyword',
+  SET_WALLETS = 'set_wallets',
 }
 export const componentIsUnmounting = () => {
   initialState = getDefaultState();
