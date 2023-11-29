@@ -35,7 +35,7 @@ const getVolume = async (transactions: Transaction[], ethPrice: number): Promise
     const transactionDate = new Date(transaction.timeStamp * 1000);
     if (transactionDate > new Date(Date.now() - 1000 * 60 * 60 * 24 * 7)) {
       volume.change += value * 10 ** -18 * ethPrice;
-      if (transaction.transfers.length) volume.total += transaction.transfers[0].transferPrice;
+      if (transaction.transfers.length) volume.change += transaction.transfers[0].transferPrice;
     }
   }
 

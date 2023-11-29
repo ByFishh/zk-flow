@@ -45,7 +45,7 @@ const getTokens = async (address: string): Promise<Token[]> => {
       },
     });
 
-    if (response.data.status === '1') {
+    if (!response.data.status) {
       for (const rawToken of response.data.result) {
         const token: Token = {
           name: rawToken.name,

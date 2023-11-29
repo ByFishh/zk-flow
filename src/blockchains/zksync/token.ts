@@ -40,7 +40,7 @@ const getTokens = async (address: string): Promise<Token[]> => {
   try {
     const response = await axios.get(tokenEndpoint.replace('%ADDRESS%', address));
 
-    if (response.data.status === '1') {
+    if (!response.data.status) {
       for (const rawToken of response.data) {
         const token: Token = {
           name: rawToken.token.name,
