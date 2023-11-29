@@ -4,7 +4,7 @@ import { getWallet as getZkSyncWallet } from './zksync/wallet.ts';
 
 const blockchains = {
   [Blockchain.zkSync]: getZkSyncWallet,
-  [Blockchain.scroll]: getScrollWallet,
+  [Blockchain.Scroll]: getScrollWallet,
 };
 
 const getWallet = async (address: string, blockchain: Blockchain): Promise<Wallet> => {

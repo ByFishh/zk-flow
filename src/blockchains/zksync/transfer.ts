@@ -23,11 +23,15 @@ const getTransfers = async (address: string) => {
       });
 
       if (response.status === 200) {
+        if (response.data.status === '0') {
+          console.error('Error occurred while retrieving transfers:', response.data.message);
+          return transfers;
+        }
         transfers.push(...response.data.result);
         if (response.data.result.length < offset) return transfers;
         page++;
       } else {
-        console.error('Error occurred while retrieving transactions.');
+        console.error('Error occurred while retrieving transfers.');
       }
     } catch (error) {
       console.error('Error occurred while making the request:', error);

@@ -82,6 +82,14 @@ const getLastActivity = (transactions: Transaction[]): AdditionalInfo => {
 
 const getMinitoolkitRank = async (address: string): Promise<AdditionalInfo> => {
   const response = await axios.post('https://minitoolkit.org/api/leaderboard', { addresses: [address] });
+
+  if (!response.data[0]) {
+    return {
+      label: 'Rank - Minitoolkit',
+      value: 'Not ranked',
+    };
+  }
+
   return {
     label: 'Rank - Minitoolkit',
     value: response.data[0].rank.toString(),
