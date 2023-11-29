@@ -1,7 +1,6 @@
 import { Airdrop, Wallet } from '../types.ts';
-import { Transaction } from './types.ts';
 
-const getAirdrop = async (address: string, transactions: Transaction[], wallet: Wallet): Promise<Airdrop> => {
+const getAirdrop = async (wallet: Wallet): Promise<Airdrop> => {
   const airdrop: Airdrop = {
     checked: 0,
     total: 0,
