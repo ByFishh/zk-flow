@@ -1,11 +1,8 @@
-const LAST_ACTIVITY_GREEN = 5;
-const LAST_ACTIVITY_ORANGE = 20;
-
 export const useProtocols = () => {
   const getLastActivityColor = (lastActivity: number): string => {
-    if (lastActivity < LAST_ACTIVITY_GREEN) return '#20EC72';
-    if (lastActivity < LAST_ACTIVITY_ORANGE) return '#CCB256';
-    return '#FF7171';
+    if (lastActivity > Date.now() - 7 * 24 * 60 * 60 * 1000) return '#20EC72';
+    if (lastActivity === 0) return '#FF7171';
+    return '#CCB256';
   };
 
   return { getLastActivityColor };

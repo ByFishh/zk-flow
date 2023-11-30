@@ -81,15 +81,7 @@ const Wallet = () => {
       </section>
       <section className="wallet-protocols-container">
         <Title content="Protocols" />
-        <Protocols
-          items={logic.wallet.protocols.map((item) => ({
-            name: item.name,
-            activeDays: item.activeDays,
-            interactions: item.interactions,
-            lastActivity: item.lastActivity,
-            volume: item.volume,
-          }))}
-        />
+        <Protocols items={logic.wallet.protocols} />
       </section>
     </div>
   );

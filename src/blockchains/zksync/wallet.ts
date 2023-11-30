@@ -20,7 +20,7 @@ const getWallet = async (address: string): Promise<Wallet> => {
   const tmp: Wallet = {
     address,
     interaction: getInteraction(address, transactions),
-    volume: await getVolume(transactions, nativeTokenPrice),
+    volume: await getVolume(transactions),
     fee: await getFee(address, transactions, nativeTokenPrice),
     contract: getContract(transactions),
     tokens: await getTokens(address),
@@ -30,6 +30,8 @@ const getWallet = async (address: string): Promise<Wallet> => {
   };
 
   tmp.airdrop = await getAirdrop(tmp);
+
+  console.log(tmp);
 
   return tmp;
 };

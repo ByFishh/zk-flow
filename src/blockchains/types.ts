@@ -38,6 +38,7 @@ type Protocol = {
   interactions: number;
   lastActivity: number;
   volume: number;
+  url: string;
 };
 
 type AirdropItem = {

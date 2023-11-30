@@ -20,21 +20,18 @@ const getInteraction = (address: string, transactions: Transaction[]): Interacti
   return interaction;
 };
 
-const getVolume = async (transactions: Transaction[], ethPrice: number): Promise<Volume> => {
+const getVolume = async (transactions: Transaction[]): Promise<Volume> => {
   const volume: Volume = {
     change: 0,
     total: 0,
   };
 
   for (const transaction of transactions) {
-    const value = Number(transaction.value);
-    volume.total += value * 10 ** -18 * ethPrice;
     if (transaction.transfers.length) {
       volume.total += transaction.transfers[0].transferPrice;
     }
     const transactionDate = new Date(transaction.timeStamp * 1000);
     if (transactionDate > new Date(Date.now() - 1000 * 60 * 60 * 24 * 7)) {
-      volume.change += value * 10 ** -18 * ethPrice;
       if (transaction.transfers.length) volume.change += transaction.transfers[0].transferPrice;
     }
   }

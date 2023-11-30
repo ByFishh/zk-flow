@@ -1,5 +1,19 @@
 import { Airdrop, Wallet } from '../types.ts';
 
+const getAirdropAmount = (taskCount: number): number => {
+  if (taskCount < 3) return 0;
+  if (taskCount === 3) return 1250;
+  if (taskCount === 4) return 1750;
+  if (taskCount === 5) return 2250;
+  if (taskCount === 6) return 3250;
+  if (taskCount === 7) return 3750;
+  if (taskCount === 8) return 4250;
+  if (taskCount === 9) return 6250;
+  if (taskCount === 10) return 6750;
+  if (taskCount === 11) return 7250;
+  return 10250;
+};
+
 const getAirdrop = async (wallet: Wallet): Promise<Airdrop> => {
   const airdrop: Airdrop = {
     checked: 0,
@@ -119,11 +133,12 @@ const getAirdrop = async (wallet: Wallet): Promise<Airdrop> => {
     for (const subitem of item.items) {
       if (subitem.checked) {
         airdrop.checked++;
-        airdrop.value += 300;
       }
       airdrop.total++;
     }
   }
+
+  airdrop.value = getAirdropAmount(airdrop.checked);
 
   return airdrop;
 };

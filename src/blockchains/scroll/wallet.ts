@@ -20,7 +20,7 @@ const getWallet = async (address: string): Promise<Wallet> => {
   const tmp: Wallet = {
     address,
     interaction: getInteraction(address, transactions),
-    volume: await getVolume(transactions, ethPrice),
+    volume: await getVolume(transactions),
     fee: await getFee(address, transactions, ethPrice),
     contract: getContract(transactions),
     tokens: await getTokens(address),

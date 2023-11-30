@@ -59,6 +59,11 @@ const assignTransfersValue = async (transactions: Transaction[], ethPrice: numbe
       const tokenPrice = tokensPrice[transfer.tokenSymbol.toUpperCase()] || 0;
       transfer.transferPrice = value * tokenPrice;
     }
+    const ETH = {
+      transferPrice: Number(transaction.value) * 10 ** -18 * ethPrice,
+      tokenSymbol: 'ETH',
+    };
+    transaction.transfers.push(ETH as Transfer);
     transaction.transfers = transaction.transfers.filter((transfer: Transfer) => transfer.transferPrice);
     transaction.transfers = transaction.transfers.sort((a: Transfer, b: Transfer) => b.transferPrice - a.transferPrice);
   }
