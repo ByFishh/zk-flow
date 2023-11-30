@@ -6,6 +6,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 }
 
 .dialogBanner-container[data-alert~="true"] {

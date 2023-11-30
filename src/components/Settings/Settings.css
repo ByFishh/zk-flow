@@ -60,6 +60,7 @@
   padding: 0.3rem 0.75rem;
   color: #676767;
   width: 100%;
+  cursor: pointer;
 }
 
 .settings-dropdown-item:hover {

@@ -48,6 +48,8 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  cursor: pointer;
+
 }
 
 .dropDown-input[data-is-inverted~="true"] {

@@ -7,7 +7,7 @@ const MainInfo = memo((props: { title: string; lastDay: number; value: number; p
   return (
     <div className="mainInfo-container">
       <div className="badge-container" data-is-profit={isProfit(props.profit)}>
-        <p>{toFixed(props.profit, 2)}</p>
+        <p>+{toFixed(props.profit, 2)}</p>
       </div>
       <div className="mainInfo-left-container">
         <p>{props.title}</p>
