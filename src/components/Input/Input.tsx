@@ -13,6 +13,7 @@ const Input = (props: {
   };
   setValue: UseFormSetValue<IWallet>;
   register: UseFormRegister<IWallet>;
+  errors: { input: string; message: string } | undefined;
   initialDropdownValues: string[];
 }) => {
   const logic = useInput(props);
@@ -28,7 +29,14 @@ const Input = (props: {
           initialValues={props.initialDropdownValues}
         />
       ) : (
-        <input className="input-inp" type="text" id={props.id} {...props.register(props.id)} />
+        <div className="input-input-container">
+          <input className="input-inp" type="text" id={props.id} {...props.register(props.id)} />
+          {props.errors && props.errors.input === props.id && (
+            <p className="input-error-message" role="alert">
+              {props.errors.message}
+            </p>
+          )}
+        </div>
       )}
     </div>
   );

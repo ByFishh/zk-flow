@@ -11,11 +11,10 @@ export const useInput = (props: {
   };
   setValue: UseFormSetValue<IWallet>;
   register: UseFormRegister<IWallet>;
+  errors: { input: string; message: string } | undefined;
   initialDropdownValues: string[];
 }) => {
-  const onDropDownChange = useCallback((data: string[]) => {
-    props.setValue('blockchain', data);
-  }, []);
+  const onDropDownChange = useCallback((data: string[]) => props.setValue('blockchain', data), []);
 
   return { onDropDownChange };
 };

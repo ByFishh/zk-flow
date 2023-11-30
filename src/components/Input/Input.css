@@ -18,3 +18,9 @@
   border: none;
   border-radius: 5px;
 }
+
+.input-error-message{
+  color: #FF7171;
+  font-size: .9rem;
+  margin-top: .5rem;
+}

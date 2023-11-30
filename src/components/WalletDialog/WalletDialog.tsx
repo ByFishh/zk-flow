@@ -47,6 +47,7 @@ const WalletDialog = () => {
               setValue={logic.setValue}
               register={logic.register}
               initialDropdownValues={logic.initialDropdownValues}
+              errors={logic.errors}
             />
           ))}
         </div>
