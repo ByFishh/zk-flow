@@ -47,7 +47,7 @@ type Transaction = {
   commitTxHash: string;
   proveTxHash: string;
   executeTxHash: string;
-  isL1Originated: boolean;
+  isL1Originated: string;
   l1BatchNumber: number;
   type: number;
   methodId: string;

@@ -80,16 +80,12 @@ const getContract = (transactions: Transaction[]): Contract => {
   };
 };
 
-const countTransactionPeriods = (transactions: Transaction[], protocol: string, addresses: string[] = []): number => {
+const countTransactionPeriods = (transactions: Transaction[], addresses: string[] = []): number => {
   const uniqueDays: Set<string> = new Set();
 
-  transactions.forEach((transaction) => {
-    if (
-      protocol !== 'zksynceraportal' &&
-      !addresses.includes(transaction.to.toLowerCase()) &&
-      !addresses.includes(transaction.from.toLowerCase())
-    )
-      return;
+  for (const transaction of transactions) {
+    if (!addresses.includes(transaction.to.toLowerCase()) && !addresses.includes(transaction.from.toLowerCase()))
+      continue;
 
     const timestamp = new Date(transaction.timeStamp * 1000);
     const year = timestamp.getFullYear();
@@ -97,7 +93,7 @@ const countTransactionPeriods = (transactions: Transaction[], protocol: string, 
     const day = timestamp.getDate();
 
     uniqueDays.add(`${year}-${month}-${day}`);
-  });
+  }
 
   return uniqueDays.size;
 };

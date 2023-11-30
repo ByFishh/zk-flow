@@ -36,7 +36,7 @@ const Ezkalibur = {
       }
     }
 
-    protocol.activeDays = countTransactionPeriods(transactions, protocol.id, addresses);
+    protocol.activeDays = countTransactionPeriods(transactions, addresses);
 
     return protocol;
   },
