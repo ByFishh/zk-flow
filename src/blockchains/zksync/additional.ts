@@ -76,11 +76,31 @@ const getMinitoolkitRank = async (address: string): Promise<AdditionalInfo> => {
   };
 };
 
+const getZkSyncLiteInteraction = async (address: string): Promise<AdditionalInfo[]> => {
+  const response = await axios.get(
+    `https://api.zksync.io/api/v0.2/accounts/${address}/transactions?from=latest&limit=100&direction=older`,
+  );
+
+  return [
+    {
+      label: 'ZkSyncLite interactions',
+      value: response.data.result.list.length.toString(),
+    },
+    {
+      label: 'ZkSyncLite last activity',
+      value: response.data.result.list[0]
+        ? getTimeAgo(new Date(response.data.result.list[0].createdAt).getTime())
+        : 'Never',
+    },
+  ];
+};
+
 const getAdditionalInfos = async (address: string, transactions: Transaction[]): Promise<AdditionalInfo[]> => {
   const additionalInfos: AdditionalInfo[] = [];
 
   additionalInfos.push(getLastActivity(transactions));
   additionalInfos.push(await getMinitoolkitRank(address));
+  additionalInfos.push(...(await getZkSyncLiteInteraction(address)));
   additionalInfos.push(...getUniqueTimePeriods(address, transactions));
 
   return additionalInfos;

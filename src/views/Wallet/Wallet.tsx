@@ -65,7 +65,7 @@ const Wallet = () => {
               Completed Tasks {logic.wallet.airdrop.checked}/{logic.wallet.airdrop.total}
             </p>
             <p className="wallet-aidrop-eligible" data-is-eligible={isProfit(logic.wallet.airdrop.value)}>
-              Eligible for {logic.wallet.airdrop.value}$
+              Eligible for {logic.wallet.airdrop.value}
             </p>
           </div>
         </div>
