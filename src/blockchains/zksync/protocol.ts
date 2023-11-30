@@ -1,10 +1,61 @@
 import { Protocol } from '../types.ts';
 import { Transaction } from './types.ts';
+import { Basilisk } from './protocols/basilisk.ts';
+import { Syncswap } from './protocols/syncswap.ts';
+import { BigInt } from './protocols/bigint.ts';
+import { DraculaFi } from './protocols/dracula.ts';
+import { Ezkalibur } from './protocols/ezkalibur.ts';
+import { Goal3 } from './protocols/goal3.ts';
+import { Holdstation } from './protocols/holdstation.ts';
+import { IzumiFinance } from './protocols/izumifinance.ts';
+import { Maverick } from './protocols/maverick.ts';
+import { Mute } from './protocols/muteio.ts';
+import { Odos } from './protocols/odos.ts';
+import { Orbiter } from './protocols/orbiter.ts';
+import { PancakeSwap } from './protocols/pancakeswap.ts';
+import { Rollup } from './protocols/rollup.ts';
+import { SpaceFi } from './protocols/spacefi.ts';
+import { Starmaker } from './protocols/starmaker.ts';
+import { Tevaera } from './protocols/tevaera.ts';
+import { Velocore } from './protocols/velocore.ts';
+import { VelocoreV2 } from './protocols/velocorev2.ts';
+import { XYFinance } from './protocols/xyfinance.ts';
+import { ZkSwap } from './protocols/zkswap.ts';
+import { ZkSyncId } from './protocols/zksyncid.ts';
+import { ZkSyncNameService } from './protocols/zksyncnameservice.ts';
+import { OfficialBridge } from './protocols/officialbridge.ts';
 
 const getProtocols = (address: string, transactions: Transaction[]): Protocol[] => {
+  const protocols: Protocol[] = [];
   address;
-  transactions;
-  return [];
+  protocols.push(Basilisk.getProtocolsState(transactions));
+  protocols.push(Syncswap.getProtocolsState(transactions));
+  protocols.push(BigInt.getProtocolsState(transactions));
+  protocols.push(DraculaFi.getProtocolsState(transactions));
+  protocols.push(Ezkalibur.getProtocolsState(transactions));
+  protocols.push(Goal3.getProtocolsState(transactions));
+  protocols.push(Holdstation.getProtocolsState(transactions));
+  protocols.push(IzumiFinance.getProtocolsState(transactions));
+  protocols.push(Maverick.getProtocolsState(transactions));
+  protocols.push(Mute.getProtocolsState(transactions));
+  protocols.push(Odos.getProtocolsState(transactions));
+  protocols.push(Orbiter.getProtocolsState(transactions));
+  protocols.push(PancakeSwap.getProtocolsState(transactions));
+  protocols.push(Rollup.getProtocolsState(transactions));
+  protocols.push(SpaceFi.getProtocolsState(transactions));
+  protocols.push(Starmaker.getProtocolsState(transactions));
+  protocols.push(Tevaera.getProtocolsState(transactions));
+  protocols.push(Velocore.getProtocolsState(transactions));
+  protocols.push(VelocoreV2.getProtocolsState(transactions));
+  protocols.push(XYFinance.getProtocolsState(transactions));
+  protocols.push(ZkSwap.getProtocolsState(transactions));
+  protocols.push(ZkSyncId.getProtocolsState(transactions));
+  protocols.push(ZkSyncNameService.getProtocolsState(transactions));
+  protocols.push(OfficialBridge.getProtocolsState(transactions));
+
+  protocols.sort((a, b) => b.volume - a.volume);
+
+  return protocols;
 };
 
 export { getProtocols };

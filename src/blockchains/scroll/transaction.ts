@@ -23,7 +23,12 @@ const getTransactions = async (address: string): Promise<Transaction[]> => {
         },
       });
       if (response.status === 200) {
+        if (response.data.status === '0') {
+          console.error('Error occurred while retrieving transactions:', response.data.message);
+          return transactions;
+        }
         transactions.push(...response.data.result);
+
         if (response.data.result.length < offset) {
           return transactions;
         }

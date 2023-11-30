@@ -1,27 +1,7 @@
 import { Transaction } from './types.ts';
 import { AdditionalInfo } from '../types.ts';
 import axios from 'axios';
-
-const getTimeAgo = (date: number) => {
-  const seconds = (new Date().getTime() - new Date(date).getTime()) / 1000;
-
-  if (seconds < 60) {
-    return Math.round(seconds) + ' second' + (seconds === 1 ? '' : 's') + ' ago';
-  }
-
-  const minutes = seconds / 60;
-  if (minutes < 60) {
-    return Math.round(minutes) + ' minute' + (minutes === 1 ? '' : 's') + ' ago';
-  }
-
-  const hours = minutes / 60;
-  if (hours < 24) {
-    return Math.round(hours) + ' hour' + (hours === 1 ? '' : 's') + ' ago';
-  }
-
-  const days = hours / 24;
-  return Math.round(days) + ' day' + (days === 1 ? '' : 's') + ' ago';
-};
+import { getTimeAgo } from '../utils.ts';
 
 const getWeekNumber = (d: Date): number => {
   d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
@@ -82,10 +62,37 @@ const getLastActivity = (transactions: Transaction[]): AdditionalInfo => {
 
 const getMinitoolkitRank = async (address: string): Promise<AdditionalInfo> => {
   const response = await axios.post('https://minitoolkit.org/api/leaderboard', { addresses: [address] });
+
+  if (!response.data[0]) {
+    return {
+      label: 'Rank - Minitoolkit',
+      value: 'Not ranked',
+    };
+  }
+
   return {
     label: 'Rank - Minitoolkit',
     value: response.data[0].rank.toString(),
   };
+};
+
+const getZkSyncLiteInteraction = async (address: string): Promise<AdditionalInfo[]> => {
+  const response = await axios.get(
+    `https://api.zksync.io/api/v0.2/accounts/${address}/transactions?from=latest&limit=100&direction=older`,
+  );
+
+  return [
+    {
+      label: 'ZkSyncLite interactions',
+      value: response.data.result.list.length.toString(),
+    },
+    {
+      label: 'ZkSyncLite last activity',
+      value: response.data.result.list[0]
+        ? getTimeAgo(new Date(response.data.result.list[0].createdAt).getTime())
+        : 'Never',
+    },
+  ];
 };
 
 const getAdditionalInfos = async (address: string, transactions: Transaction[]): Promise<AdditionalInfo[]> => {
@@ -93,6 +100,7 @@ const getAdditionalInfos = async (address: string, transactions: Transaction[]):
 
   additionalInfos.push(getLastActivity(transactions));
   additionalInfos.push(await getMinitoolkitRank(address));
+  additionalInfos.push(...(await getZkSyncLiteInteraction(address)));
   additionalInfos.push(...getUniqueTimePeriods(address, transactions));
 
   return additionalInfos;

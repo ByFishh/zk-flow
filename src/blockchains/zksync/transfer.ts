@@ -23,11 +23,15 @@ const getTransfers = async (address: string) => {
       });
 
       if (response.status === 200) {
+        if (response.data.status === '0') {
+          console.error('Error occurred while retrieving transfers:', response.data.message);
+          return transfers;
+        }
         transfers.push(...response.data.result);
         if (response.data.result.length < offset) return transfers;
         page++;
       } else {
-        console.error('Error occurred while retrieving transactions.');
+        console.error('Error occurred while retrieving transfers.');
       }
     } catch (error) {
       console.error('Error occurred while making the request:', error);
@@ -55,6 +59,11 @@ const assignTransfersValue = async (transactions: Transaction[], ethPrice: numbe
       const tokenPrice = tokensPrice[transfer.tokenSymbol.toUpperCase()] || 0;
       transfer.transferPrice = value * tokenPrice;
     }
+    const ETH = {
+      transferPrice: Number(transaction.value) * 10 ** -18 * ethPrice,
+      tokenSymbol: 'ETH',
+    };
+    transaction.transfers.push(ETH as Transfer);
     transaction.transfers = transaction.transfers.filter((transfer: Transfer) => transfer.transferPrice);
     transaction.transfers = transaction.transfers.sort((a: Transfer, b: Transfer) => b.transferPrice - a.transferPrice);
   }

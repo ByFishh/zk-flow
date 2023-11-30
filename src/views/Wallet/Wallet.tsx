@@ -65,7 +65,7 @@ const Wallet = () => {
               Completed Tasks {logic.wallet.airdrop.checked}/{logic.wallet.airdrop.total}
             </p>
             <p className="wallet-aidrop-eligible" data-is-eligible={isProfit(logic.wallet.airdrop.value)}>
-              Eligible for {logic.wallet.airdrop.value}$
+              Eligible for {logic.wallet.airdrop.value}
             </p>
           </div>
         </div>
@@ -81,15 +81,7 @@ const Wallet = () => {
       </section>
       <section className="wallet-protocols-container">
         <Title content="Protocols" />
-        <Protocols
-          items={logic.wallet.protocols.map((item) => ({
-            name: item.name,
-            activeDays: item.activeDays,
-            interactions: item.interactions,
-            lastActivity: item.lastActivity,
-            volume: item.volume,
-          }))}
-        />
+        <Protocols items={logic.wallet.protocols} />
       </section>
     </div>
   );

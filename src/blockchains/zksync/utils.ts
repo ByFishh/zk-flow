@@ -20,22 +20,19 @@ const getInteraction = (address: string, transactions: Transaction[]): Interacti
   return interaction;
 };
 
-const getVolume = async (transactions: Transaction[], ethPrice: number): Promise<Volume> => {
+const getVolume = async (transactions: Transaction[]): Promise<Volume> => {
   const volume: Volume = {
     change: 0,
     total: 0,
   };
 
   for (const transaction of transactions) {
-    const value = Number(transaction.value);
-    volume.total += value * 10 ** -18 * ethPrice;
     if (transaction.transfers.length) {
       volume.total += transaction.transfers[0].transferPrice;
     }
     const transactionDate = new Date(transaction.timeStamp * 1000);
     if (transactionDate > new Date(Date.now() - 1000 * 60 * 60 * 24 * 7)) {
-      volume.change += value * 10 ** -18 * ethPrice;
-      if (transaction.transfers.length) volume.total += transaction.transfers[0].transferPrice;
+      if (transaction.transfers.length) volume.change += transaction.transfers[0].transferPrice;
     }
   }
 
@@ -83,4 +80,22 @@ const getContract = (transactions: Transaction[]): Contract => {
   };
 };
 
-export { getInteraction, getVolume, getFee, getContract };
+const countTransactionPeriods = (transactions: Transaction[], addresses: string[] = []): number => {
+  const uniqueDays: Set<string> = new Set();
+
+  for (const transaction of transactions) {
+    if (!addresses.includes(transaction.to.toLowerCase()) && !addresses.includes(transaction.from.toLowerCase()))
+      continue;
+
+    const timestamp = new Date(transaction.timeStamp * 1000);
+    const year = timestamp.getFullYear();
+    const month = timestamp.getMonth();
+    const day = timestamp.getDate();
+
+    uniqueDays.add(`${year}-${month}-${day}`);
+  }
+
+  return uniqueDays.size;
+};
+
+export { getInteraction, getVolume, getFee, getContract, countTransactionPeriods };

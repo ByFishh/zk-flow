@@ -38,6 +38,7 @@ type Protocol = {
   interactions: number;
   lastActivity: number;
   volume: number;
+  url: string;
 };
 
 type AirdropItem = {
@@ -66,7 +67,7 @@ type Wallet = {
 
 enum Blockchain {
   zkSync = 'zkSync',
-  scroll = 'scroll',
+  Scroll = 'Scroll',
 }
 
 export type ITotalProperty = Interaction | Volume | Fee | Contract | Airdrop;

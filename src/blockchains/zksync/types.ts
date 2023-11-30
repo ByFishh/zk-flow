@@ -43,6 +43,13 @@ type Transaction = {
   cumulativeGasUsed: number;
   gasUsed: number;
   confirmations: number;
+  fee: number;
+  commitTxHash: string;
+  proveTxHash: string;
+  executeTxHash: string;
+  isL1Originated: string;
+  l1BatchNumber: number;
+  type: number;
   methodId: string;
   functionName: string;
   transfers: Transfer[];
