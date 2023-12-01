@@ -10,10 +10,11 @@ import { v4 as uuidv4 } from 'uuid';
 import { useWallet } from './Wallet.logic';
 import { isProfit } from '../../utils/isProfit';
 import { Link } from 'react-router-dom';
+import Loader from '../../components/Loader/Loader';
 
 const Wallet = () => {
   const logic = useWallet();
-
+  if (logic.isLoading) return <Loader message="Loading the wallet. Please wait" />;
   if (!logic.wallet.address) return;
 
   return (

@@ -1,13 +1,15 @@
 import { Wallet } from '../../blockchains/types';
 
-export let initialState: { keyword: string; wallets: Wallet[] } = {
+export let initialState: { keyword: string; wallets: Wallet[]; isLoading: boolean } = {
   keyword: '',
   wallets: [],
+  isLoading: false,
 };
 
 const getDefaultState = () => ({
   keyword: '',
   wallets: [],
+  isLoading: false,
 });
 
 export type IState = typeof initialState;
@@ -15,6 +17,7 @@ export type IState = typeof initialState;
 export enum IAction {
   SET_KEYWORD = 'set_keyword',
   SET_WALLETS = 'set_wallets',
+  SET_IS_LOADING = 'set_is_loading',
 }
 export const componentIsUnmounting = () => {
   initialState = getDefaultState();

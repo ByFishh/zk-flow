@@ -4,10 +4,12 @@ import Title from '../../components/Title/Title';
 import WalletDropDown from '../../components/WalletDropDown/WalletDropDown';
 import { useOverview } from './Overview.logic';
 import './Overview.css';
+import Loader from '../../components/Loader/Loader';
 
 const Overview = () => {
   const logic = useOverview();
 
+  if (logic.isLoading) return <Loader message="Loading wallets. This operation may take some time. Please wait" />;
   if (logic.wallets.length === 0) return;
 
   return (

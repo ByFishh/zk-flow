@@ -21,7 +21,13 @@ export const useOverview = () => {
 
   const getFilteredWallets = () => wallets.filter((item) => item.blockchain.includes(currentBlockchain));
 
+  const toggleLoader = (isLoading: boolean) => {
+    const payload: IState = { ...state, isLoading };
+    dispatch({ type: IAction.SET_IS_LOADING, payload });
+  };
+
   const getAllWalletsAsync = async () => {
+    toggleLoader(true);
     const wallets: Wallet[] = [];
     const filteredWallets = getFilteredWallets();
 
@@ -33,7 +39,7 @@ export const useOverview = () => {
       wallets.push(wallet);
     }
 
-    const payload: IState = { ...state, wallets };
+    const payload: IState = { ...state, wallets, isLoading: false };
     dispatch({ type: IAction.SET_WALLETS, payload });
   };
 

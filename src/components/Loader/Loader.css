@@ -1,0 +1,38 @@
+.loader-container {
+    width: 100%;
+    position: fixed;
+    height: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column nowrap;
+    color: white;
+    padding: 0 2rem;
+}
+
+.loader{
+    width: 17px;
+    height: 17px;
+    border: 2px solid #3f3f3f;
+    border-radius: 50%;
+    border-right-color: #828282;
+    animation: spin 1s ease infinite;
+}
+
+.loader-message{
+    margin-top: 1rem;
+    font-size: .85rem;
+    max-width: 300px;
+    text-align: center;
+    line-height: 1.25;
+
+
+}
+
+@keyframes spin {
+    100% {
+      transform: rotate(360deg);
+    }
+  }

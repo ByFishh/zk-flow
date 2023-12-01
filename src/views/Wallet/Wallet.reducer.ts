@@ -1,17 +1,20 @@
 import { Wallet } from '../../blockchains/types';
 
-export let initialState: { wallet: Wallet } = {
+export let initialState: { wallet: Wallet; isLoading: boolean } = {
   wallet: {} as Wallet,
+  isLoading: false,
 };
 
 const getDefaultState = () => ({
   wallet: {} as Wallet,
+  isLoading: false,
 });
 
 export type IState = typeof initialState;
 
 export enum IAction {
   SET_WALLET = 'set_wallet',
+  SET_IS_LOADING = 'set_is_loading',
 }
 export const componentIsUnmounting = () => {
   initialState = getDefaultState();
