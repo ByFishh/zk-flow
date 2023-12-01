@@ -10,12 +10,14 @@ const Navbar = () => {
 
   const renderLogo = useMemo(
     () => (
-      <div className="nav-logo-container">
-        <img src="icon.svg" alt="zkFlow" />
-        <p>
-          zk<strong>FLOW</strong>
-        </p>
-      </div>
+      <Link to="/">
+        <div className="nav-logo-container">
+          <img src="icon.svg" alt="zkFlow" />
+          <p>
+            zk<strong>FLOW</strong>
+          </p>
+        </div>
+      </Link>
     ),
     [],
   );

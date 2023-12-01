@@ -37,7 +37,6 @@ export const useWalletDialog = () => {
       if (dialog.data.action === IDialogAction.EDIT) updateLocalStorage({ ...data, id: dialog.data.wallet.id });
       handleClose();
     } catch (err: any) {
-      console.log(err);
       if (err.input && err.message) setErrors(err);
     }
   };

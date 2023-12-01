@@ -9,6 +9,7 @@ import WalletDropDown from '../../components/WalletDropDown/WalletDropDown';
 import { v4 as uuidv4 } from 'uuid';
 import { useWallet } from './Wallet.logic';
 import { isProfit } from '../../utils/isProfit';
+import { Link } from 'react-router-dom';
 
 const Wallet = () => {
   const logic = useWallet();
@@ -48,7 +49,9 @@ const Wallet = () => {
         />
       </section>
       <section className="wallet-ad-container">
-        <img src={AD} />
+        <Link to="https://www.universalchains.io/">
+          <img src={AD} />
+        </Link>
       </section>
       <section className="wallet-blockchain-section">
         <GridInfo items={logic.wallet.additionalInfos.map((item) => ({ key: item.label, value: item.value }))} />

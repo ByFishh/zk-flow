@@ -17,6 +17,10 @@
   height: 60px;
 }
 
+.walletDropDown-container[data-has-adress~="true"]:hover {
+  background-color: #272727;
+}
+
 .walletDropDown-top {
   width: 100%;
   height: 100%;
@@ -24,6 +28,7 @@
   justify-content: space-between;
   align-items: center;
 }
+
 
 .walletDropDown-main-info {
   display: flex;
