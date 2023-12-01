@@ -7,7 +7,7 @@ import './Settings.css';
 const Settings = (props: { id: string }) => {
   const logic = useSettings(props);
   return (
-    <div className="settings-container">
+    <div className="settings-container" ref={logic.dropDownContainer}>
       <button className="settings-button" onClick={logic.toggleIsActive}>
         <Gear />
       </button>

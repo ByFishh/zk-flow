@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useReducer } from 'react';
+import { useEffect, useReducer, useRef } from 'react';
 import { IState, componentIsUnmounting, reducer, initialState, IAction } from './Settings.reducer';
 import { setDialog } from '../../redux/reducer/dialogReducer';
 import { useDispatch } from 'react-redux';
@@ -15,12 +15,26 @@ export const useSettings = (props: { id: string }) => {
   // State
   const [state, dispatch] = useReducer(reducer, { ...initialState });
 
+  // Refs
+  const dropDownContainer = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     return () => componentIsUnmounting();
   }, []);
 
-  const toggleIsActive = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
+  useEffect(() => {
+    window.addEventListener('click', preventOutsideClick);
+    return () => window.removeEventListener('click', preventOutsideClick);
+  }, [state]);
+
+  const preventOutsideClick = (e: MouseEvent) => {
+    if (!state.isActive) return;
+    if (!dropDownContainer.current) return;
+    if (e.target instanceof Node && !dropDownContainer.current.contains(e.target)) toggleIsActive();
+  };
+
+  const toggleIsActive = (e?: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e?.preventDefault();
     const payload: IState = { ...state, isActive: !state.isActive };
     dispatch({ type: IAction.TOGGLE_IS_ACTIVE, payload });
   };
@@ -39,13 +53,15 @@ export const useSettings = (props: { id: string }) => {
         },
       }),
     );
+    toggleIsActive();
   };
 
   const openDeleteDialog = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     if (!props.id) throw new Error('No ID to delete');
     dispatchCtx(setDialog({ isOpen: IDialogs.DELETE, data: { id: props.id } }));
+    toggleIsActive();
   };
 
-  return { ...state, toggleIsActive, openEditDialog, openDeleteDialog };
+  return { ...state, toggleIsActive, openEditDialog, openDeleteDialog, dropDownContainer };
 };
