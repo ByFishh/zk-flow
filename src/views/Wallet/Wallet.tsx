@@ -11,11 +11,17 @@ import { useWallet } from './Wallet.logic';
 import { isProfit } from '../../utils/isProfit';
 import { Link } from 'react-router-dom';
 import Loader from '../../components/Loader/Loader';
+import NoWallet from '../../components/NoWallet/NoWallet';
 
 const Wallet = () => {
   const logic = useWallet();
   if (logic.isLoading) return <Loader message="Loading the wallet. Please wait" />;
-  if (!logic.wallet.address) return;
+  if (!logic.wallet.address)
+    return (
+      <NoWallet
+        message={`We are sorry. No wallet with this corresponding address was found. Please make sure that the address is valid`}
+      />
+    );
 
   return (
     <div className="wallet-container">

@@ -5,12 +5,18 @@ import WalletDropDown from '../../components/WalletDropDown/WalletDropDown';
 import { useOverview } from './Overview.logic';
 import './Overview.css';
 import Loader from '../../components/Loader/Loader';
+import NoWallet from '../../components/NoWallet/NoWallet';
 
 const Overview = () => {
   const logic = useOverview();
 
   if (logic.isLoading) return <Loader message="Loading wallets. This operation may take some time. Please wait" />;
-  if (logic.wallets.length === 0) return;
+  if (logic.getFilteredWallets().length === 0)
+    return (
+      <NoWallet
+        message={`No ${logic.currentBlockchain} wallet found. Please add one or make sure your registered wallets contain valid addresses.`}
+      />
+    );
 
   return (
     <div className="overview-container">

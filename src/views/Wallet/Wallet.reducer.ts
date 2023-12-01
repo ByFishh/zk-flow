@@ -2,12 +2,12 @@ import { Wallet } from '../../blockchains/types';
 
 export let initialState: { wallet: Wallet; isLoading: boolean } = {
   wallet: {} as Wallet,
-  isLoading: false,
+  isLoading: true,
 };
 
 const getDefaultState = () => ({
   wallet: {} as Wallet,
-  isLoading: false,
+  isLoading: true,
 });
 
 export type IState = typeof initialState;

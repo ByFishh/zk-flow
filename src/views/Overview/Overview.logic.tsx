@@ -28,19 +28,25 @@ export const useOverview = () => {
 
   const getAllWalletsAsync = async () => {
     toggleLoader(true);
-    const wallets: Wallet[] = [];
-    const filteredWallets = getFilteredWallets();
 
-    if (!filteredWallets.length) return;
+    try {
+      const wallets: Wallet[] = [];
+      const filteredWallets = getFilteredWallets();
 
-    for (const w of filteredWallets) {
-      const wallet = await getWallet(w.adress, currentBlockchain);
-      if (!wallet.address) return;
-      wallets.push(wallet);
+      if (!filteredWallets.length) throw new Error('No wallet found');
+
+      for (const w of filteredWallets) {
+        const wallet = await getWallet(w.adress, currentBlockchain);
+        if (!wallet.address) return;
+        wallets.push(wallet);
+      }
+
+      const payload: IState = { ...state, wallets, isLoading: false };
+      dispatch({ type: IAction.SET_WALLETS, payload });
+    } catch (error) {
+      toggleLoader(false);
+      console.error(error);
     }
-
-    const payload: IState = { ...state, wallets, isLoading: false };
-    dispatch({ type: IAction.SET_WALLETS, payload });
   };
 
   const sumTotals = (key: keyof Wallet, value: string) => {
@@ -76,5 +82,5 @@ export const useOverview = () => {
     dispatch({ type: IAction.SET_KEYWORD, payload });
   };
 
-  return { ...state, handleSearch, getFilteredWallets, sumTotals, getGridInfos };
+  return { ...state, handleSearch, getFilteredWallets, sumTotals, getGridInfos, currentBlockchain };
 };
