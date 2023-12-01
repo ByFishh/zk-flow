@@ -8,6 +8,7 @@ export const useDropDown = (props: {
   multiple?: boolean;
   onChange?: (data: Blockchain[]) => void;
   initialValues?: string[];
+  noEmpty?: boolean;
 }) => {
   // State
   const [state, dispatch] = useReducer(reducer, { ...initialState });
@@ -66,6 +67,7 @@ export const useDropDown = (props: {
       payload = { ...state, items: [...itemsCopy] };
       dispatch({ type: IAction.TOGGLE_ITEM_CHECK, payload });
     } else {
+      if (isEmpty(itemsCopy, name)) return;
       const resetItems = itemsCopy.map((item) => ({
         ...item,
         isChecked: false,
@@ -74,6 +76,18 @@ export const useDropDown = (props: {
       payload = { ...state, items: resetItems };
     }
     dispatch({ type: IAction.TOGGLE_ITEM_CHECK, payload });
+  };
+
+  const isEmpty = (
+    items: {
+      name: Blockchain;
+      isChecked: boolean;
+    }[],
+    itemToCheck: string,
+  ): boolean => {
+    if (!props.noEmpty) return false;
+    const checkedItem = items.find((item) => item.isChecked);
+    return checkedItem?.name === itemToCheck;
   };
 
   const getSelectedItem = (): string => {

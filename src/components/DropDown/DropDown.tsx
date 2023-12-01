@@ -13,6 +13,7 @@ const DropDown = memo(
     inverted?: boolean;
     onChange?: (data: Blockchain[]) => void;
     initialValues?: string[];
+    noEmpty?: boolean;
   }) => {
     const logic = useDropDown(props);
 
