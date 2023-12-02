@@ -31,8 +31,6 @@ const getWallet = async (address: string): Promise<Wallet> => {
 
   tmp.airdrop = await getAirdrop(tmp);
 
-  console.log(tmp);
-
   return tmp;
 };
 

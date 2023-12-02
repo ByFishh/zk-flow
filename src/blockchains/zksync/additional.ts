@@ -60,21 +60,21 @@ const getLastActivity = (transactions: Transaction[]): AdditionalInfo => {
   };
 };
 
-const getMinitoolkitRank = async (address: string): Promise<AdditionalInfo> => {
-  const response = await axios.post('https://minitoolkit.org/api/leaderboard', { addresses: [address] });
-
-  if (!response.data[0]) {
-    return {
-      label: 'Rank - Minitoolkit',
-      value: 'Not ranked',
-    };
-  }
-
-  return {
-    label: 'Rank - Minitoolkit',
-    value: response.data[0].rank.toString(),
-  };
-};
+//const getMinitoolkitRank = async (address: string): Promise<AdditionalInfo> => {
+//  const response = await axios.post('https://minitoolkit.org/api/leaderboard', { addresses: [address] });
+//
+//  if (!response.data[0]) {
+//    return {
+//      label: 'Rank - Minitoolkit',
+//      value: 'Not ranked',
+//    };
+//  }
+//
+//  return {
+//    label: 'Rank - Minitoolkit',
+//    value: response.data[0].rank.toString(),
+//  };
+//};
 
 const getZkSyncLiteInteraction = async (address: string): Promise<AdditionalInfo[]> => {
   const response = await axios.get(
@@ -99,7 +99,7 @@ const getAdditionalInfos = async (address: string, transactions: Transaction[]):
   const additionalInfos: AdditionalInfo[] = [];
 
   additionalInfos.push(getLastActivity(transactions));
-  additionalInfos.push(await getMinitoolkitRank(address));
+  // additionalInfos.push(await getMinitoolkitRank(address));
   additionalInfos.push(...(await getZkSyncLiteInteraction(address)));
   additionalInfos.push(...getUniqueTimePeriods(address, transactions));
 

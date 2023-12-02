@@ -63,7 +63,7 @@ const getTokens = async (address: string): Promise<Token[]> => {
   try {
     tokens.unshift(await getNativeBalance(address));
   } catch (e) {
-    console.log('Error while fetching native balance');
+    console.error('Error while fetching native balance');
   }
   return tokens;
 };
