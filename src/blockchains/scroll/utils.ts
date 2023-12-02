@@ -69,7 +69,7 @@ const getContract = (transactions: Transaction[]): Contract => {
   for (const transaction of transactions) {
     if (interactedContracts.has(transaction.to)) continue;
     interactedContracts.add(transaction.to);
-    if (new Date(transaction.timeStamp).getTime() >= new Date().getTime() - 86400 * 7 * 1000) {
+    if (new Date(transaction.timeStamp * 1000).getTime() >= new Date().getTime() - 86400 * 7 * 1000) {
       interactedContractsChange.add(transaction.to);
     }
   }
@@ -80,4 +80,22 @@ const getContract = (transactions: Transaction[]): Contract => {
   };
 };
 
-export { getInteraction, getVolume, getFee, getContract };
+const countTransactionPeriods = (transactions: Transaction[], addresses: string[] = []): number => {
+  const uniqueDays: Set<string> = new Set();
+
+  for (const transaction of transactions) {
+    if (!addresses.includes(transaction.to.toLowerCase()) && !addresses.includes(transaction.from.toLowerCase()))
+      continue;
+
+    const timestamp = new Date(transaction.timeStamp * 1000);
+    const year = timestamp.getFullYear();
+    const month = timestamp.getMonth();
+    const day = timestamp.getDate();
+
+    uniqueDays.add(`${year}-${month}-${day}`);
+  }
+
+  return uniqueDays.size;
+};
+
+export { getInteraction, getVolume, getFee, getContract, countTransactionPeriods };

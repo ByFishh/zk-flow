@@ -11,17 +11,17 @@ import { getAirdrop } from './airdrop.ts';
 
 const getWallet = async (address: string): Promise<Wallet> => {
   const transactions: Transaction[] = await getTransactions(address);
-  const ethPrice =
+  const nativeTokenPrice =
     Number((await axios.get('https://api.etherscan.io/api?module=stats&action=ethprice')).data.result.ethusd) || 2000;
 
   await assignTransfers(transactions, address);
-  await assignTransfersValue(transactions, ethPrice);
+  await assignTransfersValue(transactions, nativeTokenPrice);
 
   const tmp: Wallet = {
     address,
     interaction: getInteraction(address, transactions),
     volume: await getVolume(transactions),
-    fee: await getFee(address, transactions, ethPrice),
+    fee: await getFee(address, transactions, nativeTokenPrice),
     contract: getContract(transactions),
     tokens: await getTokens(address),
     additionalInfos: await getAdditionalInfos(address, transactions),
@@ -29,6 +29,7 @@ const getWallet = async (address: string): Promise<Wallet> => {
     airdrop: {} as Airdrop,
   };
 
+  console.log(transactions);
   tmp.airdrop = await getAirdrop(tmp);
 
   return tmp;

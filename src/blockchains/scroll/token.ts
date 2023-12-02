@@ -1,7 +1,7 @@
 import { Token } from '../types.ts';
 import axios from 'axios';
 
-const tokenEndpoints = 'https://blockscout.scroll.io/api';
+const tokenEndpoint = 'https://blockscout.scroll.io/api';
 const explorer = 'https://scrollscan.com/address/%ADDRESS%';
 const apiEndpoint = 'https://api.scrollscan.com/api';
 
@@ -36,8 +36,9 @@ const getNativeBalance = async (address: string): Promise<Token> => {
 
 const getTokens = async (address: string): Promise<Token[]> => {
   const tokens: Token[] = [];
+
   try {
-    const response = await axios.get(tokenEndpoints, {
+    const response = await axios.get(tokenEndpoint.replace('%ADDRESS%', address), {
       params: {
         module: 'account',
         action: 'tokenlist',
@@ -45,13 +46,13 @@ const getTokens = async (address: string): Promise<Token[]> => {
       },
     });
 
-    if (!response.data.status) {
+    if (response.data.status === '1') {
       for (const rawToken of response.data.result) {
         const token: Token = {
           name: rawToken.name,
           symbol: rawToken.symbol,
           link: explorer.replace('%ADDRESS%', rawToken.contractAddress),
-          balance: Number(rawToken.balance) * 10 ** -Number(rawToken.decimals),
+          balance: rawToken.balance * 10 ** (-Number(rawToken.decimals) || 1),
           type: rawToken.type,
         };
         tokens.push(token);
@@ -70,7 +71,6 @@ const getTokens = async (address: string): Promise<Token[]> => {
   } catch (e) {
     console.error('Error while fetching native balance');
   }
-
   return tokens;
 };
 

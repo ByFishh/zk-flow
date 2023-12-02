@@ -69,7 +69,7 @@ const getContract = (transactions: Transaction[]): Contract => {
   for (const transaction of transactions) {
     if (interactedContracts.has(transaction.to)) continue;
     interactedContracts.add(transaction.to);
-    if (new Date(transaction.timeStamp).getTime() >= new Date().getTime() - 86400 * 7 * 1000) {
+    if (new Date(transaction.timeStamp * 1000).getTime() >= new Date().getTime() - 86400 * 7 * 1000) {
       interactedContractsChange.add(transaction.to);
     }
   }
