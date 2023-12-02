@@ -33,13 +33,13 @@ export const useSettings = (props: { id: string }) => {
     if (e.target instanceof Node && !dropDownContainer.current.contains(e.target)) toggleIsActive();
   };
 
-  const toggleIsActive = (e?: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const toggleIsActive = (e?: React.MouseEvent<HTMLButtonElement>) => {
     e?.preventDefault();
     const payload: IState = { ...state, isActive: !state.isActive };
     dispatch({ type: IAction.TOGGLE_IS_ACTIVE, payload });
   };
 
-  const openEditDialog = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const openEditDialog = (e: React.MouseEvent<HTMLButtonElement>): void => {
     e.preventDefault();
     const wallet = findWallet(props.id);
     if (!wallet) throw new Error('No Wallet found with this ID');
@@ -56,7 +56,7 @@ export const useSettings = (props: { id: string }) => {
     toggleIsActive();
   };
 
-  const openDeleteDialog = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const openDeleteDialog = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (!props.id) throw new Error('No ID to delete');
     dispatchCtx(setDialog({ isOpen: IDialogs.DELETE, data: { id: props.id } }));

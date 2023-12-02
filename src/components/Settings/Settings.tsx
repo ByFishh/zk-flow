@@ -13,14 +13,14 @@ const Settings = (props: { id: string }) => {
       </button>
       <div className="settings-dropdown">
         <div className="settings-dropdown-items-container" data-show={logic.isActive}>
-          <div className="settings-dropdown-item" onClick={logic.openEditDialog}>
+          <button className="settings-dropdown-item" onClick={logic.openEditDialog}>
             <EditIcon />
             <p>Edit</p>
-          </div>
-          <div className="settings-dropdown-item settings-dropdown-item-delete" onClick={logic.openDeleteDialog}>
+          </button>
+          <button className="settings-dropdown-item settings-dropdown-item-delete" onClick={logic.openDeleteDialog}>
             <DeleteIcon />
             <p>Delete</p>
-          </div>
+          </button>
         </div>
       </div>
     </div>
