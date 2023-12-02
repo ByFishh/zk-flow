@@ -12,7 +12,7 @@ const Protocols = memo((props: { items: Protocol[] }) => {
   return (
     <div className="protocols-container">
       <div className="protocols-top">
-        <p>Protocols</p>
+        <p style={{ textAlign: 'left', paddingLeft: '1rem' }}>Protocols</p>
         <p>Interactions</p>
         <p>Last Activity</p>
         <p>Volume in $</p>

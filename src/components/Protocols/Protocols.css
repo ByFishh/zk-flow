@@ -33,9 +33,10 @@
 
 .protocols-item-name-container{
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: flex-start;
     text-align: left;    
+    padding-left: 1rem;
 }
 
 .protocols-item-name-container img{
@@ -86,6 +87,8 @@
     }
 
     .protocols-item-name-container{
+        justify-content: center;  
+        padding-left: 0;
         margin-bottom: .75rem;
     }
 
