@@ -25,7 +25,7 @@ const getAirdrop = async (wallet: Wallet): Promise<Airdrop> => {
         items: [
           {
             label: 'Native Bridge to Scroll',
-            checked: wallet.protocols.find((protocol) => protocol.id === 'officialbridge')!.volume > 0,
+            checked: wallet.protocols.find((protocol) => protocol.id === 'scrollbridge')!.volume > 0,
           },
         ],
       },
@@ -89,15 +89,15 @@ const getAirdrop = async (wallet: Wallet): Promise<Airdrop> => {
         items: [
           {
             label: 'You’ve deposited more than $10,000 in ETH',
-            checked: wallet.protocols.find((protocol) => protocol.id === 'officialbridge')!.volume > 10000,
+            checked: wallet.protocols.find((protocol) => protocol.id === 'scrollbridge')!.volume > 10000,
           },
           {
             label: 'You’ve deposited more than $50,000 in ETH',
-            checked: wallet.protocols.find((protocol) => protocol.id === 'officialbridge')!.volume > 50000,
+            checked: wallet.protocols.find((protocol) => protocol.id === 'scrollbridge')!.volume > 50000,
           },
           {
             label: 'You’ve deposited more than $250,000 in ETH',
-            checked: wallet.protocols.find((protocol) => protocol.id === 'officialbridge')!.volume > 250000,
+            checked: wallet.protocols.find((protocol) => protocol.id === 'scrollbridge')!.volume > 250000,
           },
         ],
       },

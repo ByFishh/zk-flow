@@ -52,7 +52,7 @@ const getTokens = async (address: string): Promise<Token[]> => {
           name: rawToken.name,
           symbol: rawToken.symbol,
           link: explorer.replace('%ADDRESS%', rawToken.contractAddress),
-          balance: rawToken.balance * 10 ** (-Number(rawToken.decimals) || 1),
+          balance: rawToken.balance * 10 ** (-Number(rawToken.decimals) || 0),
           type: rawToken.type,
         };
         tokens.push(token);

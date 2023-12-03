@@ -23,7 +23,7 @@ import { XYFinance } from './protocols/xyfinance.ts';
 import { ZkSwap } from './protocols/zkswap.ts';
 import { ZkSyncId } from './protocols/zksyncid.ts';
 import { ZkSyncNameService } from './protocols/zksyncnameservice.ts';
-import { OfficialBridge } from './protocols/officialbridge.ts';
+import { Zksyncbridge } from './protocols/zksyncbridge.ts';
 
 const getProtocols = (address: string, transactions: Transaction[]): Protocol[] => {
   const protocols: Protocol[] = [];
@@ -51,7 +51,7 @@ const getProtocols = (address: string, transactions: Transaction[]): Protocol[] 
   protocols.push(ZkSwap.getProtocolsState(transactions));
   protocols.push(ZkSyncId.getProtocolsState(transactions));
   protocols.push(ZkSyncNameService.getProtocolsState(transactions));
-  protocols.push(OfficialBridge.getProtocolsState(transactions));
+  protocols.push(Zksyncbridge.getProtocolsState(transactions));
 
   protocols.sort((a, b) => b.volume - a.volume);
 

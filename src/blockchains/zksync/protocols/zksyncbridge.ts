@@ -18,16 +18,16 @@ const countTransactionPeriods = (transactions: Transaction[]): number => {
   return uniqueDays.size;
 };
 
-const OfficialBridge = {
+const Zksyncbridge = {
   getProtocolsState: (transactions: Transaction[]) => {
     const protocol: Protocol = {
-      name: 'Official Bridge',
-      id: 'officialbridge',
+      name: 'zkSync Bridge',
+      id: 'zksyncbridge',
       lastActivity: 0,
       volume: 0,
       interactions: 0,
       activeDays: 0,
-      url: 'https://app.basilisk.org/',
+      url: 'https://portal.txsync.io/bridge/',
     };
 
     for (const transaction of transactions) {
@@ -47,4 +47,4 @@ const OfficialBridge = {
   },
 };
 
-export { OfficialBridge };
+export { Zksyncbridge };
