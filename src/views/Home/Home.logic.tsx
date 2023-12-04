@@ -8,7 +8,7 @@ export const useHome = () => {
   const navigate = useNavigate();
 
   const handleSearch = (data: string) => {
-    navigate(`/wallet/${data}/${currentBlockchain}`);
+    navigate(`/wallet/${currentBlockchain}/${data}`);
   };
 
   return { handleSearch, wallets };

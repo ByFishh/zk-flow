@@ -14,7 +14,7 @@ function App() {
       <div className="app-container">
         <Routes>
           <Route element={<Home />} path="/" />
-          <Route element={<Wallet />} path="/wallet/:id/:blockchain" />
+          <Route element={<Wallet />} path="/wallet/:blockchain/:id" />
           <Route element={<Overview />} path="/overview" />
         </Routes>
       </div>

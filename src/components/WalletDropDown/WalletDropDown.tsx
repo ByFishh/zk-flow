@@ -42,7 +42,7 @@ const WalletDropDown = (props: {
   );
 
   return (
-    <LinkContainer to={`/wallet/${props.infos.adress}/${logic.currentBlockchain}`} canRedirect={!!props.infos.adress}>
+    <LinkContainer to={`/wallet/${logic.currentBlockchain}/${props.infos.adress}`} canRedirect={!!props.infos.adress}>
       <div className="walletDropDown-global-container">
         <div className="walletDropDown-container" data-has-adress={!!props.infos.adress}>
           <div className="walletDropDown-top">

@@ -19,7 +19,7 @@ export const useWallet = () => {
   }, [params]);
 
   useEffect(() => {
-    navigate(`/wallet/${params.id}/${currentBlockchain}`);
+    navigate(`/wallet/${currentBlockchain}/${params.id}`);
   }, [currentBlockchain]);
 
   const toggleLoader = (isLoading: boolean) => {
