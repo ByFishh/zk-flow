@@ -1,0 +1,94 @@
+.footer-container{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #141414;
+    padding: 3rem;
+    color: white;
+    flex-shrink: 0;
+    height: 245px;
+}
+
+.footer-logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 1.5rem;
+  }
+  .footer-logo-container img {
+    width: 40px;
+    margin-right: 0.75rem;
+  }
+  .footer-logo-container p {
+    font-size: 1.25rem;
+    color: #ffffff;
+  }
+
+.footer-left{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer-credential-section {
+    padding-left: 3rem;
+}
+
+.footer-credential-title{
+    font-size: .7rem;
+    margin-bottom: 1.5rem;
+
+}
+
+.footer-credential-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column nowrap;
+    
+
+}
+
+.footer-credential-item:first-child{
+    margin-bottom: 2rem;
+
+}
+
+.footer-credential-item-title{
+    margin-bottom: .75rem;
+    font-weight: 600;
+
+}
+
+.footer-credential-item-link{
+    font-size: .85rem;
+
+}
+
+.footer-powered{
+    font-size: .85rem;
+}
+
+@media screen and (max-width: 768px){
+    .footer-left{
+        align-items: flex-start;
+        flex-flow: column nowrap;
+    }
+
+    .footer-credential-section {
+        padding-left: 0rem;
+        margin-top: 2rem;
+    }  
+}
+
+@media screen and (max-width: 768px){
+    .footer-container{
+        flex-flow: column nowrap;
+        align-items: flex-start;
+    }
+
+    .footer-credential-section {
+        margin-bottom: 3rem;
+    }
+}

@@ -5,6 +5,7 @@ import WalletDropDown from '../../components/WalletDropDown/WalletDropDown';
 import { useHome } from './Home.logic';
 import { useMemo } from 'react';
 import './Home.css';
+import Footer from '../../components/Footer/Footer';
 
 const Home = () => {
   const logic = useHome();
@@ -25,27 +26,30 @@ const Home = () => {
   );
 
   return (
-    <main className="home-container">
-      {renderHeader}
-      <section className="home-search-container">
-        <Search action={logic.handleSearch} placeholder={'Search an Address'} />
-      </section>
-      <section>
-        <Title content="My Wallets" />
-        <div className="home-wallets-container">
-          {logic.wallets.map((w) => (
-            <WalletDropDown
-              key={w.id}
-              settings
-              infos={{ title: w.name, id: w.id, adress: w.adress, blockchain: w.blockchain }}
-            />
-          ))}
-          <div className="home-new-wallet-container">
-            <NewWallet />
+    <>
+      <main className="home-container">
+        {renderHeader}
+        <section className="home-search-container">
+          <Search action={logic.handleSearch} placeholder={'Search an Address'} />
+        </section>
+        <section>
+          <Title content="My Wallets" />
+          <div className="home-wallets-container">
+            {logic.wallets.map((w) => (
+              <WalletDropDown
+                key={w.id}
+                settings
+                infos={{ title: w.name, id: w.id, adress: w.adress, blockchain: w.blockchain }}
+              />
+            ))}
+            <div className="home-new-wallet-container">
+              <NewWallet />
+            </div>
           </div>
-        </div>
-      </section>
-    </main>
+        </section>
+      </main>
+      <Footer />
+    </>
   );
 };
 
