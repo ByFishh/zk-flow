@@ -4,6 +4,7 @@ import DeleteDialog from '../DeleteDialog/DeleteDialog';
 import { useSelector } from 'react-redux';
 import { IRootState } from '../../redux/store';
 import WalletDialog from '../WalletDialog/WalletDialog';
+import UnknownUrlDialog from '../UnknownUrlDialog/UnknownUrlDialog';
 
 export const useDialogs = () => {
   const isOpen = useSelector((s: IRootState) => s.dialog.isOpen);
@@ -17,6 +18,10 @@ export const useDialogs = () => {
       {
         show: isOpen === IDialogs.WALLET,
         component: <WalletDialog />,
+      },
+      {
+        show: isOpen === IDialogs.UNKNOWN_URL,
+        component: <UnknownUrlDialog />,
       },
     ],
     [isOpen],

@@ -3,13 +3,16 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { getWallet } from '../../blockchains';
 import { Blockchain } from '../../blockchains/types';
 import { reducer, initialState, IState, IAction } from './Wallet.reducer';
-import { useSelector } from 'react-redux';
-import { IRootState } from '../../redux/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { IAppDispatch, IRootState } from '../../redux/store';
+import { IDialogs } from '../../types/Dialogs/IDialogs';
+import { setDialog } from '../../redux/reducer/dialogReducer';
 
 export const useWallet = () => {
   const params = useParams();
   const { currentBlockchain } = useSelector((s: IRootState) => s.blockchain);
   const navigate = useNavigate();
+  const dispatchCtx = useDispatch<IAppDispatch>();
 
   // State
   const [state, dispatch] = useReducer(reducer, { ...initialState });
@@ -42,5 +45,10 @@ export const useWallet = () => {
     }
   };
 
-  return { ...state };
+  const handleADClick = () => {
+    const url = 'https://www.universalchains.io/';
+    dispatchCtx(setDialog({ isOpen: IDialogs.UNKNOWN_URL, data: { url } }));
+  };
+
+  return { ...state, handleADClick };
 };

@@ -1,0 +1,45 @@
+.unknownUrlDialog-content {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 1.5rem 1.5rem 0.5rem 1.5rem;
+}
+
+.unknownUrlDialog-container svg {
+  stroke-width: 2px;
+}
+
+.unknownUrlDialog-content p {
+  color: #ffd6d6;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.unknownUrlDialog-footer {
+  padding: 0.5rem 1.5rem 1.5rem 1.5rem;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.unknownUrlDialog-footer button {
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  color: #ffd6d6;
+  border: 1px solid #2c2c2c;
+  border-radius: 5px;
+}
+
+.unknownUrlDialog-footer button:first-child {
+  margin-right: .5rem;
+}
+
+.unknownUrlDialog-footer button:hover {
+  color: #fbdede;
+  border: 1px solid #3b3b3b;
+}
+
+
+

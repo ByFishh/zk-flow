@@ -9,7 +9,6 @@ import WalletDropDown from '../../components/WalletDropDown/WalletDropDown';
 import { v4 as uuidv4 } from 'uuid';
 import { useWallet } from './Wallet.logic';
 import { isProfit } from '../../utils/isProfit';
-import { Link } from 'react-router-dom';
 import Loader from '../../components/Loader/Loader';
 import NoWallet from '../../components/NoWallet/NoWallet';
 
@@ -56,9 +55,7 @@ const Wallet = () => {
         />
       </section>
       <section className="wallet-ad-container">
-        <Link to="https://www.universalchains.io/">
-          <img src={AD} />
-        </Link>
+        <img src={AD} onClick={logic.handleADClick} />
       </section>
       <section className="wallet-blockchain-section">
         <GridInfo items={logic.wallet.additionalInfos.map((item) => ({ key: item.label, value: item.value }))} />
