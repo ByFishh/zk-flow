@@ -3,6 +3,11 @@
     color: white;
 }
 
+.protocols-container a{
+    text-decoration: none;
+    color: currentColor;
+}
+
 .protocols-top{
     width: 100%;
     padding: 1.5rem 0;

@@ -5,6 +5,7 @@ import { memo } from 'react';
 import { Protocol } from '../../blockchains/types.ts';
 import { getTimeAgo } from '../../blockchains/utils.ts';
 import { toFixed } from '../../utils/toFixed.ts';
+import LinkContainer from '../LinkContainer/LinkContainer.tsx';
 
 const Protocols = memo((props: { items: Protocol[] }) => {
   const logic = useProtocols();
@@ -19,34 +20,36 @@ const Protocols = memo((props: { items: Protocol[] }) => {
       </div>
       <div className="protocols-items-container">
         {props.items.map((item) => (
-          <div className="procotocols-item" key={uuidv4()}>
-            <div className="protocols-item-name-container">
-              <img src={'/protocols/' + item.id + '.png'} alt="" />
-              <div>
-                <p>
-                  <strong>{item.name}</strong>
+          <LinkContainer key={uuidv4()} canRedirect to={item.url}>
+            <div className="procotocols-item">
+              <div className="protocols-item-name-container">
+                <img src={'/protocols/' + item.id + '.png'} alt="" />
+                <div>
+                  <p>
+                    <strong>{item.name}</strong>
+                  </p>
+                  <p>{String(item.activeDays)} active days</p>
+                </div>
+              </div>
+              <div className="protocols-item-box">
+                <span>Interaction:</span>
+                <p>{String(item.interactions)}</p>
+              </div>
+              <div className="protocols-item-box">
+                <span>Last activity:</span>
+                <p
+                  className="protocols-item-last-activity"
+                  style={{ color: logic.getLastActivityColor(item.lastActivity) }}
+                >
+                  {item.lastActivity ? getTimeAgo(item.lastActivity) : 'No Activity'}
                 </p>
-                <p>{String(item.activeDays)} active days</p>
+              </div>
+              <div className="protocols-item-box">
+                <span>Volume in $:</span>
+                <p>{toFixed(item.volume, 2)}$</p>
               </div>
             </div>
-            <div className="protocols-item-box">
-              <span>Interaction:</span>
-              <p>{String(item.interactions)}</p>
-            </div>
-            <div className="protocols-item-box">
-              <span>Last activity:</span>
-              <p
-                className="protocols-item-last-activity"
-                style={{ color: logic.getLastActivityColor(item.lastActivity) }}
-              >
-                {item.lastActivity ? getTimeAgo(item.lastActivity) : 'No Activity'}
-              </p>
-            </div>
-            <div className="protocols-item-box">
-              <span>Volume in $:</span>
-              <p>{toFixed(item.volume, 2)}$</p>
-            </div>
-          </div>
+          </LinkContainer>
         ))}
       </div>
     </div>
