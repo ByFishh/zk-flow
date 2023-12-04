@@ -11,7 +11,8 @@ import Footer from '../../components/Footer/Footer';
 const Overview = () => {
   const logic = useOverview();
 
-  if (logic.isLoading) return <Loader message="Loading wallets. This operation may take some time. Please wait" />;
+  if (logic.isLoading)
+    return <Loader message="Loading wallets. This operation may take some time. Please wait" fullSize />;
   if (logic.getFilteredWallets().length === 0)
     return (
       <NoWallet
@@ -53,7 +54,12 @@ const Overview = () => {
           </div>
         </section>
         <section className="overview-wallet-section">
-          <Title content="Wallets" />
+          <div className="overview-wallet-title-section">
+            <Title content="Wallets" />
+            <p>
+              Loaded wallets: {logic.wallets.length}/{logic.getFilteredWallets().length}
+            </p>
+          </div>
           <div className="overview-search-container">
             <Search action={logic.handleSearch} placeholder="Search a wallet" />
           </div>

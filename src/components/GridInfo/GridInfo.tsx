@@ -3,8 +3,16 @@ import { isNumber } from '../../utils/isNumber';
 import { toFixed } from '../../utils/toFixed';
 import { v4 as uuidv4 } from 'uuid';
 import './GridInfo.css';
+import Loader from '../Loader/Loader';
 
 const GridInfo = (props: { items: IGridInfo[] }) => {
+  if (!props.items.length)
+    return (
+      <div className="gridInfo-container" style={{ padding: '2rem 0' }}>
+        <Loader />
+      </div>
+    );
+
   return (
     <div className="gridInfo-container">
       <div className="gridInfo-middle-bar"></div>

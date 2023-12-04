@@ -23,6 +23,14 @@
     margin-top: 2.5rem;
 }
 
+.overview-wallet-title-section{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    padding: 1rem 0;
+}
+
 .overview-search-container{
     margin-bottom: 1.5rem;
 

@@ -15,7 +15,7 @@ import Footer from '../../components/Footer/Footer';
 
 const Wallet = () => {
   const logic = useWallet();
-  if (logic.isLoading) return <Loader message="Loading the wallet. Please wait" />;
+  if (logic.isLoading) return <Loader message="Loading the wallet. Please wait" fullSize />;
   if (!logic.wallet.address)
     return (
       <NoWallet

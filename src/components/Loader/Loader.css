@@ -1,15 +1,19 @@
 .loader-container {
     width: 100%;
-    position: fixed;
-    height: 100%;
+    position: absolute;
     top: 0;
     left: 0;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-flow: column nowrap;
     color: white;
     padding: 0 2rem;
+}
+
+.loader-container[data-full-size~="true"]{
+    position: fixed;
 }
 
 .loader{

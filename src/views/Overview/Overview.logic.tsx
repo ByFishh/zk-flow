@@ -39,10 +39,9 @@ export const useOverview = () => {
         const wallet = await getWallet(w.adress, currentBlockchain);
         if (!wallet.address) return;
         wallets.push(wallet);
+        const payload: IState = { ...state, wallets, isLoading: false };
+        dispatch({ type: IAction.SET_WALLETS, payload });
       }
-
-      const payload: IState = { ...state, wallets, isLoading: false };
-      dispatch({ type: IAction.SET_WALLETS, payload });
     } catch (error) {
       toggleLoader(false);
       console.error(error);
