@@ -22,21 +22,6 @@ const Navbar = () => {
     [],
   );
 
-  const renderDropDown = useMemo(
-    () => (
-      <>
-        <span>Current Blockchain</span>
-        <DropDown
-          onChange={logic.onDropDownChange}
-          multiple={false}
-          initialValues={[logic.currentBlockchain]}
-          noEmpty
-        />
-      </>
-    ),
-    [],
-  );
-
   const renderMenu = useMemo(
     () => (
       <ul className="nav-ul">
@@ -69,7 +54,17 @@ const Navbar = () => {
           {renderLogo}
           {logic.menuIsDisplay && renderMenu}
         </div>
-        {logic.menuIsDisplay && <div className="nav-right">{renderDropDown}</div>}
+        {logic.menuIsDisplay && (
+          <div className="nav-right">
+            <span>Current Blockchain</span>
+            <DropDown
+              onChange={logic.onDropDownChange}
+              multiple={false}
+              initialValues={[logic.currentBlockchain]}
+              noEmpty
+            />
+          </div>
+        )}
         {renderMenuBtn}
       </div>
     </div>
