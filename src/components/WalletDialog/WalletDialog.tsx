@@ -17,7 +17,7 @@ const inputs: {
     id: 'name',
   },
   {
-    label: 'Adress',
+    label: 'Address',
     id: 'adress',
   },
   {
