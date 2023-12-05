@@ -1,5 +1,6 @@
 .ad-container {
     cursor: pointer;
+    width: 100%;
 }
 
 .ad-container img {

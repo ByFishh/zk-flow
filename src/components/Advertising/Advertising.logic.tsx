@@ -3,6 +3,7 @@ import { IAppDispatch, IRootState } from '../../redux/store';
 import { useState } from 'react';
 import { setDialog } from '../../redux/reducer/dialogReducer';
 import { IDialogs } from '../../types/Dialogs/IDialogs';
+import './Advertising.css';
 
 export const useAdvertising = () => {
   const { currentBlockchain } = useSelector((s: IRootState) => s.blockchain);

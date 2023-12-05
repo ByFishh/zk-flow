@@ -7,7 +7,6 @@
     padding: 3rem;
     color: white;
     flex-shrink: 0;
-    height: 245px;
 }
 
 .footer-logo-container {
@@ -15,15 +14,17 @@
     justify-content: center;
     align-items: center;
     margin-right: 1.5rem;
-  }
-  .footer-logo-container img {
+}
+
+.footer-logo-container img {
     width: 40px;
     margin-right: 0.75rem;
-  }
-  .footer-logo-container p {
+}
+
+.footer-logo-container p {
     font-size: 1.25rem;
     color: #ffffff;
-  }
+}
 
 .footer-left{
     display: flex;
@@ -43,16 +44,13 @@
 
 .footer-credential-container{
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-start;
+    align-items: flex-start;
     flex-flow: column nowrap;
-    
-
 }
 
 .footer-credential-item:first-child{
     margin-bottom: 2rem;
-
 }
 
 .footer-credential-item-title{
@@ -63,7 +61,7 @@
 
 .footer-credential-item-link{
     font-size: .85rem;
-
+    margin-bottom: .5rem;
 }
 
 .footer-powered{
@@ -82,13 +80,9 @@
     }  
 }
 
-@media screen and (max-width: 768px){
+@media screen and (max-width: 500px){
     .footer-container{
         flex-flow: column nowrap;
         align-items: flex-start;
-    }
-
-    .footer-credential-section {
-        margin-bottom: 3rem;
     }
 }
