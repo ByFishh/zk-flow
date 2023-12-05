@@ -3,7 +3,6 @@
     max-width: 1024px;
     margin: 0 auto;
     padding: 4rem 2rem 2rem 2rem;
-    min-height: calc(100vh - 80px - 245px);
 }
 
 .home-header-container{
