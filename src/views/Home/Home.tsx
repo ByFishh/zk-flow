@@ -5,7 +5,6 @@ import WalletDropDown from '../../components/WalletDropDown/WalletDropDown';
 import { useHome } from './Home.logic';
 import { useMemo } from 'react';
 import './Home.css';
-import Footer from '../../components/Footer/Footer';
 
 const Home = () => {
   const logic = useHome();
