@@ -5,8 +5,6 @@ import { Blockchain } from '../../blockchains/types';
 import { reducer, initialState, IState, IAction } from './Wallet.reducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { IAppDispatch, IRootState } from '../../redux/store';
-import { IDialogs } from '../../types/Dialogs/IDialogs';
-import { setDialog } from '../../redux/reducer/dialogReducer';
 import { setBlockchain } from '../../redux/reducer/blockchainReducer';
 
 export const useWallet = () => {
@@ -48,10 +46,5 @@ export const useWallet = () => {
     }
   };
 
-  const handleADClick = () => {
-    const url = 'https://www.universalchains.io/';
-    dispatchCtx(setDialog({ isOpen: IDialogs.UNKNOWN_URL, data: { url } }));
-  };
-
-  return { ...state, handleADClick };
+  return { ...state, currentBlockchain };
 };

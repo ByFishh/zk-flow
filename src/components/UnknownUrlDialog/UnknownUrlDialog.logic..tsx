@@ -9,7 +9,8 @@ export const useUnknownUrlDialog = () => {
 
   const handleSubmit = useCallback(() => {
     if (!dialog.data || !dialog.data.url) return;
-    window.location.replace(dialog.data.url);
+    window.open(dialog.data.url, '_blank');
+    handleClose();
   }, []);
 
   const handleClose = useCallback(() => {

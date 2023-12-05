@@ -31,10 +31,6 @@
     padding: 1.25rem 0;
 }
 
-.wallet-ad-container img {
-    width: 100%;
-}
-
 .wallet-aidrop-container{
     margin-top: 3rem;
     grid-template-columns: repeat(auto-fit, minmax(325px, 1fr));

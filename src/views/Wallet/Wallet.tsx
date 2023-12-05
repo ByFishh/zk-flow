@@ -1,7 +1,7 @@
 import MainInfo from '../../components/MainInfo/MainInfo';
 import Title from '../../components/Title/Title';
 import './Wallet.css';
-import AD from '../../ad/ad1.png';
+
 import GridInfo from '../../components/GridInfo/GridInfo';
 import AirdropItem from '../../components/AirdropItem/AirdropItem';
 import Protocols from '../../components/Protocols/Protocols';
@@ -12,6 +12,7 @@ import { isProfit } from '../../utils/isProfit';
 import Loader from '../../components/Loader/Loader';
 import NoWallet from '../../components/NoWallet/NoWallet';
 import Footer from '../../components/Footer/Footer';
+import Advertising from '../../components/Advertising/Advertising';
 
 const Wallet = () => {
   const logic = useWallet();
@@ -61,9 +62,7 @@ const Wallet = () => {
             }}
           />
         </section>
-        <section className="wallet-ad-container">
-          <img src={AD} onClick={logic.handleADClick} />
-        </section>
+        <Advertising />
         <section className="wallet-blockchain-section">
           <GridInfo items={logic.wallet.additionalInfos.map((item) => ({ key: item.label, value: item.value }))} />
         </section>
