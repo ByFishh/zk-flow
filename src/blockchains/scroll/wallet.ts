@@ -10,9 +10,10 @@ import { getAdditionalInfos } from './additional.ts';
 import { getAirdrop } from './airdrop.ts';
 
 const getWallet = async (address: string): Promise<Wallet> => {
+  await new Promise((resolve) => setTimeout(resolve, 300));
   const transactions: Transaction[] = await getTransactions(address);
   const nativeTokenPrice =
-    Number((await axios.get('https://api.etherscan.io/api?module=stats&action=ethprice')).data.result.ethusd) || 2000;
+    Number((await axios.get('https://api.etherscan.io/api?module=stats&action=ethprice')).data.result.ethusd) || 2150;
 
   await assignTransfers(transactions, address);
   await assignTransfersValue(transactions, nativeTokenPrice);

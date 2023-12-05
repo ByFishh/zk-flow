@@ -5,7 +5,7 @@ import './Footer.css';
 
 const credentialInfos = [
   {
-    name: 'ByFishh',
+    name: 'ByFish',
     github: 'https://github.com/ByFishh',
     x: 'https://twitter.com/ByFishh',
     address: '0xf859de92a63070c54d05e33a4e99d707a34fdb12',
@@ -36,7 +36,7 @@ const Footer = () => {
       <div className="footer-left">
         <div>{renderLogo}</div>
         <div className="footer-credential-section">
-          <p className="footer-credential-title">DEVELOPPERS</p>
+          <p className="footer-credential-title">DEVELOPERS</p>
           <div className="footer-credential-container">
             {credentialInfos.map((item) => (
               <div className="footer-credential-item" key={uuidv4()}>

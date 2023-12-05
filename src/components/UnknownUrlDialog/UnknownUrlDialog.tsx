@@ -11,7 +11,7 @@ const UnknownUrlDialog = () => {
       <div className="unknownUrlDialog-content">
         <p>
           Please conduct your own research and exercise due diligence before utilizing the services advertised on
-          zkFlow. ZkFlow is not responsible in case of scam or lost of money"
+          zkFlow. ZkFlow is not responsible in case of scam or lost of money
         </p>
       </div>
       <div className="unknownUrlDialog-footer">

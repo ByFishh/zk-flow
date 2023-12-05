@@ -45,7 +45,7 @@ const Wallet = () => {
             />
             <MainInfo title="Fee spent" lastDay={7} profit={logic.wallet.fee.change} value={logic.wallet.fee.total} />
             <MainInfo
-              title="Contract"
+              title="Interacted Contracts"
               lastDay={7}
               profit={logic.wallet.contract.change}
               value={logic.wallet.contract.total}

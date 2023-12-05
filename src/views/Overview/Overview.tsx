@@ -46,7 +46,7 @@ const Overview = () => {
               value={logic.sumTotals('fee', 'total')}
             />
             <MainInfo
-              title="Contract"
+              title="Interacted Contracts"
               lastDay={7}
               profit={logic.sumTotals('contract', 'change')}
               value={logic.sumTotals('contract', 'total')}
