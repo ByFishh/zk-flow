@@ -7,6 +7,7 @@ import { cutWalletAdress } from '../../utils/cutWalletAdress';
 import { IGridInfo } from '../../types/Wallet/IGridInfo';
 import GridInfo from '../GridInfo/GridInfo';
 import LinkContainer from '../LinkContainer/LinkContainer';
+import { v4 as uuidv4 } from 'uuid';
 
 const WalletDropDown = (props: {
   details?: boolean;
@@ -30,10 +31,9 @@ const WalletDropDown = (props: {
         {props.infos.adress && <span>{cutWalletAdress(props.infos.adress)}</span>}
         {props.infos.blockchain && (
           <div className="walletDropDown-blockchain-container">
-            {/* // Blockchains Logos */}
-            <div className="fake-logo"></div>
-            <div className="fake-logo"></div>
-            <div className="fake-logo"></div>
+            {props.infos.blockchain.map((item) => (
+              <img key={uuidv4()} src={`/blockchains/${item}.png`} alt={`${item} logo`} />
+            ))}
           </div>
         )}
       </div>

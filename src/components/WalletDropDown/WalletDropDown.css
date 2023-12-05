@@ -44,9 +44,9 @@
   align-items: center;
 }
 
-.walletDropDown-blockchain-container div {
-  width: 16px;
-  height: 16px;
+.walletDropDown-blockchain-container img {
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   margin: 0 -0.2rem;
 }
