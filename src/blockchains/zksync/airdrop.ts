@@ -1,4 +1,5 @@
 import { Airdrop, Wallet } from '../types.ts';
+import { toFixed } from '../../utils/toFixed.ts';
 
 const getAirdropAmount = (taskCount: number): number => {
   if (taskCount < 3) return 0;
@@ -21,7 +22,10 @@ const getAirdrop = async (wallet: Wallet): Promise<Airdrop> => {
     value: 0,
     items: [
       {
-        title: 'Bridge to zkSync',
+        title:
+          'Bridge to zkSync (' +
+          toFixed(wallet.protocols.find((protocol) => protocol.id === 'zksyncbridge')!.volume, 2) +
+          '$)',
         items: [
           {
             label: 'Native Bridge to zkSync Era',
@@ -30,7 +34,10 @@ const getAirdrop = async (wallet: Wallet): Promise<Airdrop> => {
         ],
       },
       {
-        title: 'Transactions over time',
+        title:
+          'Transactions over time (' +
+          wallet.additionalInfos.find((info) => info.label === 'Unique months')!.value +
+          ' months)',
         items: [
           {
             label: 'You’ve conducted transactions during 2 distinct months',
@@ -47,7 +54,7 @@ const getAirdrop = async (wallet: Wallet): Promise<Airdrop> => {
         ],
       },
       {
-        title: 'Transaction interaction',
+        title: 'Transaction interaction (' + wallet.interaction.total + ')',
         items: [
           {
             label: 'You’ve conducted more than 4 transactions OR interacted with more than 4 smart contracts',
@@ -68,7 +75,7 @@ const getAirdrop = async (wallet: Wallet): Promise<Airdrop> => {
         ],
       },
       {
-        title: 'Transaction value',
+        title: 'Transaction value (' + toFixed(wallet.volume.total, 2) + '$)',
         items: [
           {
             label: 'You’ve conducted transactions with more than $10,000',
@@ -85,7 +92,10 @@ const getAirdrop = async (wallet: Wallet): Promise<Airdrop> => {
         ],
       },
       {
-        title: 'Assets bridge to zkSync',
+        title:
+          'Assets bridge to zkSync (' +
+          toFixed(wallet.protocols.find((protocol) => protocol.id === 'zksyncbridge')!.volume, 2) +
+          '$)',
         items: [
           {
             label: 'You’ve deposited more than $10,000 in ETH',
@@ -102,7 +112,10 @@ const getAirdrop = async (wallet: Wallet): Promise<Airdrop> => {
         ],
       },
       {
-        title: 'Activity on zkSync Lite',
+        title:
+          'Activity on zkSync Lite (' +
+          wallet.additionalInfos.find((info) => info.label === 'ZkSyncLite interactions')!.value +
+          ')',
         items: [
           {
             label: 'You’ve conducted transactions more than 3 transactions.',
