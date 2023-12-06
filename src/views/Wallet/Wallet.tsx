@@ -30,6 +30,7 @@ const Wallet = () => {
         <h2 className="wallet-title">Wallet Information</h2>
         <p className="wallet-subtitle">{logic.wallet.address}</p>
         <section>
+          <Advertising id={0} />
           <div className="wallet-main-info-container">
             <MainInfo
               title="Interactions"
@@ -62,7 +63,7 @@ const Wallet = () => {
             }}
           />
         </section>
-        <Advertising />
+        <Advertising id={1} />
         <section className="wallet-blockchain-section">
           <GridInfo items={logic.wallet.additionalInfos.map((item) => ({ key: item.label, value: item.value }))} />
         </section>

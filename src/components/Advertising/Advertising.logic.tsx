@@ -4,19 +4,49 @@ import { useState } from 'react';
 import { setDialog } from '../../redux/reducer/dialogReducer';
 import { IDialogs } from '../../types/Dialogs/IDialogs';
 import './Advertising.css';
+import { Blockchain } from '../../blockchains/types.ts';
 
-export const useAdvertising = () => {
+const ads = {
+  [Blockchain.zkSync]: [
+    {
+      image: '/f62bde80/17b67c1d-0698-4b42-bf17-bdef269deee3.png',
+      redirect: 'https://www.universalchains.io/',
+      trusted: true,
+    },
+    {
+      image: '/f62bde80/29003706-758f-42fe-9192-d3353e6879b0.jpg',
+      redirect: 'https://x.com/xpet_tech/status/1730164076796387726?s=20',
+      trusted: false,
+    },
+  ],
+  [Blockchain.Scroll]: [
+    {
+      image: '/f62bde80/17b67c1d-0698-4b42-bf17-bdef269deee3.png',
+      redirect: 'https://www.universalchains.io/',
+      trusted: true,
+    },
+    {
+      image: '/f62bde80/29003706-758f-42fe-9192-d3353e6879b0.jpg',
+      redirect: 'https://x.com/xpet_tech/status/1730164076796387726?s=20',
+      trusted: false,
+    },
+  ],
+};
+
+export const useAdvertising = (id: 0 | 1) => {
   const { currentBlockchain } = useSelector((s: IRootState) => s.blockchain);
   const [isLoaded, setIsLoaded] = useState<boolean>(true);
   const dispatchCtx = useDispatch<IAppDispatch>();
+  const image = ads[currentBlockchain][id].image;
 
   const onImageLoaded = () => setIsLoaded(true);
   const onError = () => setIsLoaded(false);
 
   const handleADClick = () => {
-    const url = 'https://www.universalchains.io/';
-    dispatchCtx(setDialog({ isOpen: IDialogs.UNKNOWN_URL, data: { url } }));
+    const url = ads[currentBlockchain][id].redirect;
+    if (ads[currentBlockchain][id].trusted) window.open(url, '_blank');
+    else dispatchCtx(setDialog({ isOpen: IDialogs.UNKNOWN_URL, data: { url } }));
   };
 
-  return { isLoaded, currentBlockchain, onError, onImageLoaded, handleADClick };
+  return { isLoaded, onError, onImageLoaded, handleADClick, image };
 };

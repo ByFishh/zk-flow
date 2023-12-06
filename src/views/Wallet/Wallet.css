@@ -21,6 +21,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(325px, 1fr));
     gap: 1.5rem;
+    margin-top: 1rem;
 }
 
 .wallet-balance-section{
