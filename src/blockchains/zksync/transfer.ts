@@ -56,7 +56,7 @@ const assignTransfersValue = async (transactions: Transaction[], ethPrice: numbe
     if (!transaction.transfers) transaction.transfers = [];
     for (const transfer of transaction.transfers) {
       const value = Number(transfer.value) * 10 ** -Number(transfer.tokenDecimal);
-      const tokenPrice = tokensPrice[transfer.tokenSymbol.toUpperCase()] || 0;
+      const tokenPrice = tokensPrice[transfer.tokenSymbol?.toUpperCase()] || 0;
       transfer.transferPrice = value * tokenPrice;
     }
     const ETH = {
