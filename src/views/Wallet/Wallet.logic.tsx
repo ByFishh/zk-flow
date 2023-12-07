@@ -16,14 +16,15 @@ export const useWallet = () => {
   // State
   const [state, dispatch] = useReducer(reducer, { ...initialState });
 
+  // UseEffect
   useEffect(() => {
-    getWalletAsync();
     if (!params.blockchain) return;
     dispatchCtx(setBlockchain(params.blockchain as Blockchain));
   }, [params]);
 
   useEffect(() => {
     navigate(`/wallet/${currentBlockchain}/${params.id}`);
+    getWalletAsync();
   }, [currentBlockchain]);
 
   const toggleLoader = (isLoading: boolean) => {
