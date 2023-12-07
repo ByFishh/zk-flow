@@ -6,3 +6,12 @@
 .f62bde80 img {
     width: 100%;
 }
+
+.f62bde80 span {
+    color: rgb(221, 221, 221);
+    width: 100%;
+    text-align: left;
+    display: block;
+    font-size: .75rem;
+    margin-top: .25rem;
+}

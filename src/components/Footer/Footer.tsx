@@ -32,39 +32,47 @@ const Footer = () => {
   );
 
   return (
-    <footer className="footer-container">
-      <div className="footer-left">
-        <div>{renderLogo}</div>
-        <div className="footer-credential-section">
-          <p className="footer-credential-title">DEVELOPERS</p>
-          <div className="footer-credential-container">
-            {credentialInfos.map((item) => (
-              <div className="footer-credential-item" key={uuidv4()}>
-                <p className="footer-credential-item-title">{item.name}</p>
-                {item.github && (
-                  <p className="footer-credential-item-link">
-                    Github: <a href={item.github}>{item.github}</a>
-                  </p>
-                )}
-                {item.x && (
-                  <p className="footer-credential-item-link">
-                    Twitter: <a href={item.x}>{item.x}</a>
-                  </p>
-                )}
-                {item.address && (
-                  <p className="footer-credential-item-link">
-                    Donate: <a href={'https://debank.com/profile/' + item.address}>{item.address}</a>
-                  </p>
-                )}
-              </div>
-            ))}
+    <>
+      <footer className="footer-container">
+        <div className="footer-left">
+          <div>{renderLogo}</div>
+          <div className="footer-credential-section">
+            <p className="footer-credential-title">DEVELOPERS</p>
+            <div className="footer-credential-container">
+              {credentialInfos.map((item) => (
+                <div className="footer-credential-item" key={uuidv4()}>
+                  <p className="footer-credential-item-title">{item.name}</p>
+                  {item.github && (
+                    <p className="footer-credential-item-link">
+                      Github: <a href={item.github}>{item.github}</a>
+                    </p>
+                  )}
+                  {item.x && (
+                    <p className="footer-credential-item-link">
+                      Twitter: <a href={item.x}>{item.x}</a>
+                    </p>
+                  )}
+                  {item.address && (
+                    <p className="footer-credential-item-link">
+                      Donate: <a href={'https://debank.com/profile/' + item.address}>{item.address}</a>
+                    </p>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
+        <div className="footer-right">
+          <p className="footer-powered"></p>
+        </div>
+      </footer>
+      <div className="footer-bottom">
+        <p className="footer-attention">
+          Please conduct your own research and exercise due diligence before utilizing the services advertised on
+          zkFlow. ZkFlow is not responsible in case of scam or lost of money
+        </p>
       </div>
-      <div className="footer-right">
-        <p className="footer-powered"></p>
-      </div>
-    </footer>
+    </>
   );
 };
 

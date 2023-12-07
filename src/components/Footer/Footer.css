@@ -64,6 +64,20 @@
     margin-bottom: .5rem;
 }
 
+.footer-bottom{
+    background-color: #0c0c0c;
+    padding: 1rem;
+
+}
+
+.footer-attention{
+    font-size: .85rem;
+    line-height: 1.5;
+    color: #5a5a5a;
+    text-align: center;
+
+}
+
 .footer-powered{
     font-size: .85rem;
 }
