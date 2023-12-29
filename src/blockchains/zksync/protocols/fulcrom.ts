@@ -4,6 +4,8 @@ import { countTransactionPeriods } from '../utils.ts';
 
 const addresses: string[] = [
   '0x850fe8be964cc5feb3dd00cfe1364590b45e3926',
+  '0x99819f0e0927718f5fbc73d3327ff7691d0243d6',
+  '0x76df63db845027965b7f2da9acbd5994f3524c16'
 ];
 
 const Fulcrom = {
