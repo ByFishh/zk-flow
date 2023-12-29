@@ -24,6 +24,7 @@ import { ZkSwap } from './protocols/zkswap.ts';
 import { ZkSyncId } from './protocols/zksyncid.ts';
 import { ZkSyncNameService } from './protocols/zksyncnameservice.ts';
 import { Zksyncbridge } from './protocols/zksyncbridge.ts';
+import { Fulcrom } from './protocols/fulcrom.ts';
 
 const getProtocols = (address: string, transactions: Transaction[]): Protocol[] => {
   const protocols: Protocol[] = [];
@@ -52,6 +53,7 @@ const getProtocols = (address: string, transactions: Transaction[]): Protocol[] 
   protocols.push(ZkSyncId.getProtocolsState(transactions));
   protocols.push(ZkSyncNameService.getProtocolsState(transactions));
   protocols.push(Zksyncbridge.getProtocolsState(transactions));
+  protocols.push(Fulcrom.getProtocolsState(transactions));
 
   protocols.sort((a, b) => b.volume - a.volume);
 
