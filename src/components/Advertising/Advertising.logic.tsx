@@ -13,22 +13,12 @@ const ads = {
       redirect: 'https://www.universalchains.io/',
       trusted: true,
     },
-    {
-      image: '/f62bde80/29003706-758f-42fe-9192-d3353e6879b0.jpg',
-      redirect: 'https://x.com/xpet_tech/status/1730164076796387726?s=20',
-      trusted: false,
-    },
   ],
   [Blockchain.Scroll]: [
     {
       image: '/f62bde80/17b67c1d-0698-4b42-bf17-bdef269deee3.png',
       redirect: 'https://www.universalchains.io/',
       trusted: true,
-    },
-    {
-      image: '/f62bde80/29003706-758f-42fe-9192-d3353e6879b0.jpg',
-      redirect: 'https://x.com/xpet_tech/status/1730164076796387726?s=20',
-      trusted: false,
     },
   ],
 };
