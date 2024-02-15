@@ -16,7 +16,7 @@ const ads = {
     {
       image: '/f62bde80/29003706-758f-42fe-9192-d3353e6879b0.png',
       redirect: 'https://bigint.co/launchpad/echoes-of-picasso',
-      trusted: false,
+      trusted: true,
     },
   ],
   [Blockchain.Scroll]: [
