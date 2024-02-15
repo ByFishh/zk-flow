@@ -13,6 +13,11 @@ const ads = {
       redirect: 'https://www.universalchains.io/',
       trusted: true,
     },
+    {
+      image: '/f62bde80/29003706-758f-42fe-9192-d3353e6879b0.png',
+      redirect: 'https://bigint.co/launchpad/echoes-of-picasso',
+      trusted: false,
+    },
   ],
   [Blockchain.Scroll]: [
     {
@@ -27,7 +32,7 @@ export const useAdvertising = (id: 0 | 1) => {
   const { currentBlockchain } = useSelector((s: IRootState) => s.blockchain);
   const [isLoaded, setIsLoaded] = useState<boolean>(true);
   const dispatchCtx = useDispatch<IAppDispatch>();
-  const image = ads[currentBlockchain][id].image;
+  const image = ads[currentBlockchain][id]?.image;
 
   const onImageLoaded = () => setIsLoaded(true);
   const onError = () => setIsLoaded(false);

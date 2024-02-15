@@ -63,7 +63,7 @@ const Wallet = () => {
             }}
           />
         </section>
-        {/*<Advertising id={1} />*/}
+        {<Advertising id={1} />}
         <section className="wallet-blockchain-section">
           <GridInfo items={logic.wallet.additionalInfos.map((item) => ({ key: item.label, value: item.value }))} />
         </section>
