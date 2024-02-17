@@ -15,7 +15,8 @@ const ads = {
     },
     {
       image: '/f62bde80/29003706-758f-42fe-9192-d3353e6879b0.png',
-      redirect: 'https://bigint.co/launchpad/echoes-of-picasso',
+      redirect:
+        'https://bigint.co/launchpad/echoes-of-picasso?utm_source=zkflow&utm_medium=banner&utm_campaign=echoesofpicasso&utm_content=banner_ad1&utm_term=echoesofpicasso_promotion',
       trusted: true,
     },
   ],
