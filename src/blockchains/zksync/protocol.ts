@@ -25,6 +25,7 @@ import { ZkSyncId } from './protocols/zksyncid.ts';
 import { ZkSyncNameService } from './protocols/zksyncnameservice.ts';
 import { Zksyncbridge } from './protocols/zksyncbridge.ts';
 import { Fulcrom } from './protocols/fulcrom.ts';
+import { MacaronSwap } from './protocols/macaronswap.ts';
 
 const getProtocols = (address: string, transactions: Transaction[]): Protocol[] => {
   const protocols: Protocol[] = [];
@@ -37,6 +38,7 @@ const getProtocols = (address: string, transactions: Transaction[]): Protocol[] 
   protocols.push(Goal3.getProtocolsState(transactions));
   protocols.push(Holdstation.getProtocolsState(transactions));
   protocols.push(IzumiFinance.getProtocolsState(transactions));
+  protocols.push(MacaronSwap.getProtocolsState(transactions));
   protocols.push(Maverick.getProtocolsState(transactions));
   protocols.push(Mute.getProtocolsState(transactions));
   protocols.push(Odos.getProtocolsState(transactions));
