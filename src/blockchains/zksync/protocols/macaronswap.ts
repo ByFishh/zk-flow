@@ -9,7 +9,8 @@ const addresses: string[] = [
   '0x72aE6CBc34AeCF6573655739739BF746346b7C84'.toLowerCase(),
   '0xd61F9405503D4f4a09c30204F25401d9AF91C1E7'.toLowerCase(),
   '0x75a7e4BE2A1333E5c8D4f139142f1741E10E6Db5'.toLowerCase(),
-  '0xb0Cfb48713e98Ac20726274818221B951ee79dD6'.toLowerCase()
+  '0xb0Cfb48713e98Ac20726274818221B951ee79dD6'.toLowerCase(),
+  '0xa7afA3DFe5840A33bacbF961F38f1FDe05DcaEa2'.toLowerCase()
 ];
 
 const MacaronSwap = {
