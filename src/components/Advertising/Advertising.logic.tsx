@@ -20,13 +20,7 @@ const ads = {
       trusted: true,
     },
   ],
-  [Blockchain.Scroll]: [
-    {
-      image: '/f62bde80/17b67c1d-0698-4b42-bf17-bdef269deee3.png',
-      redirect: 'https://www.universalchains.io/',
-      trusted: true,
-    },
-  ],
+  [Blockchain.Scroll]: [],
 };
 
 export const useAdvertising = (id: 0 | 1) => {
