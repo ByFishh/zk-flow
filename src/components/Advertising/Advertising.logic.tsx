@@ -13,6 +13,11 @@ const ads = {
       redirect: 'https://www.universalchains.io/',
       trusted: true,
     },
+    {
+      image: '/f62bde80/29003706-758f-42fe-9192-d3353e6879b0.svg',
+      redirect: 'https://starter.bigint.co/projects/bigint-token/',
+      trusted: true,
+    }
   ],
   [Blockchain.Scroll]: [
     {
