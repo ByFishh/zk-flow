@@ -6,9 +6,12 @@ import { IDialogs } from '../../types/Dialogs/IDialogs';
 import './Advertising.css';
 import { Blockchain } from '../../blockchains/types.ts';
 
-const ads = {
+const ads: {
+  [Blockchain.zkSync]: { image: string; redirect: string; trusted: boolean }[];
+  [Blockchain.Scroll]: { image: string; redirect: string; trusted: boolean }[];
+} = {
   [Blockchain.zkSync]: [
-    {
+    /*{
       image: '/f62bde80/17b67c1d-0698-4b42-bf17-bdef269deee3.png',
       redirect: 'https://www.universalchains.io/',
       trusted: true,
@@ -17,14 +20,14 @@ const ads = {
       image: '/f62bde80/29003706-758f-42fe-9192-d3353e6879b0.svg',
       redirect: 'https://starter.bigint.co/projects/bigint-token/',
       trusted: true,
-    }
+    }*/
   ],
   [Blockchain.Scroll]: [
-    {
+    /*{
       image: '/f62bde80/17b67c1d-0698-4b42-bf17-bdef269deee3.png',
       redirect: 'https://www.universalchains.io/',
       trusted: true,
-    },
+    },*/
   ],
 };
 
